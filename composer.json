@@ -1,0 +1,12 @@
+{
+    "name": "hab/diglib-iiif",
+    "autoload": {
+        "psr-4": {
+            "HAB\\Diglib\\API\\": "src/"
+        }
+    },
+    "require": {
+        "slim/slim": "^3.0",
+        "hab/xml-helper": "^0.3"
+    }
+}
