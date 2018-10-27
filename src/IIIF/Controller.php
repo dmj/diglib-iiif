@@ -75,6 +75,11 @@ abstract class Controller
         return $response->withRedirect($target, 303);
     }
 
+    protected function createNotAcceptableResponse (Response $response)
+    {
+        return $response->withStatus(406)->write('<h1>406 Not Acceptable</h1>');
+    }
+
     protected function getMapper ($objectId)
     {
         $location = $this->resolver->resolve($objectId);
