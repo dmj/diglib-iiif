@@ -29,6 +29,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Exception\NotFoundException;
 use Slim\Interfaces\RouterInterface as Router;
 
+use Negotiation\Negotiator;
+
 use DOMDocument;
 use RuntimeException;
 
@@ -56,6 +58,10 @@ abstract class Controller
 
     final public function asJSON (Request $request, Response $response, array $arguments)
     {
+        $ctype = $this->findRequestedEntityContentType($request, array('application/json', 'application/ld+json'));
+        if (!$ctype) {
+            return $this->createNotAcceptableResponse($response);
+        }
         $data = $this->getJSON($arguments);
         if (!$data || !$data->documentElement) {
             throw new NotFoundException($request, $response);
@@ -71,8 +77,18 @@ abstract class Controller
 
     final public function __invoke (Request $request, Response $response, array $arguments)
     {
+        $ctype = $this->findRequestedEntityContentType($request, array('application/json', 'application/ld+json'));
+        if (!$ctype) {
+            return $this->createNotAcceptableResponse($response);
+        }
         $target = $this->router->pathFor(static::$jsonRoute, $arguments);
         return $response->withRedirect($target, 303);
+    }
+
+    protected function findRequestedEntityContentType (Request $request, $priorities)
+    {
+        $neg = new Negotiator();
+        return $neg->getBest(implode($request->getHeader('Accept')), $priorities);
     }
 
     protected function createNotAcceptableResponse (Response $response)
