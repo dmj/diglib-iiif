@@ -68,7 +68,7 @@ abstract class Controller
         }
         $payload = json_encode(jsonxml2php($data->documentElement), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         return $response
-            ->withHeader('Content-Type', 'application/json')
+            ->withHeader('Content-Type', $ctype->getValue())
             ->withHeader('Access-Control-Allow-Origin', '*')
             ->write($payload);
     }
