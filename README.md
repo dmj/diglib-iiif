@@ -23,27 +23,27 @@ git clone https://github.com/dmj/diglib-iiif.git
   <tbody>
     <tr>
       <th>Manifest</th>
-      <td>mets:mets/@OBJID</td>
+      <td>mets:mets/@⁠OBJID</td>
       <td>required</td>
     </tr>
     <tr>
       <th>Sequence</th>
-      <td>mets:div[@TYPE = 'physSequence']/@ID</td>
+      <td>mets:div[@⁠TYPE = 'physSequence']/@⁠ID</td>
       <td>optional</td>
     </tr>
     <tr>
       <th>Annotation</th>
-      <td>mets:div[@TYPE = 'page']/mets:fptr/@ID</td>
+      <td>mets:div[@⁠TYPE = 'page']/mets:fptr/@⁠ID</td>
       <td>optional</td>
     </tr>
     <tr>
       <th>Canvas</th>
-      <td>mets:div[@TYPE = 'page']/@ID</td>
+      <td>mets:div[@⁠TYPE = 'page']/@⁠ID</td>
       <td>optional</td>
     </tr>
     <tr>
       <th>Image</th>
-      <td>mets:fileGrp[@USE = 'MASTER']/mets:file/@ID</td>
+      <td>mets:fileGrp[@⁠USE = 'MASTER']/mets:file/@⁠ID</td>
       <td>optional</td>
     </tr>
   </tbody>
