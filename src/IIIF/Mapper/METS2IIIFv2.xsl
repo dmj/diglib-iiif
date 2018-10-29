@@ -63,8 +63,8 @@
       <json:string key="@id"><xsl:value-of select="concat($objectBaseUri, '/manifest')"/></json:string>
       <json:string key="@type">sc:Manifest</json:string>
       <json:string key="@context">http://iiif.io/api/presentation/2/context.json</json:string>
-      <!-- TODO: Label & Metadata -->
-      <json:string key="label">TBD</json:string>
+      <json:string key="label"><xsl:value-of select="@LABEL"/></json:string>
+      <!-- TODO: Metadata -->
 
       <json:array key="sequences">
         <xsl:apply-templates select="mets:structMap[@TYPE = 'PHYSICAL']"/>
