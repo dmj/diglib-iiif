@@ -1,6 +1,7 @@
 <xsl:transform version="1.0"
                xmlns:json="http://www.w3.org/2005/xpath-functions"
                xmlns:mets="http://www.loc.gov/METS/"
+               xmlns:mix="http://www.loc.gov/mix/v20"
                xmlns:xlink="http://www.w3.org/1999/xlink"
                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -17,6 +18,7 @@
   <xsl:param  name="imageComplianceLevel"/>
 
   <xsl:key name="image-by-id" match="mets:fileGrp[@USE = 'MASTER']/mets:file" use="@ID"/>
+  <xsl:key name="techmd-by-id" match="mets:techMD" use="@ID"/>
 
   <xsl:template match="/">
     <xsl:choose>
@@ -97,9 +99,15 @@
           <xsl:otherwise><xsl:value-of select="position()"/></xsl:otherwise>
         </xsl:choose>
       </json:string>
+
       <!-- TODO: Width & Height -->
-      <json:number key="height">1440</json:number>
-      <json:number key="width">1080</json:number>
+      <xsl:variable name="techmd" select="key('techmd-by-id', key('image-by-id', mets:fptr/@FILEID)/@DMDID)"/>
+      <json:number key="height">
+        <xsl:value-of select="$techmd//mix:imageWidth"/>
+      </json:number>
+      <json:number key="width">
+        <xsl:value-of select="$techmd//mix:imageHeight"/>
+      </json:number>
 
       <json:array key="images">
         <xsl:apply-templates select="mets:fptr[key('image-by-id', @FILEID)]">
