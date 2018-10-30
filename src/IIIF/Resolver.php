@@ -34,6 +34,6 @@ class Resolver
 {
     public function resolve ($objectId)
     {
-        return __DIR__ . '/../../';
+        return __DIR__ . '/../../examples/' . $objectId;
     }
 }
