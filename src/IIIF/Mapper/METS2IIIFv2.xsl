@@ -110,7 +110,7 @@
   </xsl:template>
 
   <xsl:template match="mets:fptr">
-    <xsl:param name="canvasUri"/>
+    <xsl:param name="canvasUri" select="concat($objectBaseUri, '/canvas/', ../@ID)"/>
     <json:map>
       <xsl:if test="@ID">
         <json:string key="@id"><xsl:value-of select="concat($objectBaseUri, '/annotation/', @ID)"/></json:string>
