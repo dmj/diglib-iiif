@@ -54,6 +54,5 @@ git clone https://github.com/dmj/diglib-iiif.git
 Currently the web application has the following limitations:
 
 - does not create manifest metadata
-- reports a fixed canvas size of 1080x1440
 - the METS application profile is not documented yet and might be subject to change
-- uses a stub-resolver that always points to the example file
+- uses a stub-resolver that always points to the example directory
