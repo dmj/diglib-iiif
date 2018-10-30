@@ -100,7 +100,6 @@
         </xsl:choose>
       </json:string>
 
-      <!-- TODO: Width & Height -->
       <xsl:variable name="techmd" select="key('techmd-by-id', key('image-by-id', mets:fptr/@FILEID)/@DMDID)"/>
       <json:number key="height">
         <xsl:value-of select="$techmd//mix:imageWidth"/>
