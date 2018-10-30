@@ -16,7 +16,7 @@
   <!-- <xsl:param  name="imageComplianceLevel">http://iiif.io/api/image/2/level2.json</xsl:param> -->
   <xsl:param  name="imageComplianceLevel"/>
 
-  <xsl:key name="image-by-id" match="mets:fileGrp[@USE = 'DEFAULT']/mets:file" use="@ID"/>
+  <xsl:key name="image-by-id" match="mets:fileGrp[@USE = 'MASTER']/mets:file" use="@ID"/>
 
   <xsl:template match="/">
     <xsl:choose>
