@@ -1,0 +1,81 @@
+<mets OBJID="grafik/graph-res-b-81-2" LABEL="Herzog August Bibliothek Wolfenbüttel: Graph. Res. B: 81.2"
+      xmlns="http://www.loc.gov/METS/"
+      xmlns:dct="http://purl.org/dc/terms/"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"
+      xmlns:marcrel="http://id.loc.gov/vocabulary/relators/"
+      xmlns:mix="http://www.loc.gov/mix/v20"
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <metsHdr CREATEDATE="2018-03-29T11:26:17">
+    <agent ROLE="CUSTODIAN" TYPE="ORGANIZATION">
+      <name>Herzog August Bibliothek Wolfenbüttel</name>
+    </agent>
+  </metsHdr>
+
+  <amdSec>
+    <techMD ID="techMD.1">
+      <mdWrap MDTYPE="NISOIMG">
+        <xmlData>
+          <mix:mix>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>2000</mix:imageWidth>
+                <mix:imageHeight>2192</mix:imageHeight>
+              </mix:BasicImageCharacteristics>
+            </mix:BasicImageInformation>
+          </mix:mix>
+        </xmlData>
+      </mdWrap>
+    </techMD>
+
+    <rightsMD ID="rightsMD.1">
+      <mdWrap MDTYPE="OTHER" OTHERMDTYPE="RDF/XML" MIMETYPE="application/rdf+xml">
+        <xmlData>
+          <rdf:Description>
+            <dct:relation>
+              <foaf:Project>
+                <skos:prefLabel>Virtuelles Kupferstichkabinett</skos:prefLabel>
+              </foaf:Project>
+            </dct:relation>
+            <marcrel:fnd>
+              <dct:Agent>
+                <skos:prefLabel>Deutsche Forschungsgesellschaft (DFG)</skos:prefLabel>
+              </dct:Agent>
+            </marcrel:fnd>
+            <dct:rightsHolder>
+              <dct:Agent>
+                <skos:prefLabel>HAB Wolfenbüttel</skos:prefLabel>
+              </dct:Agent>
+            </dct:rightsHolder>
+          </rdf:Description>
+        </xmlData>
+      </mdWrap>
+    </rightsMD>
+  </amdSec>
+
+  <fileSec>
+    <fileGrp USE="MASTER" ADMID="rightsMD.1">
+      <file ID="file.1" MIMETYPE="image/jp2" DMDID="techMD.1">
+        <FLocat LOCTYPE="URL" xlink:href="00001.jp2"/>
+      </file>
+    </fileGrp>
+  </fileSec>
+
+  <structMap TYPE="PHYSICAL">
+    <div TYPE="physSequence" ID="div.1">
+      <div ID="div.2" TYPE="page">
+        <fptr FILEID="file.1" ID="fptr.1"/>
+      </div>
+    </div>
+  </structMap>
+
+  <structMap TYPE="LOGICAL">
+    <div ID="div.3" TYPE="C0XX"/>
+  </structMap>
+
+  <structLink>
+    <smLink xlink:from="div.2" xlink:to="div.3"/>
+  </structLink>
+</mets>
