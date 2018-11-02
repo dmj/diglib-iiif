@@ -25,8 +25,6 @@ $container['IIIF.Filter'] = function () use ($container) {
             throw new Slim\Exception\NotFoundException($req, $res);
         }
 
-        $req = $req->withAttribute('objectLocation', $objectLocation);
-
         $reqUri = $req->getUri();
         $serviceBaseUri = sprintf('%s://%s%s', $reqUri->getScheme(), $reqUri->getAuthority(), $router->pathFor('iiif'));
         HAB\Diglib\API\IIIF\Mapper\METS2IIIFv2::$serviceBaseUri = rtrim($serviceBaseUri, '/');
