@@ -1,6 +1,14 @@
 <?php
 
 $container = $app->getContainer();
+$container['errorHandler'] = function ($container) {
+    $handler = function ($req, $res, $err) {
+        $handler = new Slim\Handlers\Error();
+        return $handler($req, $res, $err);
+    };
+    return $handler;
+};
+
 $container['IIIF.Resolver'] = function () use ($container) {
     $resolver = new HAB\Diglib\API\IIIF\Resolver();
     return $resolver;
