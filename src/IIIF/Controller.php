@@ -67,6 +67,10 @@ abstract class Controller
             throw new NotFoundException($request, $response);
         }
         $payload = json_encode(jsonxml2php($data->documentElement), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new RuntimeException(json_last_error_msg());
+        }
+
         return $response
             ->withHeader('Content-Type', $ctype->getValue())
             ->withHeader('Access-Control-Allow-Origin', '*')
