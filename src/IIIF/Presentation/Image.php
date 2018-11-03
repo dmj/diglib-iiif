@@ -21,25 +21,25 @@
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
 
-namespace HAB\Diglib\API\IIIF;
+namespace HAB\Diglib\API\IIIF\Presentation;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * Provide the IIIF Sequence.
+ * Provide the IIIF Image.
  *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Sequence extends Controller
+class Image extends Controller
 {
-    protected static $jsonRoute = 'iiif.sequence.json';
+    protected static $jsonRoute = 'iiif.image.json';
 
     protected function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);
-        return $mapper->getSequence($arguments['entityId']);
+        return $mapper->getImage($arguments['entityId']);
     }
 }

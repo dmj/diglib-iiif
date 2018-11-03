@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
 
-namespace HAB\Diglib\API\IIIF;
+namespace HAB\Diglib\API\IIIF\Presentation;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -35,6 +35,8 @@ use DOMDocument;
 use RuntimeException;
 
 use function HAB\XML\jsonxml2php;
+
+use HAB\Diglib\API\IIIF\Resolver;
 
 /**
  * Abstract base class of IIIF controllers.
