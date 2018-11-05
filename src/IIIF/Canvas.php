@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
 
-namespace HAB\Diglib\API\IIIF\Presentation;
+namespace HAB\Diglib\API\IIIF;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;

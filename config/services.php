@@ -27,7 +27,7 @@ $container['IIIF.Filter'] = function () use ($container) {
 
         $reqUri = $req->getUri();
         $serviceBaseUri = sprintf('%s://%s%s', $reqUri->getScheme(), $reqUri->getAuthority(), $router->pathFor('iiif'));
-        HAB\Diglib\API\IIIF\Presentation\Mapper\METS2IIIFv2::$serviceBaseUri = rtrim($serviceBaseUri, '/');
+        HAB\Diglib\API\IIIF\Mapper\METS2IIIFv2::$serviceBaseUri = rtrim($serviceBaseUri, '/');
 
         return $nxt($req, $res);
     };
@@ -37,34 +37,34 @@ $container['IIIF.Filter'] = function () use ($container) {
 $container['IIIF.Manifest'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
-    $controller = new HAB\Diglib\API\IIIF\Presentation\Manifest($router, $resolver);
+    $controller = new HAB\Diglib\API\IIIF\Manifest($router, $resolver);
     return $controller;
 };
 
 $container['IIIF.Canvas'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
-    $controller = new HAB\Diglib\API\IIIF\Presentation\Canvas($router, $resolver);
+    $controller = new HAB\Diglib\API\IIIF\Canvas($router, $resolver);
     return $controller;
 };
 
 $container['IIIF.Annotation'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
-    $controller = new HAB\Diglib\API\IIIF\Presentation\Annotation($router, $resolver);
+    $controller = new HAB\Diglib\API\IIIF\Annotation($router, $resolver);
     return $controller;
 };
 
 $container['IIIF.Sequence'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
-    $controller = new HAB\Diglib\API\IIIF\Presentation\Sequence($router, $resolver);
+    $controller = new HAB\Diglib\API\IIIF\Sequence($router, $resolver);
     return $controller;
 };
 
 $container['IIIF.Image'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
-    $controller = new HAB\Diglib\API\IIIF\Presentation\Image($router, $resolver);
+    $controller = new HAB\Diglib\API\IIIF\Image($router, $resolver);
     return $controller;
 };

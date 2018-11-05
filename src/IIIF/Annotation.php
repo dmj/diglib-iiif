@@ -21,25 +21,25 @@
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
 
-namespace HAB\Diglib\API\IIIF\Presentation;
+namespace HAB\Diglib\API\IIIF;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * Provide the IIIF Manifest.
+ * Provide the IIIF Annotation.
  *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Manifest extends Controller
+class Annotation extends Controller
 {
-    protected static $jsonRoute = 'iiif.manifest.json';
+    protected static $jsonRoute = 'iiif.annotation.json';
 
-    public function getJSON (array $arguments)
+    protected function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);
-        return $mapper->getManifest();
+        return $mapper->getAnnotation($arguments['entityId']);
     }
 }
