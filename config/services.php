@@ -9,13 +9,13 @@ $container['errorHandler'] = function ($container) {
     return $handler;
 };
 
-$container['IIIF.Presentation.Resolver'] = function () use ($container) {
+$container['IIIF.Resolver'] = function () use ($container) {
     $resolver = new HAB\Diglib\API\IIIF\Resolver();
     return $resolver;
 };
-$container['IIIF.Presentation.Filter'] = function () use ($container) {
+$container['IIIF.Filter'] = function () use ($container) {
     $filter = function ($req, $res, $nxt) use ($container) {
-        $resolver = $container['IIIF.Presentation.Resolver'];
+        $resolver = $container['IIIF.Resolver'];
         $router = $container['router'];
         $route = $req->getAttribute('route');
         $args = $route->getArguments();
@@ -34,37 +34,37 @@ $container['IIIF.Presentation.Filter'] = function () use ($container) {
     return $filter;
 };
 
-$container['IIIF.Presentation.Manifest'] = function () use ($container) {
+$container['IIIF.Manifest'] = function () use ($container) {
     $router = $container['router'];
-    $resolver = $container['IIIF.Presentation.Resolver'];
+    $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Presentation\Manifest($router, $resolver);
     return $controller;
 };
 
-$container['IIIF.Presentation.Canvas'] = function () use ($container) {
+$container['IIIF.Canvas'] = function () use ($container) {
     $router = $container['router'];
-    $resolver = $container['IIIF.Presentation.Resolver'];
+    $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Presentation\Canvas($router, $resolver);
     return $controller;
 };
 
-$container['IIIF.Presentation.Annotation'] = function () use ($container) {
+$container['IIIF.Annotation'] = function () use ($container) {
     $router = $container['router'];
-    $resolver = $container['IIIF.Presentation.Resolver'];
+    $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Presentation\Annotation($router, $resolver);
     return $controller;
 };
 
-$container['IIIF.Presentation.Sequence'] = function () use ($container) {
+$container['IIIF.Sequence'] = function () use ($container) {
     $router = $container['router'];
-    $resolver = $container['IIIF.Presentation.Resolver'];
+    $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Presentation\Sequence($router, $resolver);
     return $controller;
 };
 
-$container['IIIF.Presentation.Image'] = function () use ($container) {
+$container['IIIF.Image'] = function () use ($container) {
     $router = $container['router'];
-    $resolver = $container['IIIF.Presentation.Resolver'];
+    $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Presentation\Image($router, $resolver);
     return $controller;
 };

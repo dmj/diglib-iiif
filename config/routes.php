@@ -1,48 +1,48 @@
 <?php
 
-$app->get('/{objectId}/manifest.json', 'IIIF.Presentation.Manifest:asJSON')
+$app->get('/{objectId}/manifest.json', 'IIIF.Manifest:asJSON')
     ->setName('iiif.manifest.json')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
-$app->get('/{objectId}/manifest', 'IIIF.Presentation.Manifest')
+$app->get('/{objectId}/manifest', 'IIIF.Manifest')
     ->setName('iiif.manifest')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
-$app->get('/{objectId}/canvas/{entityId}.json', 'IIIF.Presentation.Canvas:asJSON')
+$app->get('/{objectId}/canvas/{entityId}.json', 'IIIF.Canvas:asJSON')
     ->setName('iiif.canvas.json')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
-$app->get('/{objectId}/canvas/{entityId}', 'IIIF.Presentation.Canvas')
+$app->get('/{objectId}/canvas/{entityId}', 'IIIF.Canvas')
     ->setName('iiif.canvas')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
-$app->get('/{objectId}/annotation/{entityId}.json', 'IIIF.Presentation.Annotation:asJSON')
+$app->get('/{objectId}/annotation/{entityId}.json', 'IIIF.Annotation:asJSON')
     ->setName('iiif.annotation.json')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
-$app->get('/{objectId}/annotation/{entityId}', 'IIIF.Presentation.Annotation')
+$app->get('/{objectId}/annotation/{entityId}', 'IIIF.Annotation')
     ->setName('iiif.annotation')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
-$app->get('/{objectId}/sequence/{entityId}.json', 'IIIF.Presentation.Sequence:asJSON')
+$app->get('/{objectId}/sequence/{entityId}.json', 'IIIF.Sequence:asJSON')
     ->setName('iiif.sequence.json')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
-$app->get('/{objectId}/sequence/{entityId}', 'IIIF.Presentation.Sequence')
+$app->get('/{objectId}/sequence/{entityId}', 'IIIF.Sequence')
     ->setName('iiif.sequence')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
-$app->get('/{objectId}/image/{entityId}/info.json', 'IIIF.Presentation.Image:asJSON')
+$app->get('/{objectId}/image/{entityId}/info.json', 'IIIF.Image:asJSON')
     ->setName('iiif.image.json')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
 $app->get('/{objectId}/image/{entityId}/{ops:.*}', function ($req, $res, $arg) { var_dump($arg); })
     ->setName('iiif.image.data')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
-$app->get('/{objectId}/image/{entityId}', 'IIIF.Presentation.Image')
+$app->get('/{objectId}/image/{entityId}', 'IIIF.Image')
     ->setName('iiif.image')
-    ->add('IIIF.Presentation.Filter');
+    ->add('IIIF.Filter');
 
 $app->get('/', function ($req, $res, $args) {
     return $res->write('Nothing to see here...');
