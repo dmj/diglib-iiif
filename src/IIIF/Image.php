@@ -26,6 +26,9 @@ namespace HAB\Diglib\API\IIIF;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+use Slim\Exception\NotFoundException;
+use Slim\Http\Stream;
+
 /**
  * Provide the IIIF Image.
  *
@@ -36,6 +39,19 @@ use Psr\Http\Message\ResponseInterface as Response;
 class Image extends Controller
 {
     protected static $jsonRoute = 'iiif.image.json';
+
+    public function asJPEG (Request $request, Response $response, array $arguments)
+    {
+        if ($arguments['ops'] !== 'full/full/0/default.jpg') {
+            throw new NotFoundException($request, $response);
+        }
+        $mapper = $this->getMapper($arguments['objectId']);
+        $imageUri = $mapper->getImageUri($arguments['entityId']);
+        return $response
+            ->withStatus(200)
+            ->withHeader('Content-Type', 'image/jpeg')
+            ->withBody(new Stream(fopen($imageUri, 'r')));
+    }
 
     protected function getJSON (array $arguments)
     {
