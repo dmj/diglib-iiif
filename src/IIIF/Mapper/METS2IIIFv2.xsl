@@ -14,8 +14,8 @@
   <xsl:variable name="objectId" select="translate(/mets:mets/@OBJID, '/', '_')"/>
   <xsl:variable name="objectBaseUri" select="concat($serviceBaseUri, '/', $objectId)"/>
 
-  <!-- <xsl:param  name="imageComplianceLevel">http://iiif.io/api/image/2/level2.json</xsl:param> -->
-  <xsl:param  name="imageComplianceLevel"/>
+  <xsl:param  name="imageComplianceLevel">http://iiif.io/api/image/2/level0.json</xsl:param>
+  <!-- <xsl:param  name="imageComplianceLevel"/> -->
 
   <xsl:key name="image-by-id" match="mets:fileGrp[@USE = 'MASTER']/mets:file" use="@ID"/>
   <xsl:key name="techmd-by-id" match="mets:techMD" use="@ID"/>
@@ -146,7 +146,16 @@
   </xsl:template>
 
   <xsl:template match="mets:file">
-    <json:string key="@id"><xsl:value-of select="mets:FLocat/@xlink:href"/></json:string>
+    <json:string key="@id">
+      <xsl:choose>
+        <xsl:when test="starts-with($imageComplianceLevel, 'http://iiif.io/api/image/2/level')">
+          <xsl:value-of select="concat($objectBaseUri, '/image/', @ID, '/full/full/0/default.jpg')"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="mets:FLocat/@xlink:href"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </json:string>
     <json:string key="@type">dctypes:Image</json:string>
     <json:string key="format"><xsl:value-of select="@MIMETYPE"/></json:string>
     <xsl:if test="$imageComplianceLevel">
