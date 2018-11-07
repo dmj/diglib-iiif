@@ -57,8 +57,8 @@
 
   <fileSec>
     <fileGrp USE="MASTER" ADMID="rightsMD.1">
-      <file ID="file.1" MIMETYPE="image/jp2" DMDID="techMD.1">
-        <FLocat LOCTYPE="URL" xlink:href="00001.jp2"/>
+      <file ID="file.1" MIMETYPE="image/jpeg" DMDID="techMD.1">
+        <FLocat LOCTYPE="URL" xlink:href="http://diglib.hab.de/varia/grafik/graph-res-b-81-2/000001.jpg"/>
       </file>
     </fileGrp>
   </fileSec>
