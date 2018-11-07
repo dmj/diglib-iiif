@@ -71,6 +71,15 @@ class METS2IIIFv2
         return $this->transform(array('entityType' => 'sc:Sequence', 'entityId' => $sequenceId));
     }
 
+    public function getImageUri ($imageId)
+    {
+        $proc = new \DOMXPath($this->source);
+        $proc->registerNamespace('mets', 'http://www.loc.gov/METS/');
+        $proc->registerNamespace('xlink', 'http://www.w3.org/1999/xlink');
+        $expr = sprintf("string(//mets:file[@ID = '%s']/mets:FLocat/@xlink:href)", $imageId);
+        return $proc->evaluate($expr);
+    }
+
     private function transform (array $parameters)
     {
         $transform = $this->getTransformation();
