@@ -54,5 +54,5 @@ git clone https://github.com/dmj/diglib-iiif.git
 Currently the web application has the following limitations:
 
 - does not create manifest metadata
-- the METS application profile is not documented yet and might be subject to change
+- the [METS application profile](https://github.com/dmj/mets-anwendungsprofil) might be subject to change
 - uses a stub-resolver that always points to the example directory
