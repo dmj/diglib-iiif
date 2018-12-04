@@ -1,4 +1,4 @@
-<mets OBJID="grafik/graph-res-b-81-2" LABEL="Herzog August Bibliothek Wolfenbüttel: Graph. Res. B: 81.2"
+<mets OBJID="grafik/graph-res-b-81-2" LABEL="Herzog August Bibliothek Wolfenbüttel, Graph. Res. B: 81.2" PROFILE="tag:diglib.hab.de,2018:METS:v1"
       xmlns="http://www.loc.gov/METS/"
       xmlns:dct="http://purl.org/dc/terms/"
       xmlns:foaf="http://xmlns.com/foaf/0.1/"
@@ -57,8 +57,8 @@
 
   <fileSec>
     <fileGrp USE="MASTER" ADMID="rightsMD.1">
-      <file ID="file.1" MIMETYPE="image/jpeg" DMDID="techMD.1">
-        <FLocat LOCTYPE="URL" xlink:href="http://diglib.hab.de/varia/grafik/graph-res-b-81-2/000001.jpg"/>
+      <file ID="file.1" MIMETYPE="image/jp2" DMDID="techMD.1">
+        <FLocat LOCTYPE="URL" xlink:href="00001.jp2"/>
       </file>
     </fileGrp>
   </fileSec>
@@ -72,7 +72,7 @@
   </structMap>
 
   <structMap TYPE="LOGICAL">
-    <div ID="div.3" TYPE="C0XX"/>
+    <div ID="div.3" TYPE="Monograph"/>
   </structMap>
 
   <structLink>
