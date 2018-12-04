@@ -45,13 +45,10 @@ class Image extends Controller
     public function asJPEG (Request $request, Response $response, array $arguments)
     {
         $location = $this->getLocation($arguments['objectId']);
-        if ($arguments['ops'] !== 'full/full/0/default.jpg') {
-            throw new NotFoundException($request, $response);
-        }
         $mapper = $this->getMapper($arguments['objectId']);
         $imageUri = $mapper->getImageUri($arguments['entityId']);
 
-        $image = $this->getJPEG($imageUri, $arguments['ops']);
+        $image = $this->getJPEG('/host/' . $arguments['objectId'] . '/' . $imageUri, $arguments['ops']);
 
         return $response
             ->withStatus(200)
@@ -69,7 +66,7 @@ class Image extends Controller
         if (!$this->imageSource) {
             return new Stream(fopen($imageUri, 'r'));
         }
-        return $this->imageSource->getImage($imageUri);
+        return $this->imageSource->getImage($imageUri, $options);
     }
 
     protected function getJSON (array $arguments)
