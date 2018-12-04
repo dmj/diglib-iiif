@@ -100,9 +100,14 @@ abstract class Controller
         return $response->withStatus(406)->write('<h1>406 Not Acceptable</h1>');
     }
 
+    protected function getLocation ($objectId)
+    {
+        return $this->resolver->resolve($objectId);
+    }
+
     protected function getMapper ($objectId)
     {
-        $location = $this->resolver->resolve($objectId);
+        $location = $this->getLocation($objectId);
         if (!$location || !file_exists($location . DIRECTORY_SEPARATOR . 'mets.xml')) {
             throw new RuntimeException();
         }
