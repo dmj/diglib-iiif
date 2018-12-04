@@ -58,7 +58,7 @@
   <fileSec>
     <fileGrp USE="MASTER" ADMID="rightsMD.1">
       <file ID="file.1" MIMETYPE="image/jp2" DMDID="techMD.1">
-        <FLocat LOCTYPE="URL" xlink:href="00001.jp2"/>
+        <FLocat LOCTYPE="URL" xlink:href="000001.jp2"/>
       </file>
     </fileGrp>
   </fileSec>
