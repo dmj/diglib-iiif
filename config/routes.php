@@ -36,7 +36,7 @@ $app->get('/{objectId}/image/{entityId}/info.json', 'IIIF.Image:asJSON')
     ->setName('iiif.image.json')
     ->add('IIIF.Filter');
 
-$app->get('/{objectId}/image/{entityId}/{ops:.*}', function ($req, $res, $arg) { var_dump($arg); })
+$app->get('/{objectId}/image/{entityId}/{ops:.*}', 'IIIF.Image:asJPEG')
     ->setName('iiif.image.data')
     ->add('IIIF.Filter');
 
