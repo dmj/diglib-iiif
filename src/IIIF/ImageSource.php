@@ -32,7 +32,7 @@ namespace HAB\Diglib\API\IIIF;
  */
 class ImageSource
 {
-    private function $iipImageUri;
+    private $iipImageUri;
 
     public function __construct ($iipImageUri)
     {
