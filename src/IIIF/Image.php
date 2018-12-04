@@ -38,19 +38,38 @@ use Slim\Http\Stream;
  */
 class Image extends Controller
 {
+    private $imageSource;
+
     protected static $jsonRoute = 'iiif.image.json';
 
     public function asJPEG (Request $request, Response $response, array $arguments)
     {
+        $location = $this->getLocation($arguments['objectId']);
         if ($arguments['ops'] !== 'full/full/0/default.jpg') {
             throw new NotFoundException($request, $response);
         }
         $mapper = $this->getMapper($arguments['objectId']);
         $imageUri = $mapper->getImageUri($arguments['entityId']);
+
+        $image = $this->getJPEG($imageUri, $arguments['ops']);
+
         return $response
             ->withStatus(200)
             ->withHeader('Content-Type', 'image/jpeg')
-            ->withBody(new Stream(fopen($imageUri, 'r')));
+            ->withBody($image);
+    }
+
+    public function setImageSource (ImageSource $imageSource)
+    {
+        $this->imageSource = $imageSource;
+    }
+
+    protected function getJPEG ($imageUri, $options)
+    {
+        if (!$this->imageSource) {
+            return new Stream(fopen($imageUri, 'r'));
+        }
+        return $this->imageSource->getImage($imageUri);
     }
 
     protected function getJSON (array $arguments)
