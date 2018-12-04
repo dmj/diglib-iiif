@@ -23,6 +23,8 @@
 
 namespace HAB\Diglib\API\IIIF;
 
+use Slim\Http\Stream;
+
 /**
  * Fetch stream with image data from IIPImage server.
  *
