@@ -50,13 +50,13 @@ abstract class Controller
 
     protected static $jsonRoute;
 
-    final public function __construct (Router $router, Resolver $resolver)
+    public function __construct (Router $router, Resolver $resolver)
     {
         $this->router = $router;
         $this->resolver = $resolver;
     }
 
-    final public function asJSON (Request $request, Response $response, array $arguments)
+    public function asJSON (Request $request, Response $response, array $arguments)
     {
         $ctype = $this->findRequestedEntityContentType($request, array('application/json', 'application/ld+json'));
         if (!$ctype) {
@@ -79,7 +79,7 @@ abstract class Controller
 
     abstract protected function getJSON (array $arguments);
 
-    final public function __invoke (Request $request, Response $response, array $arguments)
+    public function __invoke (Request $request, Response $response, array $arguments)
     {
         $ctype = $this->findRequestedEntityContentType($request, array('application/json', 'application/ld+json'));
         if (!$ctype) {
