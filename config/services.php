@@ -66,7 +66,5 @@ $container['IIIF.Image'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Image($router, $resolver);
-    $imageSource = new HAB\Diglib\API\IIIF\ImageSource('http://127.0.0.1:8080/fcgi-bin/iipsrv.fcgi');
-    $controller->setImageSource($imageSource);
     return $controller;
 };

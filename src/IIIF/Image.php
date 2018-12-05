@@ -30,7 +30,7 @@ use Slim\Exception\NotFoundException;
 use Slim\Http\Stream;
 
 /**
- * Provide the IIIF Image.
+ * IIIF Image Compliance Level 0 implementation.
  *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
@@ -38,40 +38,38 @@ use Slim\Http\Stream;
  */
 class Image extends Controller
 {
-    private $imageSource;
-
     protected static $jsonRoute = 'iiif.image.json';
 
     public function asJPEG (Request $request, Response $response, array $arguments)
     {
-        $location = $this->getLocation($arguments['objectId']);
-        $mapper = $this->getMapper($arguments['objectId']);
-        $imageUri = $mapper->getImageUri($arguments['entityId']);
+        if ($arguments['ops'] !== 'full/full/0/default.jpg') {
+            throw new NotFoundException($request, $response);
+        }
 
-        $image = $this->getJPEG('/host/' . $arguments['objectId'] . '/' . $imageUri, $arguments['ops']);
+        $imageUri = $this->resolveImageUri($arguments['objectId'], $arguments['entityId']);
+        if (!file_exists($imageUri) || !is_readable($imageUri)) {
+            throw new NotFoundException($request, $response);
+        }
 
+        $image = new Stream(fopen($imageUri, 'r'));
         return $response
             ->withStatus(200)
             ->withHeader('Content-Type', 'image/jpeg')
             ->withBody($image);
     }
 
-    public function setImageSource (ImageSource $imageSource)
-    {
-        $this->imageSource = $imageSource;
-    }
-
-    protected function getJPEG ($imageUri, $options)
-    {
-        if (!$this->imageSource) {
-            return new Stream(fopen($imageUri, 'r'));
-        }
-        return $this->imageSource->getImage($imageUri, $options);
-    }
-
     protected function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);
         return $mapper->getImage($arguments['entityId']);
+    }
+
+    protected function resolveImageUri ($objectId, $entityId)
+    {
+        $mapper = $this->getMapper($objectId);
+        $imageUri = $mapper->getImageUri($entityId);
+
+        // TODO: Use real URI resolver
+        return rtrim($this->getLocation($objectId), '/') . '/' . $imageUri;
     }
 }
