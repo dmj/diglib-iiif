@@ -99,7 +99,7 @@
         </xsl:choose>
       </json:string>
 
-      <xsl:variable name="techmd" select="key('techmd-by-id', key('image-by-id', mets:fptr/@FILEID)/@DMDID)"/>
+      <xsl:variable name="techmd" select="key('techmd-by-id', key('image-by-id', mets:fptr/@FILEID)/@ADMID)"/>
       <json:number key="height">
         <xsl:value-of select="$techmd//mix:imageWidth"/>
       </json:number>
