@@ -40,6 +40,6 @@ class Sequence extends Controller
     protected function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);
-        return $mapper->getSequence($arguments['entityId']);
+        return $this->encodeJSON($mapper->getSequence($arguments['entityId']));
     }
 }

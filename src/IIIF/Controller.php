@@ -62,13 +62,10 @@ abstract class Controller
         if (!$ctype) {
             return $this->createNotAcceptableResponse($response);
         }
-        $data = $this->getJSON($arguments);
-        if (!$data || !$data->documentElement) {
+
+        $payload = $this->getJSON($arguments);
+        if (!$payload) {
             throw new NotFoundException($request, $response);
-        }
-        $payload = json_encode(jsonxml2php($data->documentElement), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException(json_last_error_msg());
         }
 
         return $response
@@ -118,4 +115,14 @@ abstract class Controller
         return new Mapper\METS2IIIFv2($source);
     }
 
+    protected function encodeJSON ($data)
+    {
+        if ($data && $data->documentElement) {
+            $payload = json_encode(jsonxml2php($data->documentElement), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new RuntimeException(json_last_error_msg());
+            }
+            return $payload;
+        }
+    }
 }

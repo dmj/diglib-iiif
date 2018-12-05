@@ -61,7 +61,7 @@ class Image extends Controller
     protected function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);
-        return $mapper->getImage($arguments['entityId']);
+        return $this->encodeJSON($mapper->getImage($arguments['entityId']));
     }
 
     protected function resolveImageUri ($objectId, $entityId)

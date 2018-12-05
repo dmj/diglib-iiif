@@ -40,6 +40,6 @@ class Canvas extends Controller
     protected function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);
-        return $mapper->getCanvas($arguments['entityId']);
+        return $this->encodeJSON($mapper->getCanvas($arguments['entityId']));
     }
 }

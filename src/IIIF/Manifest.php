@@ -40,6 +40,6 @@ class Manifest extends Controller
     public function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);
-        return $mapper->getManifest();
+        return $this->encodeJSON($mapper->getManifest());
     }
 }
