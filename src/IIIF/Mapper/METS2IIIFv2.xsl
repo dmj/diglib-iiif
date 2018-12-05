@@ -140,7 +140,15 @@
         <json:string><xsl:value-of select="$imageComplianceLevel"/></json:string>
       </json:array>
       <!-- TODO: Width & Height -->
-
+      <xsl:variable name="techmd" select="key('techmd-by-id', @ADMID)"/>
+      <xsl:if test="$techmd">
+        <json:number key="height">
+          <xsl:value-of select="$techmd//mix:imageWidth"/>
+        </json:number>
+        <json:number key="width">
+          <xsl:value-of select="$techmd//mix:imageHeight"/>
+        </json:number>
+      </xsl:if>
     </json:map>
   </xsl:template>
 
