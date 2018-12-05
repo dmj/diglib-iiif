@@ -8,6 +8,7 @@
     "require": {
         "slim/slim": "^3.0",
         "hab/xml-helper": "^0.3",
-        "willdurand/negotiation": "^2.3"
+        "willdurand/negotiation": "^2.3",
+        "psr/log": "^1.1"
     }
 }
