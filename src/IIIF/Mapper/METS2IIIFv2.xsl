@@ -14,7 +14,7 @@
   <xsl:variable name="objectId" select="translate(/mets:mets/@OBJID, '/', '_')"/>
   <xsl:variable name="objectBaseUri" select="concat($serviceBaseUri, '/', $objectId)"/>
 
-  <xsl:param  name="imageComplianceLevel">http://iiif.io/api/image/2/level1.json</xsl:param>
+  <xsl:param  name="imageComplianceLevel"/>
 
   <xsl:key name="image-by-id" match="mets:fileGrp[@USE = 'MASTER']/mets:file" use="@ID"/>
   <xsl:key name="techmd-by-id" match="mets:techMD" use="@ID"/>
