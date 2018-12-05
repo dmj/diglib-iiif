@@ -52,6 +52,20 @@ class IIPImage extends Controller
         $this->iipImageUri = $iipImageUri;
     }
 
+    public function asJPEG (Request $request, Response $response, array $arguments)
+    {
+        $mapper = $this->getMapper($arguments['objectId']);
+        $imageUri = $mapper->getImageUri($arguments['entityId']);
+
+        $imageUri = sprintf('%s?IIIF=/%s/%s/%s', $this->iipImageUri, strtr($arguments['objectId'], '_', '/'), $imageUri, $arguments['ops']);
+
+        $image = new Stream(fopen($imageUri, 'r'));
+        return $response
+            ->withStatus(200)
+            ->withHeader('Content-Type', 'image/jpeg')
+            ->withBody($image);
+    }
+
     protected function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);
@@ -65,7 +79,12 @@ class IIPImage extends Controller
         }
 
         $json['@id'] = $this->router->pathFor(static::$jsonRoute, $arguments);
-        
-        return json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+        $json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new RuntimeException(json_last_error_msg());
+        }
+
+        return $json;
     }
 }
