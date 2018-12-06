@@ -23,6 +23,8 @@
 
 namespace HAB\Diglib\API\IIIF;
 
+use HAB\Diglib\API\Error;
+
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -42,13 +44,19 @@ class Image extends Controller
 
     public function asJPEG (Request $request, Response $response, array $arguments)
     {
+        $accept = array('image/jpeg');
+        $ctype = $this->findRequestedEntityContentType($request, $accept);
+        if (!$ctype) {
+            throw new Error\Http(406, array('Accept' => $accept));
+        }
+
         if ($arguments['ops'] !== 'full/full/0/default.jpg') {
-            throw new NotFoundException($request, $response);
+            throw new Error\Http(400);
         }
 
         $imageUri = $this->resolveImageUri($arguments['objectId'], $arguments['entityId']);
         if (!file_exists($imageUri) || !is_readable($imageUri)) {
-            throw new NotFoundException($request, $response);
+            throw new Error\Http(404);
         }
 
         $image = new Stream(fopen($imageUri, 'r'));

@@ -23,6 +23,8 @@
 
 namespace HAB\Diglib\API\IIIF;
 
+use HAB\Diglib\API\Error;
+
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -54,6 +56,12 @@ class IIPImage extends Controller
 
     public function asJPEG (Request $request, Response $response, array $arguments)
     {
+        $accept = array('image/jpeg');
+        $ctype = $this->findRequestedEntityContentType($request, $accept);
+        if (!$ctype) {
+            throw new Error\Http(406, array('Accept' => $accept));
+        }
+
         $mapper = $this->getMapper($arguments['objectId']);
         $imageUri = $mapper->getImageUri($arguments['entityId']);
 
