@@ -32,11 +32,11 @@ $app->get('/{objectId}/sequence/{entityId}', 'IIIF.Sequence')
     ->setName('iiif.sequence')
     ->add('IIIF.Filter');
 
-$app->get('/{objectId}/image/{entityId}/info.json', 'IIIF.Image:asJSON')
+$app->get('/{objectId}/image/{entityId}/info.json', 'IIIF.IIPImage:asJSON')
     ->setName('iiif.image.json')
     ->add('IIIF.Filter');
 
-$app->get('/{objectId}/image/{entityId}/{ops:.*}', 'IIIF.Image:asJPEG')
+$app->get('/{objectId}/image/{entityId}/{ops:.*}', 'IIIF.IIPImage:asJPEG')
     ->setName('iiif.image.data')
     ->add('IIIF.Filter');
 
