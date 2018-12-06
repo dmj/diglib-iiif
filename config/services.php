@@ -2,10 +2,7 @@
 
 $container = $app->getContainer();
 $container['errorHandler'] = function ($container) {
-    $handler = function ($req, $res, $err) {
-        $handler = new Slim\Handlers\Error();
-        return $handler($req, $res, $err);
-    };
+    $handler = new HAB\Diglib\API\Error\Handler();
     return $handler;
 };
 

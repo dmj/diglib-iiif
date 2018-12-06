@@ -34,6 +34,8 @@ use Negotiation\Negotiator;
 use DOMDocument;
 use RuntimeException;
 
+use HAB\Diglib\API\Error;
+
 use function HAB\XML\jsonxml2php;
 
 /**
@@ -58,14 +60,15 @@ abstract class Controller
 
     public function asJSON (Request $request, Response $response, array $arguments)
     {
-        $ctype = $this->findRequestedEntityContentType($request, array('application/json', 'application/ld+json'));
+        $accept = array('application/json', 'application/ld+json');
+        $ctype = $this->findRequestedEntityContentType($request, $accept);
         if (!$ctype) {
-            return $this->createNotAcceptableResponse($response);
+            throw new Error\Http(406, array('Accept' => $accept));
         }
 
         $payload = $this->getJSON($arguments);
         if (!$payload) {
-            throw new NotFoundException($request, $response);
+            throw new Error\Http(404);
         }
 
         return $response
@@ -78,9 +81,10 @@ abstract class Controller
 
     public function __invoke (Request $request, Response $response, array $arguments)
     {
-        $ctype = $this->findRequestedEntityContentType($request, array('application/json', 'application/ld+json'));
+        $accept = array('application/json', 'application/ld+json');
+        $ctype = $this->findRequestedEntityContentType($request, $accept);
         if (!$ctype) {
-            return $this->createNotAcceptableResponse($response);
+            throw new Error\Http(406, array('Accept' => $accept));
         }
         $target = $this->router->pathFor(static::$jsonRoute, $arguments);
         return $response->withRedirect($target, 303);
