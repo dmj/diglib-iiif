@@ -2,8 +2,37 @@
                xmlns:json="http://www.w3.org/2005/xpath-functions"
                xmlns:mets="http://www.loc.gov/METS/"
                xmlns:mix="http://www.loc.gov/mix/v20"
+               xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+               xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                xmlns:xlink="http://www.w3.org/1999/xlink"
                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+  <rdf:RDF>
+    <rdf:Description rdf:about="http://id.loc.gov/vocabulary/relators/own">
+      <skos:prefLabel xml:lang="de">Besitzende Einrichtung</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Holding Institution</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://id.loc.gov/vocabulary/relators/fnd">
+      <skos:prefLabel xml:lang="de">Digitalisierungsförderer</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Digitization Sponsor</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/relation">
+      <skos:prefLabel xml:lang="de">Digitalisierungsprojekt</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Digitization Project</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/rightsHolder">
+      <skos:prefLabel xml:lang="de">Rechteinhaber</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Rights Holder</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/rights">
+      <skos:prefLabel xml:lang="de">Rechte</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Rights</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/license">
+      <skos:prefLabel xml:lang="de">Lizenz</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">License</skos:prefLabel>
+    </rdf:Description>
+  </rdf:RDF>
 
   <xsl:output indent="yes"/>
 
