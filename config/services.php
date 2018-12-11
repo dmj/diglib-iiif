@@ -6,6 +6,8 @@ $container['errorHandler'] = function ($container) {
     return $handler;
 };
 
+$container['Logger'] = new Psr\Log\NullLogger();
+
 $container['IIIF.Resolver'] = function () use ($container) {
     $resolver = new HAB\Diglib\API\IIIF\Resolver();
     return $resolver;
@@ -24,7 +26,7 @@ $container['IIIF.Filter'] = function () use ($container) {
 
         $reqUri = $req->getUri();
         $serviceBaseUri = sprintf('%s://%s%s', $reqUri->getScheme(), $reqUri->getAuthority(), $router->pathFor('iiif'));
-        $router->setBasePath(rtrim($serviceBaseUri, '/')); 
+        $router->setBasePath(rtrim($serviceBaseUri, '/'));
         HAB\Diglib\API\IIIF\Mapper\METS2IIIFv2::$serviceBaseUri = rtrim($serviceBaseUri, '/');
 
         return $nxt($req, $res);
@@ -70,7 +72,17 @@ $container['IIIF.Image'] = function () use ($container) {
 $container['IIIF.IIPImage.URL'] = 'http://127.0.0.1:8080/fcgi-bin/iipsrv.fcgi';
 $container['IIIF.IIPImage'] = function () use ($container) {
     $router = $container['router'];
-    $resolver = $container['IIIF.Resolver'];    
+    $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\IIPImage($router, $resolver, $container['IIIF.IIPImage.URL']);
     return $controller;
 };
+
+$container['CORS.Middleware'] = function () use ($container) {
+    $options = array(
+        'origin' => array('*'),
+        'methods' => array('GET'),
+    );
+    return new Tuupola\Middleware\CorsMiddleware($options);
+};
+
+$app->add($container['CORS.Middleware']);
