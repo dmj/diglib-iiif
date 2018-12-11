@@ -35,6 +35,7 @@ use DOMDocument;
 use RuntimeException;
 
 use HAB\Diglib\API\Error;
+use HAB\Diglib\API\LoggerAwareTrait;
 
 use function HAB\XML\jsonxml2php;
 
@@ -47,6 +48,8 @@ use function HAB\XML\jsonxml2php;
  */
 abstract class Controller
 {
+    use LoggerAwareTrait;
+
     private $router;
     private $resolver;
 
