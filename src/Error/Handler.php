@@ -37,8 +37,21 @@ use Exception;
  */
 class Handler
 {
+    private $displayErrorDetails;
+
+    public function __construct ($displayErrorDetails = false)
+    {
+        $this->displayErrorDetails = $displayErrorDetails;
+    }
+
     public function __invoke (Request $request, Response $response, Exception $exception)
     {
+        if ($this->displayErrorDetails) {
+            $details = $exception->getTraceAsString();
+        } else {
+            $details = null;
+        }
+
         if (!$exception instanceof Http) {
             $exception = new Http(500, array(), $exception);
         }
@@ -47,7 +60,7 @@ class Handler
         }
         $response = $response->withStatus($exception->getCode());
         $response = $response->write(
-            sprintf('%03d %s', $response->getStatusCode(), $response->getReasonPhrase())
+            $details ?: sprintf('%03d %s', $response->getStatusCode(), $response->getReasonPhrase())
         );
         return $response;
     }
