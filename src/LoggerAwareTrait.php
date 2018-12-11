@@ -35,6 +35,8 @@ use Psr\Log\LoggerInterface;
  */
 trait LoggerAwareTrait
 {
+    protected $logger;
+
     public function setLogger (LoggerInterface $logger)
     {
         $this->logger = $logger;
