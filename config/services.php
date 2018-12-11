@@ -6,7 +6,11 @@ $container['errorHandler'] = function ($container) {
     return $handler;
 };
 
-$container['Logger'] = new Psr\Log\NullLogger();
+$container['Logger'] = function () use ($container) {
+    $logger = new Monolog\Logger('diglib-iiif');
+    $logger->pushHandler(new Monolog\Handler\StreamHandler('php://stderr', Monolog\Logger::INFO));
+    return $logger;
+};
 
 $container['IIIF.Resolver'] = function () use ($container) {
     $baseDirectory = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'examples';
