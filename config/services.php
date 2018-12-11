@@ -9,7 +9,8 @@ $container['errorHandler'] = function ($container) {
 $container['Logger'] = new Psr\Log\NullLogger();
 
 $container['IIIF.Resolver'] = function () use ($container) {
-    $resolver = new HAB\Diglib\API\IIIF\Resolver();
+    $baseDirectory = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'examples';
+    $resolver = new HAB\Diglib\API\IIIF\Resolver($baseDirectory);
     return $resolver;
 };
 $container['IIIF.Filter'] = function () use ($container) {

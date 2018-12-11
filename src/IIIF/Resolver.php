@@ -32,8 +32,17 @@ namespace HAB\Diglib\API\IIIF;
  */
 class Resolver
 {
+    private $baseDirectory;
+
+    public function __construct ($baseDirectory)
+    {
+        $this->baseDirectory = $baseDirectory;
+    }
+
     public function resolve ($objectId)
     {
-        return __DIR__ . '/../../examples/' . $objectId;
+        $objectId = strtr($objectId, '_', DIRECTORY_SEPARATOR);
+        $objectLocation = $this->baseDirectory . DIRECTORY_SEPARATOR . $objectId;
+        return realpath($objectLocation);
     }
 }
