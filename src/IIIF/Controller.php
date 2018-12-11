@@ -99,11 +99,6 @@ abstract class Controller
         return $neg->getBest(implode($request->getHeader('Accept')), $priorities);
     }
 
-    protected function createNotAcceptableResponse (Response $response)
-    {
-        return $response->withStatus(406)->write('<h1>406 Not Acceptable</h1>');
-    }
-
     protected function getLocation ($objectId)
     {
         return $this->resolver->resolve($objectId);
