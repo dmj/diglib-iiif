@@ -94,6 +94,7 @@ $container['CORS.Middleware'] = function () use ($container) {
     $options = array(
         'origin' => array('*'),
         'methods' => array('GET'),
+        'logger' => $container['Logger'],
     );
     return new Tuupola\Middleware\CorsMiddleware($options);
 };
