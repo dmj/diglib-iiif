@@ -45,6 +45,7 @@ $container['IIIF.Manifest'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Manifest($router, $resolver);
+    $controller->setLogger($container['Logger']);
     return $controller;
 };
 
@@ -52,6 +53,7 @@ $container['IIIF.Canvas'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Canvas($router, $resolver);
+    $controller->setLogger($container['Logger']);
     return $controller;
 };
 
@@ -59,6 +61,7 @@ $container['IIIF.Annotation'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Annotation($router, $resolver);
+    $controller->setLogger($container['Logger']);
     return $controller;
 };
 
@@ -66,6 +69,7 @@ $container['IIIF.Sequence'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Sequence($router, $resolver);
+    $controller->setLogger($container['Logger']);
     return $controller;
 };
 
@@ -73,6 +77,7 @@ $container['IIIF.Image'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\Image($router, $resolver);
+    $controller->setLogger($container['Logger']);
     return $controller;
 };
 
@@ -81,6 +86,7 @@ $container['IIIF.IIPImage'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
     $controller = new HAB\Diglib\API\IIIF\IIPImage($router, $resolver, $container['IIIF.IIPImage.URL']);
+    $controller->setLogger($container['Logger']);
     return $controller;
 };
 
