@@ -1,5 +1,8 @@
 <xsl:transform version="1.0"
+               xmlns:dct="http://purl.org/dc/terms/"
+               xmlns:foaf="http://xmlns.com/foaf/0.1/"
                xmlns:json="http://www.w3.org/2005/xpath-functions"
+               xmlns:marcrel="http://id.loc.gov/vocabulary/relators/"
                xmlns:mets="http://www.loc.gov/METS/"
                xmlns:mix="http://www.loc.gov/mix/v20"
                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -96,6 +99,31 @@
       </xsl:call-template>
       <json:string key="value"><xsl:value-of select="substring-before(@LABEL, ',')"/></json:string>
     </json:map>
+
+    <xsl:variable name="rightsMD" select="mets:amdSec/mets:rightsMD[@ID = /mets:mets/mets:fileSec/mets:fileGrp[@USE = 'MASTER']/@ADMID]/mets:mdWrap/mets:xmlData/rdf:Description"/>
+    <xsl:if test="$rightsMD">
+
+      <!-- Digitization Project -->
+      <xsl:if test="$rightsMD/dct:relation/foaf:Project">
+        <json:map>
+          <xsl:call-template  name="metadata-label">
+            <xsl:with-param name="property">http://purl.org/dc/terms/relation</xsl:with-param>
+          </xsl:call-template>
+          <json:string key="value"><xsl:value-of select="normalize-space($rightsMD/dct:relation/foaf:Project/skos:prefLabel)"/></json:string>
+        </json:map>
+      </xsl:if>
+
+      <!-- Digitization Sponsor -->
+      <xsl:if test="$rightsMD/marcrel:fnd/dct:Agent">
+        <json:map>
+          <xsl:call-template  name="metadata-label">
+            <xsl:with-param name="property">http://id.loc.gov/vocabulary/relators/fnd</xsl:with-param>
+          </xsl:call-template>
+          <json:string key="value"><xsl:value-of select="normalize-space($rightsMD/marcrel:fnd/dct:Agent/skos:prefLabel)"/></json:string>
+        </json:map>
+      </xsl:if>
+
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="metadata-label">

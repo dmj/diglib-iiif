@@ -44,11 +44,6 @@
                 <skos:prefLabel>Deutsche Forschungsgesellschaft (DFG)</skos:prefLabel>
               </dct:Agent>
             </marcrel:fnd>
-            <dct:rightsHolder>
-              <dct:Agent>
-                <skos:prefLabel>HAB Wolfenbüttel</skos:prefLabel>
-              </dct:Agent>
-            </dct:rightsHolder>
           </rdf:Description>
         </xmlData>
       </mdWrap>
