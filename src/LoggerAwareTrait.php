@@ -23,6 +23,7 @@
 
 namespace HAB\Diglib\API;
 
+use Psr\Log\NullLogger;
 use Psr\Log\LoggerInterface;
 
 /**
