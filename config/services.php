@@ -3,6 +3,7 @@
 $container = $app->getContainer();
 $container['errorHandler'] = function ($container) {
     $handler = new HAB\Diglib\API\Error\Handler();
+    $handler->setLogger($container['Logger']);
     return $handler;
 };
 
@@ -15,6 +16,7 @@ $container['Logger'] = function () use ($container) {
 $container['IIIF.Resolver'] = function () use ($container) {
     $baseDirectory = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'examples';
     $resolver = new HAB\Diglib\API\IIIF\Resolver($baseDirectory);
+    $resolver->setLogger($container['Logger']);
     return $resolver;
 };
 $container['IIIF.Filter'] = function () use ($container) {

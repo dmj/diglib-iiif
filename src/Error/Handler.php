@@ -26,6 +26,8 @@ namespace HAB\Diglib\API\Error;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+use HAB\Diglib\API\LoggerAwareTrait;
+
 use Exception;
 
 /**
@@ -37,6 +39,8 @@ use Exception;
  */
 class Handler
 {
+    use LoggerAwareTrait;
+
     private $displayErrorDetails;
 
     public function __construct ($displayErrorDetails = false)
@@ -46,11 +50,8 @@ class Handler
 
     public function __invoke (Request $request, Response $response, Exception $exception)
     {
-        if ($this->displayErrorDetails) {
-            $details = $exception->getTraceAsString();
-        } else {
-            $details = null;
-        }
+        $details = $exception->getTraceAsString();
+        $this->log('critical', $details);
 
         if (!$exception instanceof Http) {
             $exception = new Http(500, array(), $exception);
@@ -60,7 +61,7 @@ class Handler
         }
         $response = $response->withStatus($exception->getCode());
         $response = $response->write(
-            $details ?: sprintf('%03d %s', $response->getStatusCode(), $response->getReasonPhrase())
+            $this->displayErrorDetails ? $details : sprintf('%03d %s', $response->getStatusCode(), $response->getReasonPhrase())
         );
         return $response;
     }
