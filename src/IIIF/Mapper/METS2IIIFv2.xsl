@@ -88,13 +88,52 @@
     <xsl:apply-templates select="key('image-by-id', $entityId)" mode="imageAPI"/>
   </xsl:template>
 
+  <xsl:template name="manifest-metadata">
+    <!-- Holding Institution -->
+    <json:map>
+      <xsl:call-template name="metadata-label">
+        <xsl:with-param name="property">http://id.loc.gov/vocabulary/relators/own</xsl:with-param>
+      </xsl:call-template>
+      <json:string key="value"><xsl:value-of select="substring-before(@LABEL, ',')"/></json:string>
+    </json:map>
+  </xsl:template>
+
+  <xsl:template name="metadata-label">
+    <xsl:param name="property"/>
+    <xsl:choose>
+      <xsl:when test="document('')/xsl:transform/rdf:RDF/rdf:Description[@rdf:about = $property]">
+        <xsl:choose>
+          <xsl:when test="count(document('')/xsl:transform/rdf:RDF/rdf:Description[@rdf:about = $property]/skos:prefLabel) > 1">
+            <json:array key="label">
+              <xsl:for-each select="document('')/xsl:transform/rdf:RDF/rdf:Description[@rdf:about = $property]/skos:prefLabel">
+                <json:map>
+                  <json:string key="@language"><xsl:value-of select="@xml:lang"/></json:string>
+                  <json:string key="@value"><xsl:value-of select="normalize-space()"/></json:string>
+                </json:map>
+              </xsl:for-each>
+            </json:array>
+          </xsl:when>
+          <xsl:otherwise>
+            <json:string key="label"><xsl:value-of select="normalize-space(document('')/xsl:transform/rdf:RDF/rdf:Description[@rdf:about = $property]/skos:prefLabel)"/></json:string>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <json:string key="label"><xsl:value-of select="$property"/></json:string>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
   <xsl:template match="mets:mets">
     <json:map>
       <json:string key="@id"><xsl:value-of select="concat($objectBaseUri, '/manifest')"/></json:string>
       <json:string key="@type">sc:Manifest</json:string>
       <json:string key="@context">http://iiif.io/api/presentation/2/context.json</json:string>
       <json:string key="label"><xsl:value-of select="@LABEL"/></json:string>
-      <!-- TODO: Metadata -->
+
+      <json:array key="metadata">
+        <xsl:call-template name="manifest-metadata"/>
+      </json:array>
 
       <json:array key="sequences">
         <xsl:apply-templates select="mets:structMap[@TYPE = 'PHYSICAL']"/>
