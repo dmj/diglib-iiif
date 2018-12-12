@@ -96,7 +96,8 @@ abstract class Controller
     protected function findRequestedEntityContentType (Request $request, $priorities)
     {
         $neg = new Negotiator();
-        return $neg->getBest(implode($request->getHeader('Accept')), $priorities);
+        $accept = implode($request->getHeader('Accept')) ?: '*/*';
+        return $neg->getBest($accept, $priorities);
     }
 
     protected function getLocation ($objectId)
