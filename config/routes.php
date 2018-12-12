@@ -32,11 +32,11 @@ $app->get('/iiif/{objectId}/sequence/{entityId}', 'IIIF.Sequence')
     ->setName('iiif.sequence')
     ->add('IIIF.Filter');
 
-$app->get('/iiif/{objectId}/image/{entityId}/info.json', 'IIIF.IIPImage:asJSON')
+$app->get('/iiif/{objectId}/image/{entityId}/info.json', 'IIIF.Image:asJSON')
     ->setName('iiif.image.json')
     ->add('IIIF.Filter');
 
-$app->get('/iiif/{objectId}/image/{entityId}/{ops:.*}', 'IIIF.IIPImage:asJPEG')
+$app->get('/iiif/{objectId}/image/{entityId}/{ops:.*}', 'IIIF.Image:asJPEG')
     ->setName('iiif.image.data')
     ->add('IIIF.Filter');
 
@@ -44,6 +44,6 @@ $app->get('/iiif/{objectId}/image/{entityId}', 'IIIF.Image')
     ->setName('iiif.image')
     ->add('IIIF.Filter');
 
-$app->get('/', function ($req, $res, $args) {
+$app->get('/iiif/', function ($req, $res, $args) {
     return $res->write('Nothing to see here...');
 })->setName('iiif');
