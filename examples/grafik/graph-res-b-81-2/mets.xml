@@ -53,10 +53,10 @@
   <fileSec>
     <fileGrp USE="MASTER" ADMID="rightsMD.1">
       <file ID="file.1" MIMETYPE="image/jp2" ADMID="techMD.1">
-        <FLocat LOCTYPE="URL" xlink:href="000001.jp2"/>
+        <FLocat LOCTYPE="URL" xlink:href="000001.jpg"/>
       </file>
       <file ID="file.2" MIMETYPE="image/jpeg" ADMID="techMD.1">
-        <FLocat LOCTYPE="URL" xlink:href="000001.jpg"/>
+        <FLocat LOCTYPE="URL" xlink:href="000001.jp2"/>
       </file>
     </fileGrp>
   </fileSec>
