@@ -32,8 +32,10 @@ $container['IIIF.Filter'] = function () use ($container) {
         }
 
         $reqUri = $req->getUri();
-        $serviceBaseUri = sprintf('%s://%s%s', $reqUri->getScheme(), $reqUri->getAuthority(), $router->pathFor('iiif'));
-        $router->setBasePath(rtrim($serviceBaseUri, '/'));
+        $basePath = sprintf('%s://%s', $reqUri->getScheme(), $reqUri->getAuthority());
+        $router->setBasePath(rtrim($basePath, '/'));
+
+        $serviceBaseUri = $router->pathFor('iiif');
         HAB\Diglib\API\IIIF\Mapper\METS2IIIFv2::$serviceBaseUri = rtrim($serviceBaseUri, '/');
 
         return $nxt($req, $res);
