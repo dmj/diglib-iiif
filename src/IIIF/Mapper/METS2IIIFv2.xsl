@@ -92,38 +92,42 @@
   </xsl:template>
 
   <xsl:template name="manifest-metadata">
-    <!-- Holding Institution -->
-    <json:map>
-      <xsl:call-template name="metadata-label">
-        <xsl:with-param name="property">http://id.loc.gov/vocabulary/relators/own</xsl:with-param>
-      </xsl:call-template>
-      <json:string key="value"><xsl:value-of select="substring-before(@LABEL, ',')"/></json:string>
-    </json:map>
-
     <xsl:variable name="rightsMD" select="mets:amdSec/mets:rightsMD[@ID = /mets:mets/mets:fileSec/mets:fileGrp[@USE = 'MASTER']/@ADMID]/mets:mdWrap/mets:xmlData/rdf:Description"/>
-    <xsl:if test="$rightsMD">
 
-      <!-- Digitization Project -->
-      <xsl:if test="$rightsMD/dct:relation/foaf:Project">
-        <json:map>
-          <xsl:call-template  name="metadata-label">
-            <xsl:with-param name="property">http://purl.org/dc/terms/relation</xsl:with-param>
-          </xsl:call-template>
-          <json:string key="value"><xsl:value-of select="normalize-space($rightsMD/dct:relation/foaf:Project/skos:prefLabel)"/></json:string>
-        </json:map>
+    <json:array key="metadata">
+
+      <!-- Holding Institution -->
+      <json:map>
+        <xsl:call-template name="metadata-label">
+          <xsl:with-param name="property">http://id.loc.gov/vocabulary/relators/own</xsl:with-param>
+        </xsl:call-template>
+        <json:string key="value"><xsl:value-of select="substring-before(@LABEL, ',')"/></json:string>
+      </json:map>
+
+      <xsl:if test="$rightsMD">
+
+        <!-- Digitization Project -->
+        <xsl:if test="$rightsMD/dct:relation/foaf:Project">
+          <json:map>
+            <xsl:call-template  name="metadata-label">
+              <xsl:with-param name="property">http://purl.org/dc/terms/relation</xsl:with-param>
+            </xsl:call-template>
+            <json:string key="value"><xsl:value-of select="normalize-space($rightsMD/dct:relation/foaf:Project/skos:prefLabel)"/></json:string>
+          </json:map>
+        </xsl:if>
+
+        <!-- Digitization Sponsor -->
+        <xsl:if test="$rightsMD/marcrel:fnd/dct:Agent">
+          <json:map>
+            <xsl:call-template  name="metadata-label">
+              <xsl:with-param name="property">http://id.loc.gov/vocabulary/relators/fnd</xsl:with-param>
+            </xsl:call-template>
+            <json:string key="value"><xsl:value-of select="normalize-space($rightsMD/marcrel:fnd/dct:Agent/skos:prefLabel)"/></json:string>
+          </json:map>
+        </xsl:if>
+
       </xsl:if>
-
-      <!-- Digitization Sponsor -->
-      <xsl:if test="$rightsMD/marcrel:fnd/dct:Agent">
-        <json:map>
-          <xsl:call-template  name="metadata-label">
-            <xsl:with-param name="property">http://id.loc.gov/vocabulary/relators/fnd</xsl:with-param>
-          </xsl:call-template>
-          <json:string key="value"><xsl:value-of select="normalize-space($rightsMD/marcrel:fnd/dct:Agent/skos:prefLabel)"/></json:string>
-        </json:map>
-      </xsl:if>
-
-    </xsl:if>
+    </json:array>
   </xsl:template>
 
   <xsl:template name="metadata-label">
@@ -159,9 +163,7 @@
       <json:string key="@context">http://iiif.io/api/presentation/2/context.json</json:string>
       <json:string key="label"><xsl:value-of select="@LABEL"/></json:string>
 
-      <json:array key="metadata">
-        <xsl:call-template name="manifest-metadata"/>
-      </json:array>
+      <xsl:call-template name="manifest-metadata"/>
 
       <json:array key="sequences">
         <xsl:apply-templates select="mets:structMap[@TYPE = 'PHYSICAL']"/>
