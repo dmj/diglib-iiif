@@ -28,11 +28,10 @@ use HAB\Diglib\API\Error;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-use Slim\Exception\NotFoundException;
 use Slim\Http\Stream;
 
 /**
- * IIIF Image Compliance Level 0 implementation.
+ * IIIF Image API implementation.
  *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
@@ -42,6 +41,8 @@ class Image extends Controller
 {
     protected static $jsonRoute = 'iiif.image.json';
 
+    private $imageCompliance;
+
     public function asJPEG (Request $request, Response $response, array $arguments)
     {
         $accept = array('image/jpeg');
@@ -50,20 +51,20 @@ class Image extends Controller
             throw new Error\Http(406, array('Accept' => $accept));
         }
 
-        if ($arguments['ops'] !== 'full/full/0/default.jpg') {
-            throw new Error\Http(400);
-        }
-
         $imageUri = $this->resolveImageUri($arguments['objectId'], $arguments['entityId']);
         if (!file_exists($imageUri) || !is_readable($imageUri)) {
             throw new Error\Http(404);
         }
 
-        $image = new Stream(fopen($imageUri, 'r'));
+        $image = $this->getImageCompliance()->getImageStream($imageUri, $arguments['ops']);
+        if (!is_resource($image)) {
+            throw new RuntimeException();
+        }
+
         return $response
             ->withStatus(200)
             ->withHeader('Content-Type', 'image/jpeg')
-            ->withBody($image);
+            ->withBody(new Stream($image));
     }
 
     protected function getJSON (array $arguments)
@@ -79,5 +80,18 @@ class Image extends Controller
 
         // TODO: Use real URI resolver
         return rtrim($this->getLocation($objectId), '/') . '/' . $imageUri;
+    }
+
+    public function getImageCompliance ()
+    {
+        if (!$this->imageCompliance) {
+            $this->setImageCompliance(new ImageCompliance\Level0());
+        }
+        return $this->imageCompliance;
+    }
+
+    public function setImageCompliance (ImageCompliance\ImageCompliance $imageCompliance)
+    {
+        $this->imageCompliance = $imageCompliance;
     }
 }
