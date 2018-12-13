@@ -38,7 +38,7 @@ use HAB\XML\Transformation;
 class METS2IIIFv2
 {
     public static $serviceBaseUri;
-    public static $imageComplianceLevel = 'http://iiif.io/api/image/2/level0.json';
+    public static $imageComplianceLevel = 'http://iiif.io/api/image/2/level1.json';
 
     private $source;
 
