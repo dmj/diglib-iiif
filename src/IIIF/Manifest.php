@@ -26,6 +26,8 @@ namespace HAB\Diglib\API\IIIF;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+use RuntimeException;
+
 /**
  * Provide the IIIF Manifest.
  *
