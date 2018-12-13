@@ -94,6 +94,21 @@
   <xsl:template name="manifest-metadata">
     <xsl:variable name="rightsMD" select="mets:amdSec/mets:rightsMD[@ID = /mets:mets/mets:fileSec/mets:fileGrp[@USE = 'MASTER']/@ADMID]/mets:mdWrap/mets:xmlData/rdf:Description"/>
 
+    <xsl:if test="$rightsMD/dct:rightsHolder/dct:Agent | $rightsMD/dct:license/dct:LicenseDocument">
+      <json:string key="attribution">
+        <xsl:value-of select="normalize-space($rightsMD/dct:rightsHolder/dct:Agent/skos:prefLabel)"/>
+        <xsl:if test="$rightsMD/dct:license/dct:LicenseDocument">
+          <xsl:value-of select="concat(', ', $rightsMD/dct:license/dct:LicenseDocument/skos:prefLabel)"/>
+        </xsl:if>
+      </json:string>
+    </xsl:if>
+
+    <xsl:if test="$rightsMD/dct:license/dct:LicenseDocument/foaf:homepage">
+      <json:string key="license">
+        <xsl:value-of select="$rightsMD/dct:license/dct:LicenseDocument/foaf:homepage/@rdf:resource"/>
+      </json:string>
+    </xsl:if>
+
     <json:array key="metadata">
 
       <!-- Holding Institution -->
