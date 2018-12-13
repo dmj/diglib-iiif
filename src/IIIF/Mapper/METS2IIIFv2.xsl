@@ -244,6 +244,16 @@
         <json:number key="width">
           <xsl:value-of select="$techmd//mix:imageHeight"/>
         </json:number>
+        <json:array key="sizes">
+          <json:map>
+            <json:number key="height">
+              <xsl:value-of select="$techmd//mix:imageWidth"/>
+            </json:number>
+            <json:number key="width">
+              <xsl:value-of select="$techmd//mix:imageHeight"/>
+            </json:number>
+          </json:map>
+        </json:array>
       </xsl:if>
     </json:map>
   </xsl:template>
