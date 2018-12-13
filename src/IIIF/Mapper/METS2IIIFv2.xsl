@@ -272,10 +272,10 @@
   <xsl:template name="insert-canvas-size">
     <xsl:variable name="techmd" select="key('techmd-by-id', @ADMID)"/>
     <xsl:if test="$techmd">
-      <json:number key="height">
+      <json:number key="width">
         <xsl:value-of select="$techmd//mix:imageWidth"/>
       </json:number>
-      <json:number key="width">
+      <json:number key="height">
         <xsl:value-of select="$techmd//mix:imageHeight"/>
       </json:number>
     </xsl:if>
