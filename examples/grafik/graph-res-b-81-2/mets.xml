@@ -44,6 +44,17 @@
                 <skos:prefLabel>Deutsche Forschungsgesellschaft (DFG)</skos:prefLabel>
               </dct:Agent>
             </marcrel:fnd>
+            <dct:rightsHolder>
+              <dct:Agent>
+                <skos:prefLabel>Herzog August Bibliothek Wolfenbüttel</skos:prefLabel>
+              </dct:Agent>
+            </dct:rightsHolder>
+            <dct:license>
+              <dct:LicenseDocument>
+                <foaf:homepage rdf:resource="http://diglib.hab.de?link=012"/>
+                <skos:prefLabel>CC BY SA 3.0 Deutschland</skos:prefLabel>
+              </dct:LicenseDocument>
+            </dct:license>
           </rdf:Description>
         </xmlData>
       </mdWrap>
