@@ -50,71 +50,96 @@ class Level1 implements ImageCompliance
             throw new Error\Http(400);
         }
 
-        if ($imageParameters[3] != 'default.jpg') {
-            $this->log('warning', sprintf('Invalid image quality and format: "%s"', $imageParameters[3]));
-            throw new Error\Http(400);
-        }
-
-        if ($imageParameters[2] != '0') {
-            $this->log('warning', sprintf('Invalid image rotation: "%s"', $imageParameters[2]));
-            throw new Error\Http(400);
-        }
-
         $imageinfo = getimagesize($imageUri);
-        if ($imageParameters[1] == 'full') {
-            $sizeTransform = function ($image) { return $image; };
-        } else if (preg_match('@^(?<w>[0-9]+),$@u', $imageParameters[1], $match)) {
-            $width = $match['w'];
-            $height = round($imageinfo[1] * ($width / $imageinfo[0]));
-            $sizeTransform = function ($image) use ($width, $height) {
-                return imagescale($image, $width, $height);
-            };
-        } else if (preg_match('@^,(?<h>[0-9]+)$@u', $imageParameters[1], $match)) {
-            $height = $match['h'];
-            $width = round($imageinfo[0] * ($height / $imageinfo[1]));
-            $sizeTransform = function ($image) use ($width, $height) {
-                return imagescale($image, $width, $height);
-            };
-        } else if (preg_match('@^pct:(?<n>[0-9]+)$@u', $imageParameters[1], $match)) {
-            $pct = $match['n'] / 100;
-            $width = round($imageinfo[0] * $pct);
-            $height = round($imageinfo[1] * $pct);
-            $sizeTransform = function ($image) use ($width, $height) {
-                return imagescale($image, $width, $height);
-            };
-        } else {
-            $this->log('warning', sprintf('Invalid image size: "%s"', $imageParameters[1]));
-            throw new Error\Http(400);
-        }
-
-        if ($imageParameters[0] == 'full') {
-            $regionTransform = function ($image) { return $image; };
-        } else if (preg_match('@^(?<x>[0-9]+),(?<y>[0-9]+),(?<width>[0-9]+),(?<height>[0-9]+)$@u', $imageParameters[0], $match)) {
-            $rect = $match;
-            $regionTransform = function ($image) use ($rect) {
-                return imagecrop($image, $rect);
-            };
-        } else {
-            $this->log('warning', sprintf('Invalid image region: "%s"', $imageParameters[0]));
-            throw new Error\Http(400);
-        }
+        $transformations = array();
+        $transformations []= $this->createRegionTransform($imageParameters[0]);
+        $transformations []= $this->createSizeTransform($imageParameters[1], $imageinfo[0], $imageinfo[1]);
+        $transformations []= $this->createRotationTransform($imageParameters[2]);
+        $transformations []= $this->createFormatTransform($imageParameters[3]);
 
         $image = imagecreatefromjpeg($imageUri);
         if (!is_resource($image)) {
             throw new RuntimeException();
         }
-        $image = $regionTransform($image);
-        if (!is_resource($image)) {
-            throw new RuntimeException();
-        }
-        $image = $sizeTransform($image);
-        if (!is_resource($image)) {
-            throw new RuntimeException();
+
+        foreach ($transformations as $transformation) {
+            $image = $transformation($image);
+            if (!is_resource($image)) {
+                throw new RuntimeException();
+            }
         }
 
-        $out = fopen('php://temp', 'rw');
-        imagejpeg($image, $out);
-        rewind($out);
-        return $out;
+        $outbuf = fopen('php://temp', 'rw');
+        imagejpeg($image, $outbuf);
+        rewind($outbuf);
+        return $outbuf;
     }
+
+    protected function createFormatTransform ($spec)
+    {
+        if ($spec != 'default.jpg') {
+            $this->log('warning', sprintf('Invalid image quality and format: "%s"', $spec));
+            throw new Error\Http(400);
+        }
+        return array($this, 'identity');
+    }
+
+    protected function createRotationTransform ($spec)
+    {
+        if ($spec != '0') {
+            $this->log('warning', sprintf('Invalid image rotation: "%s"', $spec));
+            throw new Error\Http(400);
+        }
+        return array($this, 'identity');
+    }
+
+    protected function createRegionTransform ($spec)
+    {
+        if ($spec == 'full') {
+            return array($this, 'identity');
+        } else if (preg_match('@^(?<x>[0-9]+),(?<y>[0-9]+),(?<width>[0-9]+),(?<height>[0-9]+)$@u', $spec, $match)) {
+            $rect = $match;
+            return function ($image) use ($rect) {
+                return imagecrop($image, $rect);
+            };
+        } else {
+            $this->log('warning', sprintf('Invalid image region: "%s"', $spec));
+            throw new Error\Http(400);
+        }
+    }
+
+    protected function createSizeTransform ($spec, $sourceWidth, $sourceHeight)
+    {
+        if ($spec == 'full') {
+            return array($this, 'identity');
+        } else if (preg_match('@^(?<w>[0-9]+),$@u', $spec, $match)) {
+            $width = $match['w'];
+            $height = round($sourceHeight * ($width / $sourceWidth));
+            return function ($image) use ($width, $height) {
+                return imagescale($image, $width, $height);
+            };
+        } else if (preg_match('@^,(?<h>[0-9]+)$@u', $spec, $match)) {
+            $height = $match['h'];
+            $width = round($sourceWidth * ($height / $sourceHeight));
+            return function ($image) use ($width, $height) {
+                return imagescale($image, $width, $height);
+            };
+        } else if (preg_match('@^pct:(?<n>[0-9]+)$@u', $spec, $match)) {
+            $pct = $match['n'] / 100;
+            $width = round($sourceWidth * $pct);
+            $height = round($sourceHeight * $pct);
+            return function ($image) use ($width, $height) {
+                return imagescale($image, $width, $height);
+            };
+        } else {
+            $this->log('warning', sprintf('Invalid image size: "%s"', $spec));
+            throw new Error\Http(400);
+        }
+    }
+
+    public function identity ($argument)
+    {
+        return $argument;
+    }
+
 }
