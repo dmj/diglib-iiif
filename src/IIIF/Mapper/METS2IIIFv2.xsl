@@ -235,26 +235,14 @@
       <json:array key="profile">
         <json:string><xsl:value-of select="$imageComplianceLevel"/></json:string>
       </json:array>
-      <!-- TODO: Width & Height -->
-      <xsl:variable name="techmd" select="key('techmd-by-id', @ADMID)"/>
-      <xsl:if test="$techmd">
-        <json:number key="height">
-          <xsl:value-of select="$techmd//mix:imageWidth"/>
-        </json:number>
-        <json:number key="width">
-          <xsl:value-of select="$techmd//mix:imageHeight"/>
-        </json:number>
-        <json:array key="sizes">
-          <json:map>
-            <json:number key="height">
-              <xsl:value-of select="$techmd//mix:imageWidth"/>
-            </json:number>
-            <json:number key="width">
-              <xsl:value-of select="$techmd//mix:imageHeight"/>
-            </json:number>
-          </json:map>
-        </json:array>
-      </xsl:if>
+
+      <xsl:call-template name="insert-canvas-size"/>
+      <json:array key="sizes">
+        <json:map>
+          <xsl:call-template name="insert-canvas-size"/>
+        </json:map>
+      </json:array>
+
     </json:map>
   </xsl:template>
 
@@ -271,12 +259,25 @@
     </json:string>
     <json:string key="@type">dctypes:Image</json:string>
     <json:string key="format">image/jpeg</json:string>
+    <xsl:call-template name="insert-canvas-size"/>
     <xsl:if test="$imageComplianceLevel">
       <json:map key="service">
         <json:string key="@context">http://iiif.io/api/image/2/context.json</json:string>
         <json:string key="@id"><xsl:value-of select="concat($objectBaseUri, '/image/', @ID)"/></json:string>
         <json:string key="profile"><xsl:value-of select="$imageComplianceLevel"/></json:string>
       </json:map>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="insert-canvas-size">
+    <xsl:variable name="techmd" select="key('techmd-by-id', @ADMID)"/>
+    <xsl:if test="$techmd">
+      <json:number key="height">
+        <xsl:value-of select="$techmd//mix:imageWidth"/>
+      </json:number>
+      <json:number key="width">
+        <xsl:value-of select="$techmd//mix:imageHeight"/>
+      </json:number>
     </xsl:if>
   </xsl:template>
 
