@@ -50,19 +50,26 @@ class Handler
 
     public function __invoke (Request $request, Response $response, Exception $exception)
     {
-        $details = $exception->getTraceAsString();
-        $this->log('critical', $details);
-
         if (!$exception instanceof Http) {
+            $details = $exception->getTraceAsString();
+            $message = $exception->getMessage();
+            $this->log('critical', $message . PHP_EOL . $details);
             $exception = new Http(500, array(), $exception);
         }
+
         foreach ($exception->getHeaders() as $name => $value) {
             $response = $response->withHeader($name, $value);
         }
         $response = $response->withStatus($exception->getCode());
-        $response = $response->write(
-            $this->displayErrorDetails ? $details : sprintf('%03d %s', $response->getStatusCode(), $response->getReasonPhrase())
-        );
+        $message = sprintf('%03d %s', $response->getStatusCode(), $response->getReasonPhrase());
+        $this->log('info', $message);
+
+        if ($this->displayErrorDetails) {
+            $response = $response->write($details);
+        } else {
+            $response = $response->write($message);
+        }
+
         return $response;
     }
 }
