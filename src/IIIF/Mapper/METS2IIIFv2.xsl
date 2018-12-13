@@ -35,6 +35,18 @@
       <skos:prefLabel xml:lang="de">Lizenz</skos:prefLabel>
       <skos:prefLabel xml:lang="en">License</skos:prefLabel>
     </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/elements/1.1/identifier">
+      <skos:prefLabel xml:lang="de">Signatur</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Shelfmark</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/created">
+      <skos:prefLabel xml:lang="de">Datensatz angelegt</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Record Created</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/modified">
+      <skos:prefLabel xml:lang="de">Datensatz aktualisiert</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Record Modified</skos:prefLabel>
+    </rdf:Description>
   </rdf:RDF>
 
   <xsl:output indent="yes"/>
@@ -119,6 +131,14 @@
         <json:string key="value"><xsl:value-of select="substring-before(@LABEL, ',')"/></json:string>
       </json:map>
 
+      <!-- Shelfmark -->
+      <json:map>
+        <xsl:call-template name="metadata-label">
+          <xsl:with-param name="property">http://purl.org/dc/elements/1.1/identifier</xsl:with-param>
+        </xsl:call-template>
+        <json:string key="value"><xsl:value-of select="substring-after(@LABEL, ',')"/></json:string>
+      </json:map>
+
       <xsl:if test="$rightsMD">
 
         <!-- Digitization Project -->
@@ -142,6 +162,27 @@
         </xsl:if>
 
       </xsl:if>
+
+      <!-- Record created -->
+      <xsl:if test="mets:metsHdr/@CREATEDATE">
+        <json:map>
+          <xsl:call-template name="metadata-label">
+            <xsl:with-param name="property">http://purl.org/dc/terms/created</xsl:with-param>
+          </xsl:call-template>
+          <json:string key="value"><xsl:value-of select="mets:metsHdr/@CREATEDATE"/></json:string>
+        </json:map>
+      </xsl:if>
+
+      <!-- Record modified -->
+      <xsl:if test="mets:metsHdr/@LASTMODDATE">
+        <json:map>
+          <xsl:call-template name="metadata-label">
+            <xsl:with-param name="property">http://purl.org/dc/terms/modified</xsl:with-param>
+          </xsl:call-template>
+          <json:string key="value"><xsl:value-of select="mets:metsHdr/@LASTMODDATE"/></json:string>
+        </json:map>
+      </xsl:if>
+
     </json:array>
   </xsl:template>
 
