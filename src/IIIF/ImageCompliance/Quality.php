@@ -45,8 +45,26 @@ class Quality implements Feature
 
     public function createTransform ($spec)
     {
-        if ($spec == 'default') {
+        if ($spec == 'default' || $spec == 'color') {
             return null;
+        }
+        if ($this->features & Quality::gray) {
+            if ($spec == 'gray') {
+                return function ($image) {
+                    if (imagefilter($image, IMG_FILTER_GRAYSCALE)) {
+                        return $image;
+                    }
+                };
+            }
+        }
+        if ($this->features & Quality::bitonal) {
+            if ($spec == 'bitonal') {
+                return function ($image) {
+                    if (imagefilter($image, IMG_FILTER_GRAYSCALE) && imagefilter($image, IMG_FILTER_CONTRAST, -100)) {
+                        return $image;
+                    }
+                };
+            }
         }
         throw new UnsupportedFeature(sprintf('Unsupported image quality request: %s', $spec));
     }
