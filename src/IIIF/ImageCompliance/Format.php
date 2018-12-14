@@ -46,7 +46,16 @@ class Format implements Feature
     public function createTransform ($spec)
     {
         if ($spec == 'jpg') {
-            return null;
+            return function ($image, $buffer) {
+                return imagejpeg($image, $buffer);
+            };
+        }
+        if ($this->features & Format::png) {
+            if ($spec == 'png') {
+                return function ($image, $buffer) {
+                    return imagepng($image, $buffer);
+                };
+            }
         }
         throw new UnsupportedFeature(sprintf('Unsupported image format: %s', $spec));
     }

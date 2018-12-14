@@ -69,8 +69,8 @@ class Level1 implements ImageCompliance
         $quality = new Quality();
         $transformations []= $quality->createTransform($targetParameters[0]) ?: array($this, 'identity');
 
-        $format = new Format();
-        $transformations []= $format->createTransform($targetParameters[1]) ?: array($this, 'identity');
+        $format = new Format(Format::png);
+        $serialize = $format->createTransform($targetParameters[1]);
 
         $image = imagecreatefromjpeg($imageUri);
         if (!is_resource($image)) {
@@ -85,8 +85,7 @@ class Level1 implements ImageCompliance
         }
 
         $outbuf = fopen('php://temp', 'rw');
-        imagejpeg($image, $outbuf);
-        rewind($outbuf);
+        $serialize($image, $outbuf);
         return $outbuf;
     }
 
