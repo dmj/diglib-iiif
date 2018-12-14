@@ -42,7 +42,13 @@ class Image extends Controller
     protected static $baseRoute = 'iiif.image';
     protected static $jsonRoute = 'iiif.image.json';
 
-    private $imageCompliance;
+    private $server;
+
+    public function __construct (Router $router, Resolver $resolver, ImageServer $server)
+    {
+        parent::__construct($router, $resolver);
+        $this->server = $server;
+    }
 
     public function asJPEG (Request $request, Response $response, array $arguments)
     {
@@ -57,7 +63,7 @@ class Image extends Controller
             throw new Error\Http(404);
         }
 
-        $image = $this->getImageCompliance()->getImageStream($imageUri, $arguments['ops']);
+        $image = $this->getImageStream($imageUri, $arguments['ops']);
         if (!is_resource($image)) {
             throw new RuntimeException();
         }
@@ -75,7 +81,7 @@ class Image extends Controller
             throw new Error\Http(404);
         }
         
-        $info = $this->getImageCompliance()->getImageInfo($imageUri);
+        $info = $this->server->getImageInfo($imageUri);
         $info['@id'] = $this->router->pathFor(static::$baseRoute, $arguments);
         return $this->encodeJSON($info);
     }
@@ -87,18 +93,5 @@ class Image extends Controller
 
         // TODO: Use real URI resolver
         return rtrim($this->getLocation($objectId), '/') . '/' . $imageUri;
-    }
-
-    public function getImageCompliance ()
-    {
-        if (!$this->imageCompliance) {
-            $this->setImageCompliance(new ImageServer\Server(new ImageServer\Level1()));
-        }
-        return $this->imageCompliance;
-    }
-
-    public function setImageCompliance (ImageServer\Server $imageCompliance)
-    {
-        $this->imageCompliance = $imageCompliance;
     }
 }
