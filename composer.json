@@ -12,6 +12,7 @@
         "psr/log": "^1.1",
         "hab/resolver": "^1.0",
         "tuupola/cors-middleware": "^0.9.1",
-        "monolog/monolog": "^1.24"
+        "monolog/monolog": "^1.24",
+        "hab/php-image-server": "^1.0"
     }
 }
