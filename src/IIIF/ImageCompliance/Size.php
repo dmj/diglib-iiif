@@ -78,6 +78,27 @@ class Size implements Feature
                 };
             }
         }
+        if ($this->features & Size::sizeByConfinedWh) {
+            if (preg_match('@^!(?<w>[0-9]+),(?<h>[0-9]+)$@u', $spec, $match)) {
+                $width = $match['w'];
+                $height = $match['h'];
+                return function ($image) use ($width, $height) {
+                    $wScale = $width / imagesx($image);
+                    $hScale = $height / imagesy($image);
+                    $scale = min($wScale, $hScale);
+                    return imagescale($image, imagesx($image) * $scale, imagesy($image) * $scale);
+                };
+            }
+        }
+        if ($this->features & Size::sizeByDistoredWh) {
+            if (preg_match('@^(?<w>[0-9]+),(?<h>[0-9]+)$@u', $spec, $match)) {
+                $width = $match['w'];
+                $height = $match['h'];
+                return function ($image) use ($width, $height) {
+                    return imagescale($image, $width, $height);
+                };
+            }
+        }
         throw new UnsupportedFeature(sprintf('Unsupported image size feature request: %s', $spec));
     }
 }
