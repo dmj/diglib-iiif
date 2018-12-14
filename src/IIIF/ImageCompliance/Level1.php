@@ -50,12 +50,27 @@ class Level1 implements ImageCompliance
             throw new Error\Http(400);
         }
 
+        $targetParameters = explode('.', $imageParameters[3]);
+        if (count($targetParameters) != 2) {
+            throw new Error\Http(400);
+        }
+
         $imageinfo = getimagesize($imageUri);
         $transformations = array();
-        $transformations []= $this->createRegionTransform($imageParameters[0]);
-        $transformations []= $this->createSizeTransform($imageParameters[1], $imageinfo[0], $imageinfo[1]);
-        $transformations []= $this->createRotationTransform($imageParameters[2]);
-        $transformations []= $this->createFormatTransform($imageParameters[3]);
+
+        $region = new Region(Region::regionByPx | Region::regionByPct);
+        $transformations []= $region->createTransform($imageParameters[0]) ?: array($this, 'identity');
+        $size = new Size(Size::sizeByW | Size::sizeByH | Size::sizeByPct);
+        $transformations []= $size->createTransform($imageParameters[1]) ?: array($this, 'identity');
+
+        $rotation = new Rotation();
+        $transformations []= $rotation->createTransform($imageParameters[2]) ?: array($this, 'identity');
+
+        $quality = new Quality();
+        $transformations []= $quality->createTransform($targetParameters[0]) ?: array($this, 'identity');
+
+        $format = new Format();
+        $transformations []= $format->createTransform($targetParameters[1]) ?: array($this, 'identity');
 
         $image = imagecreatefromjpeg($imageUri);
         if (!is_resource($image)) {
@@ -73,68 +88,6 @@ class Level1 implements ImageCompliance
         imagejpeg($image, $outbuf);
         rewind($outbuf);
         return $outbuf;
-    }
-
-    protected function createFormatTransform ($spec)
-    {
-        if ($spec != 'default.jpg') {
-            $this->log('warning', sprintf('Invalid image quality and format: "%s"', $spec));
-            throw new Error\Http(400);
-        }
-        return array($this, 'identity');
-    }
-
-    protected function createRotationTransform ($spec)
-    {
-        if ($spec != '0') {
-            $this->log('warning', sprintf('Invalid image rotation: "%s"', $spec));
-            throw new Error\Http(400);
-        }
-        return array($this, 'identity');
-    }
-
-    protected function createRegionTransform ($spec)
-    {
-        if ($spec == 'full') {
-            return array($this, 'identity');
-        } else if (preg_match('@^(?<x>[0-9]+),(?<y>[0-9]+),(?<width>[0-9]+),(?<height>[0-9]+)$@u', $spec, $match)) {
-            $rect = $match;
-            return function ($image) use ($rect) {
-                return imagecrop($image, $rect);
-            };
-        } else {
-            $this->log('warning', sprintf('Invalid image region: "%s"', $spec));
-            throw new Error\Http(400);
-        }
-    }
-
-    protected function createSizeTransform ($spec, $sourceWidth, $sourceHeight)
-    {
-        if ($spec == 'full') {
-            return array($this, 'identity');
-        } else if (preg_match('@^(?<w>[0-9]+),$@u', $spec, $match)) {
-            $width = $match['w'];
-            $height = round($sourceHeight * ($width / $sourceWidth));
-            return function ($image) use ($width, $height) {
-                return imagescale($image, $width, $height);
-            };
-        } else if (preg_match('@^,(?<h>[0-9]+)$@u', $spec, $match)) {
-            $height = $match['h'];
-            $width = round($sourceWidth * ($height / $sourceHeight));
-            return function ($image) use ($width, $height) {
-                return imagescale($image, $width, $height);
-            };
-        } else if (preg_match('@^pct:(?<n>[0-9]+)$@u', $spec, $match)) {
-            $pct = $match['n'] / 100;
-            $width = round($sourceWidth * $pct);
-            $height = round($sourceHeight * $pct);
-            return function ($image) use ($width, $height) {
-                return imagescale($image, $width, $height);
-            };
-        } else {
-            $this->log('warning', sprintf('Invalid image size: "%s"', $spec));
-            throw new Error\Http(400);
-        }
     }
 
     public function identity ($argument)
