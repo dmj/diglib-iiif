@@ -75,10 +75,17 @@ $container['IIIF.Sequence'] = function () use ($container) {
     return $controller;
 };
 
+$container['IIIF.ImageServer'] = function () use ($container) {
+    $features = new HAB\Diglib\API\IIIF\ImageServer\Level1();
+    $server = new HAB\Diglib\API\IIIF\NativeBridge($features);
+    return $server;
+};
+
 $container['IIIF.Image'] = function () use ($container) {
     $router = $container['router'];
     $resolver = $container['IIIF.Resolver'];
-    $controller = new HAB\Diglib\API\IIIF\Image($router, $resolver);
+    $server = $container['IIIF.ImageServer'];
+    $controller = new HAB\Diglib\API\IIIF\Image($router, $resolver, $server);
     $controller->setLogger($container['Logger']);
     return $controller;
 };
