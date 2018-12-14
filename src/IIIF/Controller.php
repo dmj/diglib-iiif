@@ -50,7 +50,7 @@ abstract class Controller
 {
     use LoggerAwareTrait;
 
-    private $router;
+    protected $router;
     private $resolver;
 
     protected static $jsonRoute;
@@ -120,8 +120,11 @@ abstract class Controller
 
     protected function encodeJSON ($data)
     {
-        if ($data && $data->documentElement) {
-            $payload = json_encode(jsonxml2php($data->documentElement), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        if ($data instanceof DOMDocument) {
+            $data = jsonxml2php($data->documentElement);
+        }
+        if ($data) {
+            $payload = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
             if (json_last_error() !== JSON_ERROR_NONE) {
                 throw new RuntimeException(json_last_error_msg());
             }
