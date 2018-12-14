@@ -34,6 +34,7 @@ class Rotation implements Feature
 {
     const rotationBy90s     = 0b00000001;
     const rotationArbitrary = 0b00000010;
+    const mirroring         = 0b00000100;
 
     private $features;
 
@@ -46,6 +47,14 @@ class Rotation implements Feature
     {
         if ($spec == '0') {
             return null;
+        }
+        if ($this->features & Rotation::rotationBy90s) {
+            if ($spec == '90' || $spec == '180' || $spec = '270') {
+                $angle = (360 - floatval($spec)) % 360;
+                return function ($image) use ($angle) {
+                    return imagerotate($image, $angle, 0);
+                };
+            }
         }
         throw new UnsupportedFeature(sprintf('Unsupported image rotation request: %s', $spec));
     }
