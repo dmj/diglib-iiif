@@ -55,7 +55,6 @@ class Level1 implements ImageCompliance
             throw new Error\Http(400);
         }
 
-        $imageinfo = getimagesize($imageUri);
         $transformations = array();
 
         $region = new Region(Region::regionByPx | Region::regionByPct);
