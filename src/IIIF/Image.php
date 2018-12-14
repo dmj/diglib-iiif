@@ -28,6 +28,8 @@ use HAB\Diglib\API\Error;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
+use Slim\Interfaces\RouterInterface as Router;
+
 use Slim\Http\Stream;
 
 /**
@@ -63,7 +65,7 @@ class Image extends Controller
             throw new Error\Http(404);
         }
 
-        $image = $this->getImageStream($imageUri, $arguments['ops']);
+        $image = $this->server->getImageStream($imageUri, $arguments['ops']);
         if (!is_resource($image)) {
             throw new RuntimeException();
         }
@@ -80,7 +82,7 @@ class Image extends Controller
         if (!file_exists($imageUri) || !is_readable($imageUri)) {
             throw new Error\Http(404);
         }
-        
+
         $info = $this->server->getImageInfo($imageUri);
         $info['@id'] = $this->router->pathFor(static::$baseRoute, $arguments);
         return $this->encodeJSON($info);
