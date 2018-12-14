@@ -39,6 +39,7 @@ use Slim\Http\Stream;
  */
 class Image extends Controller
 {
+    protected static $baseRoute = 'iiif.image';
     protected static $jsonRoute = 'iiif.image.json';
 
     private $imageCompliance;
@@ -69,8 +70,14 @@ class Image extends Controller
 
     protected function getJSON (array $arguments)
     {
-        $mapper = $this->getMapper($arguments['objectId']);
-        return $this->encodeJSON($mapper->getImage($arguments['entityId']));
+        $imageUri = $this->resolveImageUri($arguments['objectId'], $arguments['entityId']);
+        if (!file_exists($imageUri) || !is_readable($imageUri)) {
+            throw new Error\Http(404);
+        }
+        
+        $info = $this->getImageCompliance()->getImageInfo($imageUri);
+        $info['@id'] = $this->router->pathFor(static::$baseRoute, $arguments);
+        return $this->encodeJSON($info);
     }
 
     protected function resolveImageUri ($objectId, $entityId)
@@ -85,12 +92,12 @@ class Image extends Controller
     public function getImageCompliance ()
     {
         if (!$this->imageCompliance) {
-            $this->setImageCompliance(new ImageCompliance\Server(new ImageCompliance\Level1()));
+            $this->setImageCompliance(new ImageServer\Server(new ImageServer\Level1()));
         }
         return $this->imageCompliance;
     }
 
-    public function setImageCompliance (ImageCompliance\Server $imageCompliance)
+    public function setImageCompliance (ImageServer\Server $imageCompliance)
     {
         $this->imageCompliance = $imageCompliance;
     }
