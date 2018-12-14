@@ -32,8 +32,9 @@ namespace HAB\Diglib\API\IIIF\ImageCompliance;
  */
 class Quality implements Feature
 {
-    const regionByPx  = 0b0001;
-    const regionByPct = 0b0010;
+    const color   = 0b00000001;
+    const gray    = 0b00000010;
+    const bitonal = 0b00000100;
 
     private $features;
 
