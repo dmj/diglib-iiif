@@ -23,31 +23,18 @@
 
 namespace HAB\Diglib\API\IIIF\ImageCompliance;
 
-use HAB\Diglib\API\Error;
-use HAB\Diglib\API\LoggerAwareTrait;
-
 /**
- * Implements IIIF Image API 2.1 Level 0 compliance.
+ * IIIF Image API Level 0 Compliance.
  *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Level0 implements ImageCompliance
+class Level0 extends FeatureSet
 {
-    use LoggerAwareTrait;
-
-    public function getComplianceLevel ()
-    {
-        return 'http://iiif.io/api/image/2/level0.json';
-    }
-
-    public function getImageStream ($imageUri, $imageParameters)
-    {
-        if ($imageParameters != 'full/full/0/default.jpg') {
-            $this->log('error', sprintf('Invalid or unsupported image parameters: "%s"', $imageParameters));
-            throw new Error\Http(400);
-        }
-        return fopen($imageUri, 'r');
-    }
+    protected static $region = 0;
+    protected static $size = 0;
+    protected static $rotation = 0;
+    protected static $quality = 0;
+    protected static $format = 0;
 }

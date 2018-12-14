@@ -24,17 +24,17 @@
 namespace HAB\Diglib\API\IIIF\ImageCompliance;
 
 /**
- * IIIF Image API Level 1 Compliance.
+ * IIIF Image API Level 2 Compliance.
  *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Level1 extends FeatureSet
+class Level2 extends FeatureSet
 {
-    protected static $region = Region::regionByPx;
-    protected static $size = Size::sizeByW | Size::sizeByH | Size::sizeByPct;
-    protected static $rotation = 0;
-    protected static $quality = 0;
-    protected static $format = 0;
+    protected static $region = Region::regionByPx | Region::regionByPct;
+    protected static $size = Size::sizeByW | Size::sizeByH | Size::sizeByPct | Size::sizeByConfinedWh | Size::sizeByDistoredWh;
+    protected static $rotation = Rotation::rotationBy90s;
+    protected static $quality = Quality::color | Quality::gray | Quality::bitonal;
+    protected static $format = Format::png;
 }

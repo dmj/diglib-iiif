@@ -85,7 +85,7 @@ class Image extends Controller
     public function getImageCompliance ()
     {
         if (!$this->imageCompliance) {
-            $this->setImageCompliance(new ImageCompliance\Level1());
+            $this->setImageCompliance(new ImageCompliance\Server(new ImageCompliance\Level1()));
         }
         return $this->imageCompliance;
     }

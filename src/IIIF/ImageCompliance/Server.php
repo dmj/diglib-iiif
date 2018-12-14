@@ -23,18 +23,47 @@
 
 namespace HAB\Diglib\API\IIIF\ImageCompliance;
 
+use RuntimeException;
+
 /**
- * IIIF Image API Level 1 Compliance.
+ * Serve image bitstream.
  *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Level1 extends FeatureSet
+class Server implements ImageCompliance
 {
-    protected static $region = Region::regionByPx;
-    protected static $size = Size::sizeByW | Size::sizeByH | Size::sizeByPct;
-    protected static $rotation = 0;
-    protected static $quality = 0;
-    protected static $format = 0;
+    private $features;
+
+    public function __construct (FeatureSet $features)
+    {
+        $this->features = $features;
+    }
+
+    public function getComplianceLevel ()
+    {
+        return $this->features->getComplianceLevelUri();
+    }
+
+    public function getImageStream ($imageUri, $imageParameters)
+    {
+        if (!preg_match('@^(?<region>[^/]+)/(?<size>[^/]+)/(?<rotation>[^/]+)/(?<quality>[^.]+)\.(?<format>.+)$@u', $imageParameters, $match)) {
+            throw new UnsupportedFeature(sprintf('Unsupported feature request: %s', $imageParameters));
+        }
+        extract($match);
+        $image = imagecreatefromjpeg($imageUri);
+        if (!is_resource($image)) {
+            throw new RuntimeException();
+        }
+
+        $image = $this->features->apply($image, $region, $size, $rotation, $quality);
+        if (!is_resource($image)) {
+            throw new RuntimeException();
+        }
+
+        $buffer = fopen('php://temp', 'rw');
+        $this->features->serialize($image, $buffer, $format);
+        return $buffer;
+    }
 }
