@@ -32,7 +32,7 @@ use RuntimeException;
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Server implements ImageCompliance
+class Server
 {
     private $features;
 

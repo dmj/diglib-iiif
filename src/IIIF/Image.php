@@ -90,7 +90,7 @@ class Image extends Controller
         return $this->imageCompliance;
     }
 
-    public function setImageCompliance (ImageCompliance\ImageCompliance $imageCompliance)
+    public function setImageCompliance (ImageCompliance\Server $imageCompliance)
     {
         $this->imageCompliance = $imageCompliance;
     }
