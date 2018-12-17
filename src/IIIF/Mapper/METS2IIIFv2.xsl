@@ -131,7 +131,7 @@
         <xsl:call-template name="metadata-label">
           <xsl:with-param name="property">http://purl.org/dc/elements/1.1/identifier</xsl:with-param>
         </xsl:call-template>
-        <json:string key="value"><xsl:value-of select="substring-after(@LABEL, ',')"/></json:string>
+        <json:string key="value"><xsl:value-of select="normalize-space(substring-after(@LABEL, ','))"/></json:string>
       </json:map>
 
       <xsl:if test="$rightsMD">
