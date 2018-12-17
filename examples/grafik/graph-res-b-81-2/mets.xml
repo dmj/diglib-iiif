@@ -1,6 +1,7 @@
 <mets OBJID="grafik/graph-res-b-81-2" LABEL="Herzog August Bibliothek Wolfenbüttel, Graph. Res. B: 81.2" PROFILE="tag:diglib.hab.de,2018:METS:v1"
       xmlns="http://www.loc.gov/METS/"
       xmlns:dct="http://purl.org/dc/terms/"
+      xmlns:exif="https://www.w3.org/2003/12/exif/ns#"
       xmlns:foaf="http://xmlns.com/foaf/0.1/"
       xmlns:marcrel="http://id.loc.gov/vocabulary/relators/"
       xmlns:mix="http://www.loc.gov/mix/v20"
@@ -14,7 +15,19 @@
     </agent>
   </metsHdr>
 
+  <dmdSec ID="dmdSec.1">
+    <mdWrap MDTYPE="OTHER" OTHERMDTYPE="RDF" MIMETYPE="application/rdf+xml">
+      <xmlData>
+        <rdf:Description>
+          <exif:width rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2000</exif:width>
+          <exif:height rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2192</exif:height>
+        </rdf:Description>
+      </xmlData>
+    </mdWrap>
+  </dmdSec>
+
   <amdSec>
+
     <techMD ID="techMD.1">
       <mdWrap MDTYPE="NISOIMG">
         <xmlData>
@@ -74,7 +87,7 @@
 
   <structMap TYPE="PHYSICAL">
     <div TYPE="physSequence" ID="div.1">
-      <div ID="div.2" TYPE="page">
+      <div ID="div.2" TYPE="page" DMDID="dmdSec.1">
         <fptr FILEID="file.1" ID="fptr.1"/>
       </div>
     </div>

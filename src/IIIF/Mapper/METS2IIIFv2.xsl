@@ -1,10 +1,11 @@
 <xsl:transform version="1.0"
                xmlns:dct="http://purl.org/dc/terms/"
+               xmlns:exif="https://www.w3.org/2003/12/exif/ns#"
                xmlns:foaf="http://xmlns.com/foaf/0.1/"
                xmlns:json="http://www.w3.org/2005/xpath-functions"
                xmlns:marcrel="http://id.loc.gov/vocabulary/relators/"
-               xmlns:mets="http://www.loc.gov/METS/"
                xmlns:mix="http://www.loc.gov/mix/v20"
+               xmlns:mets="http://www.loc.gov/METS/"
                xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
                xmlns:skos="http://www.w3.org/2004/02/skos/core#"
                xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -61,7 +62,8 @@
   <xsl:param  name="imageComplianceLevel"/>
 
   <xsl:key name="image-by-id" match="mets:fileGrp[@USE = 'MASTER']/mets:file" use="@ID"/>
-  <xsl:key name="techmd-by-id" match="mets:techMD" use="@ID"/>
+  <xsl:key name="tech-by-id" match="mets:techMD" use="@ID"/>
+  <xsl:key name="dmd-by-id" match="mets:dmdSec" use="@ID"/>
 
   <xsl:template match="/">
     <xsl:choose>
@@ -70,9 +72,6 @@
       </xsl:when>
       <xsl:when test="$entityType = 'sc:Canvas'">
         <xsl:call-template name="canvas"/>
-      </xsl:when>
-      <xsl:when test="$entityType = 'iiif:Image'">
-        <xsl:call-template name="image"/>
       </xsl:when>
       <xsl:when test="$entityType = 'sc:Sequence'">
         <xsl:call-template name="sequence"/>
@@ -97,10 +96,6 @@
 
   <xsl:template name="sequence">
     <xsl:apply-templates select="mets:mets/mets:structMap[@TYPE = 'PHYSICAL']/mets:div[@TYPE = 'physSequence'][@ID = $entityId]"/>
-  </xsl:template>
-
-  <xsl:template name="image">
-    <xsl:apply-templates select="key('image-by-id', $entityId)" mode="imageAPI"/>
   </xsl:template>
 
   <xsl:template name="manifest-metadata">
@@ -253,12 +248,12 @@
         </xsl:choose>
       </json:string>
 
-      <xsl:variable name="techmd" select="key('techmd-by-id', key('image-by-id', mets:fptr/@FILEID)/@ADMID)"/>
+      <xsl:variable name="canvasDesc" select="key('dmd-by-id', @DMDID)//rdf:Description"/>
       <json:number key="height">
-        <xsl:value-of select="$techmd//mix:imageWidth"/>
+        <xsl:value-of select="$canvasDesc/exif:width"/>
       </json:number>
       <json:number key="width">
-        <xsl:value-of select="$techmd//mix:imageHeight"/>
+        <xsl:value-of select="$canvasDesc/exif:height"/>
       </json:number>
 
       <json:array key="images">
@@ -284,26 +279,6 @@
     </json:map>
   </xsl:template>
 
-  <xsl:template match="mets:file" mode="imageAPI">
-    <json:map>
-      <json:string key="@context">http://iiif.io/api/image/2/context.json</json:string>
-      <json:string key="@id"><xsl:value-of select="concat($objectBaseUri, '/image/', @ID)"/></json:string>
-      <json:string key="@type">iiif:Image</json:string>
-      <json:string key="protocol">http://iiif.io/api/image</json:string>
-      <json:array key="profile">
-        <json:string><xsl:value-of select="$imageComplianceLevel"/></json:string>
-      </json:array>
-
-      <xsl:call-template name="insert-canvas-size"/>
-      <json:array key="sizes">
-        <json:map>
-          <xsl:call-template name="insert-canvas-size"/>
-        </json:map>
-      </json:array>
-
-    </json:map>
-  </xsl:template>
-
   <xsl:template match="mets:file">
     <json:string key="@id">
       <xsl:choose>
@@ -317,7 +292,17 @@
     </json:string>
     <json:string key="@type">dctypes:Image</json:string>
     <json:string key="format">image/jpeg</json:string>
-    <xsl:call-template name="insert-canvas-size"/>
+
+    <xsl:variable name="techDesc" select="key('tech-by-id', @ADMID)//mix:BasicImageCharacteristics"/>
+    <xsl:if test="$techDesc">
+      <json:number key="width">
+        <xsl:value-of select="$techDesc//mix:imageWidth"/>
+      </json:number>
+      <json:number key="height">
+        <xsl:value-of select="$techDesc//mix:imageHeight"/>
+      </json:number>
+    </xsl:if>
+
     <xsl:if test="$imageComplianceLevel">
       <json:map key="service">
         <json:string key="@context">http://iiif.io/api/image/2/context.json</json:string>
@@ -327,19 +312,6 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template name="insert-canvas-size">
-    <xsl:variable name="techmd" select="key('techmd-by-id', @ADMID)"/>
-    <xsl:if test="$techmd">
-      <json:number key="width">
-        <xsl:value-of select="$techmd//mix:imageWidth"/>
-      </json:number>
-      <json:number key="height">
-        <xsl:value-of select="$techmd//mix:imageHeight"/>
-      </json:number>
-    </xsl:if>
-  </xsl:template>
-
   <xsl:template match="text()"/>
-  <xsl:template match="text()" mode="imageAPI"/>
 
 </xsl:transform>

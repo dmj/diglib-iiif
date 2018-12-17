@@ -62,11 +62,6 @@ class METS2IIIFv2
         return $this->transform(array('entityType' => 'oa:Annotation', 'entityId' => $annotationId));
     }
 
-    public function getImage ($imageId)
-    {
-        return $this->transform(array('entityType' => 'iiif:Image', 'entityId' => $imageId));
-    }
-
     public function getSequence ($sequenceId)
     {
         return $this->transform(array('entityType' => 'sc:Sequence', 'entityId' => $sequenceId));
