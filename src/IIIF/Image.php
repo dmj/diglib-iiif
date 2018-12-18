@@ -65,13 +65,18 @@ class Image extends Controller
             throw new Error\Http(404);
         }
 
-        $image = $this->server->getImageStream($imageUri, $arguments['ops']);
+        try {
+            $image = $this->server->getImageStream($imageUri, $arguments['ops']);
+        } catch (ImageServer\UnsupportedFeature $e) {
+            throw new Error\Http(400);
+        }
         if (!is_resource($image)) {
             throw new RuntimeException();
         }
 
         return $response
             ->withStatus(200)
+            ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Content-Type', 'image/jpeg')
             ->withBody(new Stream($image));
     }
