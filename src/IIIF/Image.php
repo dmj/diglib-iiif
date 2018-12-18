@@ -52,6 +52,12 @@ class Image extends Controller
         $this->server = $server;
     }
 
+    public function asJSON (Request $request, Response $response, array $arguments)
+    {
+        $response = parent::asJSON($request, $response, $arguments);
+        return $response->withHeader('Link', sprintf('<%s>; rel="profile"', $this->server->getComplianceLevel()));
+    }
+
     public function asJPEG (Request $request, Response $response, array $arguments)
     {
         $accept = array('image/jpeg');
@@ -77,6 +83,7 @@ class Image extends Controller
         return $response
             ->withStatus(200)
             ->withHeader('Content-Type', 'image/jpeg')
+            ->withHeader('Link', sprintf('<%s>; rel="profile"', $this->server->getComplianceLevel()))
             ->withBody(new Stream($image));
     }
 
