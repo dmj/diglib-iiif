@@ -77,7 +77,7 @@ class Image extends Controller
         try {
             $image = $this->server->getImageStream($imageUri, $arguments['ops']);
         } catch (ImageServer\UnsupportedFeature $e) {
-            throw new Error\Http(400);
+            throw new Error\Http(400, array(), $e);
         }
         if (!is_resource($image)) {
             throw new RuntimeException();
