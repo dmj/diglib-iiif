@@ -76,7 +76,6 @@ class Image extends Controller
 
         return $response
             ->withStatus(200)
-            ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Content-Type', 'image/jpeg')
             ->withBody(new Stream($image));
     }
