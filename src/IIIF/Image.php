@@ -55,7 +55,10 @@ class Image extends Controller
     public function asJSON (Request $request, Response $response, array $arguments)
     {
         $response = parent::asJSON($request, $response, $arguments);
-        return $response->withHeader('Link', sprintf('<%s>; rel="profile"', $this->server->getComplianceLevel()));
+        if ($complianceLevelUri = $this->server->getComplianceLevel()) {
+            $response = $response->withHeader('Link', sprintf('<%s>; rel="profile"', $complianceLevelUri));
+        }
+        return $response;
     }
 
     public function asJPEG (Request $request, Response $response, array $arguments)
@@ -80,10 +83,13 @@ class Image extends Controller
             throw new RuntimeException();
         }
 
+        if ($complianceLevelUri = $this->server->getComplianceLevel()) {
+            $response = $response->withHeader('Link', sprintf('<%s>; rel="profile"', $complianceLevelUri));
+        }
+
         return $response
             ->withStatus(200)
             ->withHeader('Content-Type', 'image/jpeg')
-            ->withHeader('Link', sprintf('<%s>; rel="profile"', $this->server->getComplianceLevel()))
             ->withBody(new Stream($image));
     }
 
