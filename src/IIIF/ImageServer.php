@@ -35,4 +35,5 @@ interface ImageServer
     public function getImageStream ($imageUri, $imageParameters);
     public function getImageInfo ($imageUri);
     public function getComplianceLevel();
+    public function getProfile();
 }
