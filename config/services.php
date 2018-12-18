@@ -75,8 +75,14 @@ $container['IIIF.Sequence'] = function () use ($container) {
     return $controller;
 };
 
+$container['IIIF.ImageServer.Features'] = function () use ($container) {
+    $base = new HAB\Diglib\API\IIIF\ImageServer\Level2();
+    $features = new HAB\Diglib\API\IIIF\ImageServer\Custom($base);
+    $features->addRotationFeatures(HAB\Diglib\API\IIIF\ImageServer\Rotation::rotationArbitrary);
+    return $features;
+};
 $container['IIIF.ImageServer'] = function () use ($container) {
-    $features = new HAB\Diglib\API\IIIF\ImageServer\Level2();
+    $features = $container['IIIF.ImageServer.Features'];
     $server = new HAB\Diglib\API\IIIF\NativeBridge($features);
     return $server;
 };
