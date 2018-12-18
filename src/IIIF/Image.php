@@ -87,8 +87,15 @@ class Image extends Controller
             throw new Error\Http(404);
         }
 
+        $profile = $this->server->getProfile();
+        $profile['supports'] []= 'cors';
+        $profile['supports'] []= 'baseUriRedirect';
+        $profile['supports'] []= 'jsonldMediatype';
+        $profile['supports'] []= 'profileLinkHeader';
+
         $info = $this->server->getImageInfo($imageUri);
         $info['@id'] = $this->router->pathFor(static::$baseRoute, $arguments);
+        $info['profile'] = array($this->server->getComplianceLevel(), $profile);
         return $this->encodeJSON($info);
     }
 
