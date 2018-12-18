@@ -58,6 +58,7 @@
 
   <xsl:variable name="objectId" select="translate(/mets:mets/@OBJID, '/', '_')"/>
   <xsl:variable name="objectBaseUri" select="concat($serviceBaseUri, '/', $objectId)"/>
+  <xsl:variable name="manifestUri" select="concat($objectBaseUri, '/manifest')"/>
 
   <xsl:param  name="imageComplianceLevel"/>
 
@@ -87,15 +88,24 @@
   </xsl:template>
 
   <xsl:template name="canvas">
-    <xsl:apply-templates select="mets:mets/mets:structMap[@TYPE = 'PHYSICAL']/mets:div[@TYPE = 'physSequence']/mets:div[@ID = $entityId]"/>
+    <xsl:param name="entityId" select="$entityId"/>
+    <xsl:apply-templates select="/mets:mets/mets:structMap[@TYPE = 'PHYSICAL']/mets:div[@TYPE = 'physSequence']/mets:div[@ID = $entityId]">
+      <xsl:with-param name="standalone" select="true()"/>
+    </xsl:apply-templates>
   </xsl:template>
 
   <xsl:template name="annotation">
-    <xsl:apply-templates select="mets:mets/mets:structMap[@TYPE = 'PHYSICAL']/mets:div[@TYPE = 'physSequence']/mets:div/mets:fptr[@ID = $entityId]"/>
+    <xsl:param name="entityId" select="$entityId"/>
+    <xsl:apply-templates select="/mets:mets/mets:structMap[@TYPE = 'PHYSICAL']/mets:div[@TYPE = 'physSequence']/mets:div/mets:fptr[@ID = $entityId]">
+      <xsl:with-param name="standalone" select="true()"/>
+    </xsl:apply-templates>
   </xsl:template>
 
   <xsl:template name="sequence">
-    <xsl:apply-templates select="mets:mets/mets:structMap[@TYPE = 'PHYSICAL']/mets:div[@TYPE = 'physSequence'][@ID = $entityId]"/>
+    <xsl:param name="entityId" select="$entityId"/>
+    <xsl:apply-templates select="/mets:mets/mets:structMap[@TYPE = 'PHYSICAL']/mets:div[@TYPE = 'physSequence'][@ID = $entityId]">
+      <xsl:with-param name="standalone" select="true()"/>
+    </xsl:apply-templates>
   </xsl:template>
 
   <xsl:template name="manifest-metadata">
@@ -207,9 +217,14 @@
     </xsl:choose>
   </xsl:template>
 
+  <xsl:template name="standalone-entity">
+    <json:string key="@context">http://iiif.io/api/presentation/2/context.json</json:string>
+    <json:string key="within"><xsl:value-of select="$manifestUri"/></json:string>
+  </xsl:template>
+
   <xsl:template match="mets:mets">
     <json:map>
-      <json:string key="@id"><xsl:value-of select="concat($objectBaseUri, '/manifest')"/></json:string>
+      <json:string key="@id"><xsl:value-of select="$manifestUri"/></json:string>
       <json:string key="@type">sc:Manifest</json:string>
       <json:string key="@context">http://iiif.io/api/presentation/2/context.json</json:string>
       <json:string key="label"><xsl:value-of select="@LABEL"/></json:string>
@@ -224,9 +239,13 @@
   </xsl:template>
 
   <xsl:template match="mets:structMap[@TYPE = 'PHYSICAL']/mets:div[@TYPE = 'physSequence']">
+    <xsl:param name="standalone" select="false()"/>
     <json:map>
       <xsl:if test="@ID">
         <json:string key="@id"><xsl:value-of select="concat($objectBaseUri, '/sequence/', @ID)"/></json:string>
+      </xsl:if>
+      <xsl:if test="$standalone">
+        <xsl:call-template name="standalone-entity"/>
       </xsl:if>
       <json:string key="@type">sc:Sequence</json:string>
       <json:array key="canvases">
@@ -236,9 +255,13 @@
   </xsl:template>
 
   <xsl:template match="mets:div[@TYPE = 'page']">
+    <xsl:param name="standalone" select="false()"/>
     <xsl:variable name="canvasUri" select="concat($objectBaseUri, '/canvas/', @ID)"/>
     <json:map>
       <json:string key="@id"><xsl:value-of select="$canvasUri"/></json:string>
+      <xsl:if test="$standalone">
+        <xsl:call-template name="standalone-entity"/>
+      </xsl:if>
       <json:string key="@type">sc:Canvas</json:string>
       <json:string key="label">
         <xsl:choose>
@@ -266,9 +289,13 @@
 
   <xsl:template match="mets:fptr">
     <xsl:param name="canvasUri" select="concat($objectBaseUri, '/canvas/', ../@ID)"/>
+    <xsl:param name="standalone" select="false()"/>
     <json:map>
       <xsl:if test="@ID">
         <json:string key="@id"><xsl:value-of select="concat($objectBaseUri, '/annotation/', @ID)"/></json:string>
+      </xsl:if>
+      <xsl:if test="$standalone">
+        <xsl:call-template name="standalone-entity"/>
       </xsl:if>
       <json:string key="@type">oa:Annotation</json:string>
       <json:string key="motivation">sc:painting</json:string>

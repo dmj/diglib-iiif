@@ -1,0 +1,100 @@
+<mets OBJID="grafik/graph-res-b-81-2" LABEL="Herzog August Bibliothek Wolfenbüttel, Graph. Res. B: 81.2" PROFILE="tag:diglib.hab.de,2018:METS:v1"
+      xmlns="http://www.loc.gov/METS/"
+      xmlns:dct="http://purl.org/dc/terms/"
+      xmlns:exif="https://www.w3.org/2003/12/exif/ns#"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"
+      xmlns:marcrel="http://id.loc.gov/vocabulary/relators/"
+      xmlns:mix="http://www.loc.gov/mix/v20"
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <metsHdr CREATEDATE="2018-03-29T11:26:17">
+    <agent ROLE="CUSTODIAN" TYPE="ORGANIZATION">
+      <name>Herzog August Bibliothek Wolfenbüttel</name>
+    </agent>
+  </metsHdr>
+
+  <dmdSec ID="dmdSec.1">
+    <mdWrap MDTYPE="OTHER" OTHERMDTYPE="RDF" MIMETYPE="application/rdf+xml">
+      <xmlData>
+        <rdf:Description>
+          <exif:width rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2000</exif:width>
+          <exif:height rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2192</exif:height>
+        </rdf:Description>
+      </xmlData>
+    </mdWrap>
+  </dmdSec>
+
+  <amdSec>
+
+    <techMD ID="techMD.1">
+      <mdWrap MDTYPE="NISOIMG">
+        <xmlData>
+          <mix:mix>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>2000</mix:imageWidth>
+                <mix:imageHeight>2192</mix:imageHeight>
+              </mix:BasicImageCharacteristics>
+            </mix:BasicImageInformation>
+          </mix:mix>
+        </xmlData>
+      </mdWrap>
+    </techMD>
+
+    <rightsMD ID="rightsMD.1">
+      <mdWrap MDTYPE="OTHER" OTHERMDTYPE="RDF/XML" MIMETYPE="application/rdf+xml">
+        <xmlData>
+          <rdf:Description>
+            <dct:relation>
+              <foaf:Project>
+                <skos:prefLabel>Virtuelles Kupferstichkabinett</skos:prefLabel>
+              </foaf:Project>
+            </dct:relation>
+            <marcrel:fnd>
+              <dct:Agent>
+                <skos:prefLabel>Deutsche Forschungsgesellschaft (DFG)</skos:prefLabel>
+              </dct:Agent>
+            </marcrel:fnd>
+            <dct:rightsHolder>
+              <dct:Agent>
+                <skos:prefLabel>Herzog August Bibliothek Wolfenbüttel</skos:prefLabel>
+              </dct:Agent>
+            </dct:rightsHolder>
+            <dct:license>
+              <dct:LicenseDocument>
+                <foaf:homepage rdf:resource="http://diglib.hab.de?link=012"/>
+                <skos:prefLabel>CC BY SA 3.0 Deutschland</skos:prefLabel>
+              </dct:LicenseDocument>
+            </dct:license>
+          </rdf:Description>
+        </xmlData>
+      </mdWrap>
+    </rightsMD>
+  </amdSec>
+
+  <fileSec>
+    <fileGrp USE="MASTER" ADMID="rightsMD.1">
+      <file ID="file.1" MIMETYPE="image/jp2" ADMID="techMD.1">
+        <FLocat LOCTYPE="URL" xlink:href="000001.jpg"/>
+      </file>
+    </fileGrp>
+  </fileSec>
+
+  <structMap TYPE="PHYSICAL">
+    <div TYPE="physSequence" ID="div.1">
+      <div ID="div.2" TYPE="page" DMDID="dmdSec.1">
+        <fptr FILEID="file.1" ID="fptr.1"/>
+      </div>
+    </div>
+  </structMap>
+
+  <structMap TYPE="LOGICAL">
+    <div ID="div.3" TYPE="Monograph"/>
+  </structMap>
+
+  <structLink>
+    <smLink xlink:from="div.2" xlink:to="div.3"/>
+  </structLink>
+</mets>

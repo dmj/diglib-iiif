@@ -1,0 +1,45 @@
+<description xslt-version="1.0" stylesheet="../../src/IIIF/Mapper/METS2IIIFv2.xsl"
+             xmlns="http://www.jenitennison.com/xslt/xspec"
+             xmlns:json="http://www.w3.org/2005/xpath-functions">
+
+  <scenario label="When creating a standalone manifest">
+    <context href="METS2IIIFv2.xml"/>
+    <call template="manifest"/>
+    <expect label="the @context key is included in the entity description"
+            test="exists(json:map/json:string[@key = '@context'])"/>
+  </scenario>
+
+  <scenario label="When creating a standalone sequence">
+    <context href="METS2IIIFv2.xml"/>
+    <call template="sequence">
+      <param name="entityId" select="'div.1'"/>
+    </call>
+    <expect label="the @context key is included in the entity description"
+            test="exists(json:map/json:string[@key = '@context'])"/>
+    <expect label="the within key is included in the entity description"
+            test="exists(json:map/json:string[@key = 'within'])"/>
+  </scenario>
+
+  <scenario label="When creating a standalone annotation">
+    <context href="METS2IIIFv2.xml"/>
+    <call template="annotation">
+      <param name="entityId" select="'fptr.1'"/>
+    </call>
+    <expect label="the @context key is included in the entity description"
+            test="exists(json:map/json:string[@key = '@context'])"/>
+    <expect label="the within key is included in the entity description"
+            test="exists(json:map/json:string[@key = 'within'])"/>
+  </scenario>
+
+  <scenario label="When creating a standalone canvas">
+    <context href="METS2IIIFv2.xml"/>
+    <call template="canvas">
+      <param name="entityId" select="'div.2'"/>
+    </call>
+    <expect label="the @context key is included in the entity description"
+            test="exists(json:map/json:string[@key = '@context'])"/>
+    <expect label="the within key is included in the entity description"
+            test="exists(json:map/json:string[@key = 'within'])"/>
+  </scenario>
+
+</description>
