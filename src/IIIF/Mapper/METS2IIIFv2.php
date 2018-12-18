@@ -23,6 +23,7 @@
 
 namespace HAB\Diglib\API\IIIF\Mapper;
 
+use DOMXPath;
 use DOMDocument;
 use RuntimeException;
 
@@ -69,7 +70,7 @@ class METS2IIIFv2
 
     public function getImageUri ($imageId)
     {
-        $proc = new \DOMXPath($this->source);
+        $proc = new DOMXPath($this->source);
         $proc->registerNamespace('mets', 'http://www.loc.gov/METS/');
         $proc->registerNamespace('xlink', 'http://www.w3.org/1999/xlink');
         $expr = sprintf("string(//mets:file[@ID = '%s']/mets:FLocat/@xlink:href)", $imageId);
