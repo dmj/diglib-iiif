@@ -76,7 +76,6 @@ abstract class Controller
 
         return $response
             ->withHeader('Content-Type', $ctype->getValue())
-            ->withHeader('Access-Control-Allow-Origin', '*')
             ->write($payload);
     }
 
