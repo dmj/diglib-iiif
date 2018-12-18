@@ -36,7 +36,8 @@ class Http extends Exception
 {
     public function __construct ($code, array $headers = array(), Exception $previous = null)
     {
-        parent::__construct('Internal Server Error', $code, $previous);
+        $message = $previous ? $previous->getMessage() : null;
+        parent::__construct($message, $code, $previous);
         $this->headers = $headers;
     }
 
