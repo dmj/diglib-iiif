@@ -9,7 +9,8 @@ $container = $app->getContainer();
 
 $container['Logger'] = function () use ($container) {
     $logger = new Monolog\Logger('diglib-iiif');
-    $logger->pushHandler(new Monolog\Handler\StreamHandler('php://stderr', Monolog\Logger::INFO));
+    $logfile = __DIR__ . '/../logs/application.log';
+    $logger->pushHandler(new Monolog\Handler\RotatingFileHandler($logfile, 1, Monolog\Logger::INFO));
     return $logger;
 };
 
