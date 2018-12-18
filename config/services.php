@@ -76,7 +76,7 @@ $container['IIIF.Sequence'] = function () use ($container) {
 };
 
 $container['IIIF.ImageServer'] = function () use ($container) {
-    $features = new HAB\Diglib\API\IIIF\ImageServer\Level1();
+    $features = new HAB\Diglib\API\IIIF\ImageServer\Level2();
     $server = new HAB\Diglib\API\IIIF\NativeBridge($features);
     return $server;
 };
