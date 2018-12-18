@@ -305,7 +305,6 @@
 
     <xsl:if test="$imageComplianceLevel">
       <json:map key="service">
-        <json:string key="@context">http://iiif.io/api/image/2/context.json</json:string>
         <json:string key="@id"><xsl:value-of select="concat($objectBaseUri, '/image/', @ID)"/></json:string>
         <json:string key="profile"><xsl:value-of select="$imageComplianceLevel"/></json:string>
       </json:map>
