@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7026aab6552e6805513da0225b431a1",
+    "content-hash": "7844dac615345ced8fc3edb091204fca",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -39,16 +39,16 @@
         },
         {
             "name": "hab/php-image-server",
-            "version": "v1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmj/php-iiif-image-server.git",
-                "reference": "2d31196fe76a38cb7c40c25c4027f7d031bf448c"
+                "reference": "476dd0ea7bbc4a09d7788371d9e8232946af46ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmj/php-iiif-image-server/zipball/2d31196fe76a38cb7c40c25c4027f7d031bf448c",
-                "reference": "2d31196fe76a38cb7c40c25c4027f7d031bf448c",
+                "url": "https://api.github.com/repos/dmj/php-iiif-image-server/zipball/476dd0ea7bbc4a09d7788371d9e8232946af46ab",
+                "reference": "476dd0ea7bbc4a09d7788371d9e8232946af46ab",
                 "shasum": ""
             },
             "require": {
@@ -64,7 +64,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2018-12-14T12:05:49+00:00"
+            "time": "2018-12-18T13:24:17+00:00"
         },
         {
             "name": "hab/resolver",
@@ -949,7 +949,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "hab/php-image-server": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
