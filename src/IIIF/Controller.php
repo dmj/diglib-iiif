@@ -51,14 +51,14 @@ abstract class Controller
     use LoggerAwareTrait;
 
     protected $router;
-    private $resolver;
+    protected $mapper;
 
     protected static $jsonRoute;
 
-    public function __construct (Router $router, Resolver $resolver)
+    public function __construct (Router $router, MapperFactory $mapper)
     {
         $this->router = $router;
-        $this->resolver = $resolver;
+        $this->mapper = $mapper;
     }
 
     public function asJSON (Request $request, Response $response, array $arguments)
@@ -99,22 +99,9 @@ abstract class Controller
         return $neg->getBest($accept, $priorities);
     }
 
-    protected function getLocation ($objectId)
-    {
-        return $this->resolver->resolve($objectId);
-    }
-
     protected function getMapper ($objectId)
     {
-        $location = $this->getLocation($objectId);
-        if (!$location || !file_exists($location . DIRECTORY_SEPARATOR . 'mets.xml')) {
-            throw new RuntimeException();
-        }
-        $source = new DOMDocument();
-        if (!$source->load($location . DIRECTORY_SEPARATOR . 'mets.xml')) {
-            throw new RuntimeException();
-        }
-        return new Mapper\METS2IIIFv2($source);
+        return $this->mapper->create($objectId);
     }
 
     protected function encodeJSON ($data)

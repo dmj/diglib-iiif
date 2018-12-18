@@ -46,9 +46,9 @@ class Image extends Controller
 
     private $server;
 
-    public function __construct (Router $router, Resolver $resolver, ImageServer $server)
+    public function __construct (Router $router, MapperFactory $mapper, ImageServer $server)
     {
-        parent::__construct($router, $resolver);
+        parent::__construct($router, $mapper);
         $this->server = $server;
     }
 
@@ -97,7 +97,8 @@ class Image extends Controller
         $mapper = $this->getMapper($objectId);
         $imageUri = $mapper->getImageUri($entityId);
 
-        // TODO: Use real URI resolver
-        return rtrim($this->getLocation($objectId), '/') . '/' . $imageUri;
+        $location = $this->mapper->getObjectLocation($objectId);
+
+        return rtrim($location, '/\\')  . DIRECTORY_SEPARATOR . $imageUri;
     }
 }
