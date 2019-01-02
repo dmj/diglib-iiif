@@ -26,7 +26,7 @@ namespace HAB\Diglib\API\IIIF;
 use HAB\Diglib\API\LoggerAwareTrait;
 
 /**
- * Resolve object identifier to accessible object location.
+ * Resolve identifier to accessible location.
  *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
@@ -34,8 +34,6 @@ use HAB\Diglib\API\LoggerAwareTrait;
  */
 class Resolver
 {
-    use LoggerAwareTrait;
-
     private $baseDirectory;
 
     public function __construct ($baseDirectory)
@@ -47,7 +45,6 @@ class Resolver
     {
         $objectId = strtr($objectId, '_', DIRECTORY_SEPARATOR);
         $objectLocation = $this->baseDirectory . DIRECTORY_SEPARATOR . $objectId;
-        $this->log('info', sprintf('Resolved "%s" to "%s"', $objectId, $objectLocation));
         return realpath($objectLocation);
     }
 }
