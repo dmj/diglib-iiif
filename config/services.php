@@ -1,16 +1,16 @@
 <?php
 
 $container = $app->getContainer();
-// $container['errorHandler'] = function ($container) {
-//     $handler = new HAB\Diglib\API\Error\Handler(true);
-//     $handler->setLogger($container['Logger']);
-//     return $handler;
-// };
+$container['errorHandler'] = function ($container) {
+    $handler = new HAB\Diglib\API\Error\Handler();
+    $handler->setLogger($container['Logger']);
+    return $handler;
+};
 
 $container['Logger'] = function () use ($container) {
     $logger = new Monolog\Logger('diglib-iiif');
     $logfile = __DIR__ . '/../logs/application.log';
-    $logger->pushHandler(new Monolog\Handler\RotatingFileHandler($logfile, 1, Monolog\Logger::INFO));
+    $logger->pushHandler(new Monolog\Handler\RotatingFileHandler($logfile, 1, Monolog\Logger::ERROR));
     return $logger;
 };
 
