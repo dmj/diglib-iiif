@@ -62,7 +62,6 @@ class Handler
         }
         $response = $response->withStatus($exception->getCode());
         $message = sprintf('%03d %s', $response->getStatusCode(), $response->getReasonPhrase());
-        $this->log('info', $message);
 
         if ($this->displayErrorDetails) {
             $response = $response->write($details);
