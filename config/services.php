@@ -21,7 +21,9 @@ $container['IIIF.Resolver'] = function () use ($container) {
 };
 $container['IIIF.Mapper'] = function () use ($container) {
     $resolver = $container['IIIF.Resolver'];
-    return new HAB\Diglib\API\IIIF\MapperFactory($resolver);
+    $router = $container['router'];
+    $serviceBaseUri = rtrim($router->pathFor('iiif'), '/');
+    return new HAB\Diglib\API\IIIF\MapperFactory($resolver, $serviceBaseUri);
 };
 
 $container['Slim.RouterBasePath'] = function () use ($container) {
@@ -37,16 +39,6 @@ $container['Slim.RouterBasePath'] = function () use ($container) {
         $router->setBasePath(rtrim($basePath, '/'));
         return $nxt($req, $res);
     };
-};
-
-$container['IIIF.Filter'] = function () use ($container) {
-    $filter = function ($req, $res, $nxt) use ($container) {
-        $router = $container['router'];
-        $serviceBaseUri = $router->pathFor('iiif');
-        HAB\Diglib\API\IIIF\Mapper\METS2IIIFv2::$serviceBaseUri = rtrim($serviceBaseUri, '/');
-        return $nxt($req, $res);
-    };
-    return $filter;
 };
 
 $container['IIIF.Manifest'] = function () use ($container) {

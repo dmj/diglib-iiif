@@ -36,10 +36,12 @@ use DOMDocument;
 class MapperFactory
 {
     private $resolver;
+    private $serviceBaseUri;
 
-    public function __construct (Resolver $resolver)
+    public function __construct (Resolver $resolver, $serviceBaseUri)
     {
         $this->resolver = $resolver;
+        $this->serviceBaseUri = $serviceBaseUri;
     }
 
     public function getObjectLocation ($objectId)
@@ -57,6 +59,6 @@ class MapperFactory
         if (!$source->load($location . DIRECTORY_SEPARATOR . 'mets.xml')) {
             throw new RuntimeException();
         }
-        return new Mapper\METS2IIIFv2($source);
+        return new Mapper\METS2IIIFv2($source, $this->serviceBaseUri);
     }
 }

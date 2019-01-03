@@ -38,14 +38,15 @@ use HAB\XML\Transformation;
  */
 class METS2IIIFv2
 {
-    public static $serviceBaseUri;
     public static $imageComplianceLevel = 'http://iiif.io/api/image/2/level1.json';
 
     private $source;
+    private $serviceBaseUri;
 
-    public function __construct (DOMDocument $source)
+    public function __construct (DOMDocument $source, $serviceBaseUri)
     {
         $this->source = $source;
+        $this->serviceBaseUri = $serviceBaseUri;
     }
 
     public function getManifest ()
@@ -82,7 +83,7 @@ class METS2IIIFv2
         $transform = $this->getTransformation();
         $transform->setSource($this->source);
         $transform->setParameters($parameters);
-        $transform->setParameter('serviceBaseUri', self::$serviceBaseUri);
+        $transform->setParameter('serviceBaseUri', $this->serviceBaseUri);
         $transform->setParameter('imageComplianceLevel', self::$imageComplianceLevel);
         return $transform->execute();
     }
