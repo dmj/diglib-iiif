@@ -53,6 +53,13 @@ $container['IIIF.Presentation'] = function () use ($container) {
     $controller = new HAB\Diglib\API\IIIF\Presentation($mapper);
     return $controller;
 };
+
+$container['IIIF.InformationResource.JSON'] = function () {
+    $middleware = new HAB\Diglib\API\InformationResource();
+    $middleware->addMediatype('application/json', 'json');
+    $middleware->addMediatype('application/ld+json', 'json');
+    return $middleware;
+};
     
 $container['IIIF.Manifest'] = function () use ($container) {
     $router = $container['router'];

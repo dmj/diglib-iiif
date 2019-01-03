@@ -6,11 +6,13 @@ $app->get('/iiif/{objectId}/image/{entityId}/info.json', 'IIIF.Image:asJSON');
 $app->get('/iiif/{objectId}/image/{entityId}', 'IIIF.NonInformationResource')
     ->setName('iiif.image');
 
-$app->get('/iiif/{objectId}/{entityType}.json', 'IIIF.Presentation');
+$app->get('/iiif/{objectId}/{entityType}.json', 'IIIF.Presentation')
+    ->add('IIIF.InformationResource.JSON');
 
 $app->get('/iiif/{objectId}/{entityType}', 'IIIF.NonInformationResource');
 
-$app->get('/iiif/{objectId}/{entityType}/{entityId}.json', 'IIIF.Presentation');
+$app->get('/iiif/{objectId}/{entityType}/{entityId}.json', 'IIIF.Presentation')
+        ->add('IIIF.InformationResource.JSON');
 
 $app->get('/iiif/{objectId}/{entityType}/{entityId}', 'IIIF.NonInformationResource');
 

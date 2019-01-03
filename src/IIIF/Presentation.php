@@ -56,6 +56,6 @@ class Presentation
             throw new Error\Http(404);
         }
 
-        return $response->withHeader('Content-Type', 'application/json')->write($payload);
+        return $response->write($payload);
     }
 }
