@@ -23,18 +23,10 @@ $container['IIIF.Mapper'] = function () use ($container) {
     $resolver = $container['IIIF.Resolver'];
     return new HAB\Diglib\API\IIIF\MapperFactory($resolver);
 };
-    
+
 $container['IIIF.Filter'] = function () use ($container) {
     $filter = function ($req, $res, $nxt) use ($container) {
-        $resolver = $container['IIIF.Resolver'];
         $router = $container['router'];
-        $route = $req->getAttribute('route');
-        $args = $route->getArguments();
-
-        $objectLocation = $resolver->resolve($args['objectId']);
-        if (!$objectLocation) {
-            throw new Slim\Exception\NotFoundException($req, $res);
-        }
 
         $reqUri = $req->getUri();
         $basePath = sprintf('%s://%s', $reqUri->getScheme(), $reqUri->getAuthority());
