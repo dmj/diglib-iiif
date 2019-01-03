@@ -51,22 +51,27 @@ class METS2IIIFv2
 
     public function getManifest ()
     {
-        return $this->transform(array('entityType' => 'sc:Manifest'));
+        return $this->getEntity('sc:Manifest', null);
     }
 
     public function getCanvas ($canvasId)
     {
-        return $this->transform(array('entityType' => 'sc:Canvas', 'entityId' => $canvasId));
+        return $this->getEntity('sc:Canvas', $canvasId);
     }
 
     public function getAnnotation ($annotationId)
     {
-        return $this->transform(array('entityType' => 'oa:Annotation', 'entityId' => $annotationId));
+        return $this->getEntity('oa:Annotation', $annotationId);
     }
 
     public function getSequence ($sequenceId)
     {
-        return $this->transform(array('entityType' => 'sc:Sequence', 'entityId' => $sequenceId));
+        return $this->getEntity('sc:Sequence', $sequenceId);
+    }
+
+    public function getEntity ($entityType, $entityId)
+    {
+        return $this->transform(compact('entityType', 'entityId'));
     }
 
     public function getImageUri ($imageId)
