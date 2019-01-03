@@ -35,8 +35,6 @@ use Psr\Http\Message\ResponseInterface as Response;
  */
 class Sequence extends Controller
 {
-    protected static $jsonRoute = 'iiif.sequence.json';
-
     protected function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);

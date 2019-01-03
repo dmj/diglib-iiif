@@ -53,8 +53,6 @@ abstract class Controller
     protected $router;
     protected $mapper;
 
-    protected static $jsonRoute;
-
     public function __construct (Router $router, MapperFactory $mapper)
     {
         $this->router = $router;
@@ -80,17 +78,6 @@ abstract class Controller
     }
 
     abstract protected function getJSON (array $arguments);
-
-    public function __invoke (Request $request, Response $response, array $arguments)
-    {
-        $accept = array('application/json', 'application/ld+json');
-        $ctype = $this->findRequestedEntityContentType($request, $accept);
-        if (!$ctype) {
-            throw new Error\Http(406, array('Accept' => $accept));
-        }
-        $target = $this->router->pathFor(static::$jsonRoute, $arguments);
-        return $response->withRedirect($target, 303);
-    }
 
     protected function findRequestedEntityContentType (Request $request, $priorities)
     {

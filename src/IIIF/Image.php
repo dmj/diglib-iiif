@@ -42,7 +42,6 @@ use Slim\Http\Stream;
 class Image extends Controller
 {
     protected static $baseRoute = 'iiif.image';
-    protected static $jsonRoute = 'iiif.image.json';
 
     private $server;
 

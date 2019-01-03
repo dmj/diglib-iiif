@@ -35,8 +35,6 @@ use Psr\Http\Message\ResponseInterface as Response;
  */
 class Annotation extends Controller
 {
-    protected static $jsonRoute = 'iiif.annotation.json';
-
     protected function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);

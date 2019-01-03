@@ -41,6 +41,13 @@ $container['Slim.RouterBasePath'] = function () use ($container) {
     };
 };
 
+$container['IIIF.NonInformationResource'] = function () {
+    $controller = new HAB\Diglib\API\NonInformationResource();
+    $controller->addMediatype('application/json', 'json');
+    $controller->addMediatype('application/ld+json', 'json');
+    return $controller;
+};
+
 $container['IIIF.Manifest'] = function () use ($container) {
     $router = $container['router'];
     $mapper = $container['IIIF.Mapper'];

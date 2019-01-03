@@ -37,8 +37,6 @@ use RuntimeException;
  */
 class Manifest extends Controller
 {
-    protected static $jsonRoute = 'iiif.manifest.json';
-
     public function getJSON (array $arguments)
     {
         $mapper = $this->getMapper($arguments['objectId']);
