@@ -52,7 +52,7 @@ class NonInformationResource
         }
         $type = $negotiator->getBest($client, $this->mediatypes);
         if (!$type) {
-            throw new Error\Http(406, array_keys($this->extensions));
+            throw new Error\Http(406);
         }
         $extension = $this->extensions[$type->getValue()];
         $target = (string)$request->getUri() . $extension;
