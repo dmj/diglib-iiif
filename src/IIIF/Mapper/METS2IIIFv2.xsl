@@ -53,7 +53,7 @@
   <xsl:output indent="yes"/>
 
   <xsl:param name="serviceBaseUri"/>
-  <xsl:param name="entityType">sc:Manifest</xsl:param>
+  <xsl:param name="entityType">manifest</xsl:param>
   <xsl:param name="entityId"/>
 
   <xsl:variable name="objectId" select="translate(/mets:mets/@OBJID, '/', '_')"/>
@@ -68,16 +68,16 @@
 
   <xsl:template match="/">
     <xsl:choose>
-      <xsl:when test="$entityType = 'sc:Manifest'">
+      <xsl:when test="$entityType = 'manifest'">
         <xsl:call-template name="manifest"/>
       </xsl:when>
-      <xsl:when test="$entityType = 'sc:Canvas'">
+      <xsl:when test="$entityType = 'canvas'">
         <xsl:call-template name="canvas"/>
       </xsl:when>
-      <xsl:when test="$entityType = 'sc:Sequence'">
+      <xsl:when test="$entityType = 'sequence'">
         <xsl:call-template name="sequence"/>
       </xsl:when>
-      <xsl:when test="$entityType = 'oa:Annotation'">
+      <xsl:when test="$entityType = 'annotation'">
         <xsl:call-template name="annotation"/>
       </xsl:when>
     </xsl:choose>

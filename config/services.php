@@ -48,6 +48,12 @@ $container['IIIF.NonInformationResource'] = function () {
     return $controller;
 };
 
+$container['IIIF.Presentation'] = function () use ($container) {
+    $mapper = $container['IIIF.Mapper'];
+    $controller = new HAB\Diglib\API\IIIF\Presentation($mapper);
+    return $controller;
+};
+    
 $container['IIIF.Manifest'] = function () use ($container) {
     $router = $container['router'];
     $mapper = $container['IIIF.Mapper'];

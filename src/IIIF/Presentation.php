@@ -17,7 +17,7 @@
  * along with HAB Diglib IIIF.  If not, see <https://www.gnu.org/licenses/>.
  *
  * @author    David Maus <maus@hab.de>
- * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
+ * @copyright (c) 2019 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
 
@@ -26,20 +26,36 @@ namespace HAB\Diglib\API\IIIF;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-use RuntimeException;
+use HAB\Diglib\API\Error;
 
 /**
- * Provide the IIIF Manifest.
+ * Presentation API controller.
  *
  * @author    David Maus <maus@hab.de>
- * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
+ * @copyright (c) 2019 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class Manifest extends Controller
+class Presentation
 {
-    public function getJSON (array $arguments)
+    private $mapper;
+
+    public function __construct (MapperFactory $mapper)
     {
-        $mapper = $this->getMapper($arguments['objectId']);
-        return $this->encodeJSON($mapper->getManifest());
+        $this->mapper = $mapper;
+    }
+
+    public function __invoke (Request $request, Response $response, array $arguments)
+    {
+        $entityType = $arguments['entityType'];
+        $entityId = isset($arguments['entityId']) ? $arguments['entityId'] : null;
+
+        $mapper = $this->mapper->create($arguments['objectId']);
+
+        $payload = $mapper->getEntity($entityType, $entityId);
+        if (!$payload) {
+            throw new Error\Http(404);
+        }
+
+        return $response->withHeader('Content-Type', 'application/json')->write($payload);
     }
 }

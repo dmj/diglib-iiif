@@ -28,6 +28,7 @@ use DOMDocument;
 use RuntimeException;
 
 use HAB\XML\Transformation;
+use function HAB\XML\jsonxml2php;
 
 /**
  * Map METS to IIIF v2 API.
@@ -49,29 +50,17 @@ class METS2IIIFv2
         $this->serviceBaseUri = $serviceBaseUri;
     }
 
-    public function getManifest ()
-    {
-        return $this->getEntity('sc:Manifest', null);
-    }
-
-    public function getCanvas ($canvasId)
-    {
-        return $this->getEntity('sc:Canvas', $canvasId);
-    }
-
-    public function getAnnotation ($annotationId)
-    {
-        return $this->getEntity('oa:Annotation', $annotationId);
-    }
-
-    public function getSequence ($sequenceId)
-    {
-        return $this->getEntity('sc:Sequence', $sequenceId);
-    }
-
     public function getEntity ($entityType, $entityId)
     {
-        return $this->transform(compact('entityType', 'entityId'));
+        $document = $this->transform(compact('entityType', 'entityId'));
+        if ($document && $document->documentElement) {
+            $entity = jsonxml2php($document->documentElement);
+            $data = json_encode($entity, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new RuntimeException(json_last_error_msg());
+            }
+            return $data;
+        }
     }
 
     public function getImageUri ($imageId)
