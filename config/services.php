@@ -24,17 +24,26 @@ $container['IIIF.Mapper'] = function () use ($container) {
     return new HAB\Diglib\API\IIIF\MapperFactory($resolver);
 };
 
-$container['IIIF.Filter'] = function () use ($container) {
-    $filter = function ($req, $res, $nxt) use ($container) {
+$container['Slim.RouterBasePath'] = function () use ($container) {
+    // This is a workaround for Slim 3.x whose router does not provide
+    // a method to create an absolute URI
+    //
+    // See https://github.com/slimphp/Slim/issues/2258
+    //
+    return function ($req, $res, $nxt) use ($container) {
         $router = $container['router'];
-
         $reqUri = $req->getUri();
         $basePath = sprintf('%s://%s', $reqUri->getScheme(), $reqUri->getAuthority());
         $router->setBasePath(rtrim($basePath, '/'));
+        return $nxt($req, $res);
+    };
+};
 
+$container['IIIF.Filter'] = function () use ($container) {
+    $filter = function ($req, $res, $nxt) use ($container) {
+        $router = $container['router'];
         $serviceBaseUri = $router->pathFor('iiif');
         HAB\Diglib\API\IIIF\Mapper\METS2IIIFv2::$serviceBaseUri = rtrim($serviceBaseUri, '/');
-
         return $nxt($req, $res);
     };
     return $filter;
