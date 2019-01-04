@@ -48,6 +48,10 @@
       <skos:prefLabel xml:lang="de">Datensatz aktualisiert</skos:prefLabel>
       <skos:prefLabel xml:lang="en">Record Modified</skos:prefLabel>
     </rdf:Description>
+    <rdf:Description rdf:about="tag:maus@hab.de,2019:isDescribedBy">
+      <skos:prefLabel xml:lang="en">Catalog Description</skos:prefLabel>
+      <skos:prefLabel xml:lang="de">Katalogeintrag</skos:prefLabel>
+    </rdf:Description>
   </rdf:RDF>
 
   <xsl:output indent="yes"/>
@@ -143,6 +147,32 @@
         </xsl:call-template>
         <json:string key="value"><xsl:value-of select="normalize-space(substring-after(@LABEL, ','))"/></json:string>
       </json:map>
+
+      <!-- Catalog Record -->
+      <xsl:if test="starts-with(@OBJID, 'mss/') or starts-with(@OBJID, 'grafik/')">
+        <xsl:variable name="catalogUri">
+          <xsl:choose>
+            <xsl:when test="starts-with(@OBJID, 'mss/')">
+              <xsl:value-of select="concat('http://diglib.hab.de?db=mss&amp;id=', substring-after(@OBJID, 'mss/'))"/>
+            </xsl:when>
+            <xsl:when test="starts-with(@OBJID, 'grafik/')">
+              <xsl:value-of select="concat('http://diglib.hab.de?grafik=', substring-after(@OBJID, 'grafik/'))"/>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:variable>
+        <json:map>
+          <xsl:call-template name="metadata-label">
+            <xsl:with-param name="property">tag:maus@hab.de,2019:isDescribedBy</xsl:with-param>
+          </xsl:call-template>
+          <json:string key="value">
+            <xsl:text>&lt;a href="</xsl:text>
+            <xsl:value-of select="$catalogUri"/>
+            <xsl:text>" target="_blank"></xsl:text>
+            <xsl:value-of select="$catalogUri"/>
+            <xsl:text>&lt;/a></xsl:text>
+          </json:string>
+        </json:map>
+      </xsl:if>
 
       <xsl:if test="$rightsMD">
 
