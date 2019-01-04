@@ -1,5 +1,6 @@
 <mets OBJID="grafik/graph-res-b-81-2" LABEL="Herzog August Bibliothek Wolfenbüttel, Graph. Res. B: 81.2" PROFILE="tag:diglib.hab.de,2018:METS:v1"
       xmlns="http://www.loc.gov/METS/"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
       xmlns:dct="http://purl.org/dc/terms/"
       xmlns:exif="https://www.w3.org/2003/12/exif/ns#"
       xmlns:foaf="http://xmlns.com/foaf/0.1/"
@@ -21,6 +22,19 @@
         <rdf:Description>
           <exif:width rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2000</exif:width>
           <exif:height rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2192</exif:height>
+        </rdf:Description>
+      </xmlData>
+    </mdWrap>
+  </dmdSec>
+
+  <dmdSec ID="dmdSec.2">
+    <mdWrap MDTYPE="DC">
+      <xmlData>
+        <rdf:Description>
+          <dc:title>Ein Löwe ist in einem Netz gefangen, eine Maus knabbert es auf.</dc:title>
+          <dc:date>1626/1650</dc:date>
+          <dc:creator>M., C. (Stecher)</dc:creator>
+          <dc:identifier>Graph. Res. B: 81.2</dc:identifier>
         </rdf:Description>
       </xmlData>
     </mdWrap>
@@ -86,7 +100,7 @@
   </fileSec>
 
   <structMap TYPE="PHYSICAL">
-    <div TYPE="physSequence" ID="div.1">
+    <div TYPE="physSequence" ID="div.1" DMDID="dmdSec.2">
       <div ID="div.2" TYPE="page" DMDID="dmdSec.1">
         <fptr FILEID="file.1" ID="fptr.1"/>
       </div>
