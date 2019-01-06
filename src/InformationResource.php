@@ -31,9 +31,6 @@ use Negotiation\Negotiator;
 /**
  * Middleware for information resources.
  *
- * Redirects based on the Accept: header by appending a defined
- * extension to the current request URI.
- *
  * @author    David Maus <maus@hab.de>
  * @copyright (c) 2019 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
