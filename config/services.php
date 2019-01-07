@@ -60,7 +60,14 @@ $container['IIIF.InformationResource.JSON'] = function () {
     $middleware->addMediatype('application/ld+json', 'json');
     return $middleware;
 };
-    
+
+$container['IIIF.InformationResource.Image'] = function () {
+    $middleware = new HAB\Diglib\API\InformationResource();
+    $middleware->addMediatype('image/jpeg');
+    $middleware->addMediatype('image/png');
+    return $middleware;
+};
+
 $container['IIIF.Manifest'] = function () use ($container) {
     $router = $container['router'];
     $mapper = $container['IIIF.Mapper'];
@@ -102,10 +109,10 @@ $container['IIIF.ImageServer'] = function () use ($container) {
 };
 
 $container['IIIF.Image'] = function () use ($container) {
-    $router = $container['router'];
     $mapper = $container['IIIF.Mapper'];
     $server = $container['IIIF.ImageServer'];
-    $controller = new HAB\Diglib\API\IIIF\Image($router, $mapper, $server);
+    $router = $container['router'];
+    $controller = new HAB\Diglib\API\IIIF\Image($server, $mapper, $router);
     return $controller;
 };
 
