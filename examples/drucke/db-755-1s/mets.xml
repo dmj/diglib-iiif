@@ -1,0 +1,197 @@
+<mets OBJID="drucke/db-755-1s" PROFILE="tag:diglib.hab.de,2018:METS:v1"
+      LABEL="Herzog August Bibliothek Wolfenbüttel, M: Db 755 (1)"
+      xmlns="http://www.loc.gov/METS/"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:dct="http://purl.org/dc/terms/"
+      xmlns:exif="https://www.w3.org/2003/12/exif/ns#"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/"
+      xmlns:marcrel="http://id.loc.gov/vocabulary/relators/"
+      xmlns:mix="http://www.loc.gov/mix/v20"
+      xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <metsHdr CREATEDATE="2018-11-23T10:48:25Z" LASTMODDATE="2018-12-19T09:48:23Z">
+    <agent ROLE="CUSTODIAN" TYPE="ORGANIZATION">
+      <name>Herzog August Bibliothek Wolfenbüttel</name>
+    </agent>
+  </metsHdr>
+
+  <dmdSec ID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+    <mdWrap MDTYPE="OTHER" OTHERMDTYPE="RDF" MIMETYPE="application/rdf+xml">
+      <xmlData>
+        <rdf:Description>
+          <exif:width rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2602</exif:width>
+          <exif:height rdf:datatype="http://www.w3.org/2001/XMLSchema#int">2857</exif:height>
+        </rdf:Description>
+      </xmlData>
+    </mdWrap>
+  </dmdSec>
+  
+  <dmdSec ID="id.3589dd5f-742e-48c6-ba1e-b97669e99ee9">
+    <mdWrap MDTYPE="DC">
+      <xmlData>
+        <oai_dc:dc>
+          <dc:title>Rede, welche nach der Wiederaufrichtung des, vom Feuer stark beschädigten und hiedurch unwohnbar gemachten Bückingschen Hauses in Wolfenbüttel abgelesen wurde den 9. September 1758</dc:title>
+          <dc:format>8 Seiten, 4°</dc:format>
+          <dc:publisher>[Erscheinungsort nicht ermittelbar] : [Verlag nicht ermittelbar]</dc:publisher>
+          <dc:identifier>(vd18)1294727X</dc:identifier>
+          <dc:identifier>(fingerprint)chie chen ufil rmn. C 1758Q</dc:identifier>
+          <dc:language>ger</dc:language>
+          <dc:creator>Bücking, Heinrich Wilhelm, ca. 1709-nach 1765</dc:creator>
+          <dc:type>(aad)Gelegenheitsschrift</dc:type>
+          <dc:type>(aad)Rede</dc:type>oai_dc:dc>
+        </oai_dc:dc>
+      </xmlData>
+    </mdWrap>
+  </dmdSec>
+
+  <amdSec>
+    <techMD ID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+      <mdWrap MDTYPE="NISOIMG">
+        <xmlData>
+          <mix:mix>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>2602</mix:imageWidth>
+                <mix:imageHeight>2857</mix:imageHeight>
+              </mix:BasicImageCharacteristics>
+            </mix:BasicImageInformation>
+          </mix:mix>
+        </xmlData>
+      </mdWrap>
+    </techMD>
+
+    <rightsMD ID="id.25038441-622f-4aab-ad75-bf8a9e3ffffc">
+      <mdWrap MDTYPE="OTHER" OTHERMDTYPE="RDF" MIMETYPE="application/rdf+xml">
+        <xmlData>
+          <rdf:Description>
+            <dct:relation>
+              <foaf:Project>
+                <skos:prefLabel>Digitalisierung und Erschließung der im deutschen Sprachraum erschienenen Drucke des 18. Jahrhunderts (VD 18)</skos:prefLabel>
+              </foaf:Project>
+            </dct:relation>
+            <marcrel:fnd>
+              <dct:Agent>
+                <skos:prefLabel>Deutsche Forschungsgesellschaft (DFG)</skos:prefLabel>
+              </dct:Agent>
+            </marcrel:fnd>
+            <dct:rightsHolder>
+              <dct:Agent>
+                <skos:prefLabel>HAB Wolfenbüttel</skos:prefLabel>
+              </dct:Agent>
+            </dct:rightsHolder>
+            <dct:license>
+              <dct:LicenseDocument>
+                <foaf:homepage rdf:resource="http://diglib.hab.de?link=012"/>
+                <skos:prefLabel>CC BY SA 3.0 Deutschland</skos:prefLabel>
+              </dct:LicenseDocument>
+            </dct:license>
+          </rdf:Description>
+        </xmlData>
+      </mdWrap>
+    </rightsMD>
+  </amdSec>
+
+  <fileSec>
+    <fileGrp USE="MASTER" ADMID="id.25038441-622f-4aab-ad75-bf8a9e3ffffc">
+      <file ID="drucke_db-755-1s_00001" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00001.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00002" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00002.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00003" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00003.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00004" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00004.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00005" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00005.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00006" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00006.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00007" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00007.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00008" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00008.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00009" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00009.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00010" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00010.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00011" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00011.jpg"/>
+      </file>
+      <file ID="drucke_db-755-1s_00012" MIMETYPE="image/jpeg" ADMID="id.6880f0c3-c78a-4201-8b88-a1dd9325ed6f">
+        <FLocat LOCTYPE="URL" xlink:href="00012.jpg"/>
+      </file>
+    </fileGrp>
+  </fileSec>
+
+  <structMap TYPE="PHYSICAL">
+    <div TYPE="physSequence" ID="id.61407213-c91b-49fa-b687-1f8b0f5f328a" DMDID="id.3589dd5f-742e-48c6-ba1e-b97669e99ee9">
+      <div ID="id.5b5788c7-aca8-4231-b725-6475647154d3" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00001" ID="id.64456514-f855-4e88-a119-5b7fa7bf9097"/>
+      </div>
+      <div ID="id.f5ea8570-8762-406d-90f1-3667b5b9bc88" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00002" ID="d71881e7-fd82-4f1b-8b03-e03313c5f342"/>
+      </div>
+      <div ID="id.edc459f2-242a-4610-a885-3e6fc0ba21a2" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00003" ID="id.f07e2539-b0f0-4a43-8315-3ea2a773686d"/>
+      </div>
+      <div ID="id.ee419fef-1bd2-49f2-a229-7298adeaa1a1" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00004" ID="id.b2b79d5b-2107-43da-86ed-584156f89f68"/>
+      </div>
+      <div ID="id.95d1c796-398d-42f4-b2be-9e73d07c9a14" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00005" ID="id.8c53c3c9-f096-4b2c-a7e4-0ac42d6eef31"/>
+      </div>
+      <div ID="id.3eecda88-bb18-4e92-8f2c-ad67e07bc4f4" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00006" ID="id.8f23c599-3a16-4312-9c09-1270f0dea383"/>
+      </div>
+      <div ID="id.28068b98-e8f3-426d-aad3-3df51454717f" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00007" ID="id.be86a25b-c4d1-40fe-8cee-280eb20736d8"/>
+      </div>
+      <div ID="id.6de23174-279a-437c-8733-e435b974654b" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00008" ID="id.88a1fdce-42fb-4d41-863d-f5a554322bb0"/>
+      </div>
+      <div ID="id.b418b0da-a831-4a9b-ac34-bc78efcb4da4" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00009" ID="id.1eaff5b3-5a2b-47d1-b4fd-a41cd466f566"/>
+      </div>
+      <div ID="id.78dec051-0aa0-4222-98ce-7b77a485c520" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00010" ID="id.8dce49f6-f2e3-4bf2-92f2-ecc85589243f"/>
+      </div>
+      <div ID="id.32ee40a5-7f6d-436f-bc9b-d306a364f364" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00011" ID="id.7a031a23-1703-4d50-b1a8-b7e7d600d646"/>
+      </div>
+      <div ID="id.9c1a5b8a-1e26-4f1e-b8e2-b58c487ee529" TYPE="page" DMDID="id.ddd3d63a-fae1-487a-8572-794702a6f770">
+        <fptr FILEID="drucke_db-755-1s_00012" ID="id.c4970660-801c-4242-bbd4-57202e05dfa1"/>
+      </div>
+    </div>
+  </structMap>
+
+  <structMap TYPE="LOGICAL">
+    <div ID="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" TYPE="Monograph"/>
+  </structMap>
+
+  <structLink>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.5b5788c7-aca8-4231-b725-6475647154d3"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.f5ea8570-8762-406d-90f1-3667b5b9bc88"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.edc459f2-242a-4610-a885-3e6fc0ba21a2"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.ee419fef-1bd2-49f2-a229-7298adeaa1a1"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.95d1c796-398d-42f4-b2be-9e73d07c9a14"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.3eecda88-bb18-4e92-8f2c-ad67e07bc4f4"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.28068b98-e8f3-426d-aad3-3df51454717f"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.6de23174-279a-437c-8733-e435b974654b"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.b418b0da-a831-4a9b-ac34-bc78efcb4da4"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.78dec051-0aa0-4222-98ce-7b77a485c520"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.32ee40a5-7f6d-436f-bc9b-d306a364f364"/>
+    <smLink xlink:from="id.0b2dfbf6-cb22-4f0c-bb94-97a3f6dfc686" xlink:to="id.9c1a5b8a-1e26-4f1e-b8e2-b58c487ee529"/>
+  </structLink>
+</mets>
