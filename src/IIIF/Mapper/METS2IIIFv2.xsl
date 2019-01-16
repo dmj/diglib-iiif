@@ -52,6 +52,26 @@
       <skos:prefLabel xml:lang="en">Catalog Description</skos:prefLabel>
       <skos:prefLabel xml:lang="de">Katalogeintrag</skos:prefLabel>
     </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/creator">
+      <skos:prefLabel xml:lang="de">Hersteller/Verfasser</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Creator</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/contributor">
+      <skos:prefLabel xml:lang="de">Beiträger</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Contributor</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/date">
+      <skos:prefLabel xml:lang="de">Datierung</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Date</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/spatial">
+      <skos:prefLabel xml:lang="de">Ort</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Place</skos:prefLabel>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/language">
+      <skos:prefLabel xml:lang="de">Sprache</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Language</skos:prefLabel>
+    </rdf:Description>
   </rdf:RDF>
 
   <xsl:output indent="yes"/>
