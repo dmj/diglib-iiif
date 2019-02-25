@@ -23,4 +23,8 @@ $app->get('/iiif/object/', function ($req, $res, $args) {
     return $res->write('Nothing to see here...');
 })->setName('iiif');
 
+$app->get('/iiif/collection/project/mssox', 'IIIF.NonInformationResource');
+$app->get('/iiif/collection/project/mssox.json', 'IIIF.StaticCollection')
+    ->add('IIIF.InformationResource.JSON');
+
 $app->add('Slim.RouterBasePath');
