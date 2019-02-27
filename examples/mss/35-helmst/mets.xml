@@ -44,7 +44,14 @@
           <rdf:Description>
             <dct:relation>
               <foaf:Project>
-                <skos:prefLabel>The Polonsky Foundation Oxford-Wolfenbüttel German Manuscripts Digitization Project (2018-2021)</skos:prefLabel>
+                <skos:prefLabel xml:lang="en">
+                  Manuscripts from German-Speaking Lands - A Polonsky Foundation Digitization Project - A collaboration
+                  between the Bodleian Libraries and the Herzog August Bibliothek.
+                </skos:prefLabel>
+                <skos:prefLabel xml:lang="de">
+                  Handschriften aus dem deutschen Sprachraum. Ein Digitalisierungsprojekt der Polonsky Stiftung. Eine
+                  Zusammenarbeit zwischen der Universität Oxford und der Herzog August Bibliothek Wolfenbüttel
+                </skos:prefLabel>
               </foaf:Project>
             </dct:relation>
             <marcrel:fnd>
