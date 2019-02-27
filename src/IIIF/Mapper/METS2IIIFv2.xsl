@@ -134,6 +134,7 @@
 
   <xsl:template name="manifest-metadata">
     <xsl:variable name="rightsMD" select="mets:amdSec/mets:rightsMD[@ID = /mets:mets/mets:fileSec/mets:fileGrp[@USE = 'MASTER']/@ADMID]/mets:mdWrap/mets:xmlData/rdf:Description"/>
+    <xsl:variable name="dmdSec" select="mets:dmdSec[@ID = /mets:mets/mets:structMap[@TYPE = 'LOGICAL']/mets:div/@DMDID]/mets:mdWrap/mets:xmlData/rdf:Description"/>
 
     <xsl:if test="$rightsMD/dct:rightsHolder/dct:Agent | $rightsMD/dct:license/dct:LicenseDocument">
       <json:string key="attribution">
@@ -167,6 +168,26 @@
         </xsl:call-template>
         <json:string key="value"><xsl:value-of select="normalize-space(substring-after(@LABEL, ','))"/></json:string>
       </json:map>
+
+      <!-- Descriptive Metadata -->
+      <xsl:if test="$dmdSec">
+        <xsl:if test="$dmdSec/dct:spatial">
+          <json:map>
+            <xsl:call-template name="metadata-label">
+              <xsl:with-param name="property">http://purl.org/dc/terms/spatial</xsl:with-param>
+            </xsl:call-template>
+            <json:string key="value"><xsl:value-of select="$dmdSec/dct:spatial/dct:Location/skos:prefLabel"/></json:string>
+            </json:map>
+        </xsl:if>
+        <xsl:if test="$dmdSec/dct:date">
+          <json:map>
+            <xsl:call-template name="metadata-label">
+              <xsl:with-param name="property">http://purl.org/dc/terms/date</xsl:with-param>
+            </xsl:call-template>
+            <json:string key="value"><xsl:value-of select="normalize-space($dmdSec/dct:date)"/></json:string>
+          </json:map>
+        </xsl:if>
+      </xsl:if>
 
       <!-- Catalog Record -->
       <xsl:if test="starts-with(@OBJID, 'mss/') or starts-with(@OBJID, 'grafik/')">
