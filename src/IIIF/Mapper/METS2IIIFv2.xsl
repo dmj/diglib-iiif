@@ -176,8 +176,10 @@
             <xsl:call-template name="metadata-label">
               <xsl:with-param name="property">http://purl.org/dc/terms/spatial</xsl:with-param>
             </xsl:call-template>
-            <json:string key="value"><xsl:value-of select="$dmdSec/dct:spatial/dct:Location/skos:prefLabel"/></json:string>
-            </json:map>
+            <xsl:call-template name="metadata-value">
+              <xsl:with-param name="labels" select="$dmdSec/dct:spatial/dct:Location/skos:prefLabel"/>
+            </xsl:call-template>
+          </json:map>
         </xsl:if>
         <xsl:if test="$dmdSec/dct:date">
           <json:map>
@@ -223,7 +225,9 @@
             <xsl:call-template  name="metadata-label">
               <xsl:with-param name="property">http://purl.org/dc/terms/relation</xsl:with-param>
             </xsl:call-template>
-            <json:string key="value"><xsl:value-of select="normalize-space($rightsMD/dct:relation/foaf:Project/skos:prefLabel)"/></json:string>
+            <xsl:call-template name="metadata-value">
+              <xsl:with-param name="labels" select="$rightsMD/dct:relation/foaf:Project/skos:prefLabel"/>
+            </xsl:call-template>
           </json:map>
         </xsl:if>
 
@@ -260,6 +264,25 @@
       </xsl:if>
 
     </json:array>
+  </xsl:template>
+
+  <xsl:template name="metadata-value">
+    <xsl:param name="labels"/>
+    <xsl:choose>
+      <xsl:when test="count($labels) = 1">
+        <json:string key="value"><xsl:value-of select="normalize-space($labels)"/></json:string>
+      </xsl:when>
+      <xsl:otherwise>
+        <json:array key="value">
+          <xsl:for-each select="$labels">
+            <json:map>
+              <json:string key="@language"><xsl:value-of select="@xml:lang"/></json:string>
+              <json:string key="@value"><xsl:value-of select="normalize-space()"/></json:string>
+            </json:map>
+          </xsl:for-each>
+        </json:array>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="metadata-label">
