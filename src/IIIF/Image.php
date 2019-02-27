@@ -55,7 +55,7 @@ class Image
     public function getImageInfo (Request $request, Response $response, array $arguments)
     {
         $imageUri = $this->resolveImageUri($arguments['objectId'], $arguments['entityId']);
-        if (!file_exists($imageUri) || !is_readable($imageUri)) {
+        if (!$imageUri) {
             throw new Error\Http(404);
         }
 
@@ -84,7 +84,7 @@ class Image
     public function getImageStream (Request $request, Response $response, array $arguments)
     {
         $imageUri = $this->resolveImageUri($arguments['objectId'], $arguments['entityId']);
-        if (!file_exists($imageUri) || !is_readable($imageUri)) {
+        if (!$imageUri) {
             throw new Error\Http(404);
         }
 
@@ -108,7 +108,14 @@ class Image
         $location = $this->mapper->getObjectLocation($objectId);
         $mapper = $this->mapper->create($objectId);
         $image = $mapper->getImageUri($entityId);
-        return rtrim($location, '/\\') . DIRECTORY_SEPARATOR . $image;
+        if (preg_match('@https?://@u', $image)) {
+            return $image;
+        } else {
+            $image = rtrim($location, '/\\') . DIRECTORY_SEPARATOR . $image;
+            if (file_exists($image) && is_readable($image)) {
+                return  $image;
+            }
+        }
     }
 
 }
