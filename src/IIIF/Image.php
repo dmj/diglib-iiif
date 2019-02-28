@@ -76,6 +76,7 @@ class Image
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException(json_last_error_msg());
         }
+
         return $response->write($payload);
     }
 
@@ -86,18 +87,11 @@ class Image
             throw new Error\Http(404);
         }
 
-        try {
-            $image = $this->server->getImageStream($imageUri, $arguments['ops']);
-        } catch (ImageServer\UnsupportedFeature $e) {
-            throw new Error\Http(400, array(), $e);
-        }
-
+        $response = $this->server->getImageStream($imageUri, $arguments['ops']);
         if ($complianceLevelUri = $this->server->getComplianceLevel()) {
             $response = $response->withHeader('Link', sprintf('<%s>; rel="profile"', $complianceLevelUri));
         }
 
-        $response = $response->withHeader('Content-Type', $image->getMediatype());
-        $response = $response->withBody(new Stream($image->getStream()));
         return $response;
     }
 
