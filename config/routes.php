@@ -4,6 +4,8 @@ $app->get('/object/{objectId}/image/{entityId}.json', 'IIIF.Image:getImageInfo')
     ->add('IIIF.InformationResource.JSON');
 $app->get('/object/{objectId}/image/{entityId}/info.json', 'IIIF.Image:getImageInfo')
     ->add('IIIF.InformationResource.JSON');
+$app->get('/object/{objectId}/image/{entityId}/', 'IIIF.Image:getImageInfo')
+    ->add('IIIF.InformationResource.JSON');
 $app->get('/object/{objectId}/image/{entityId}/{ops:.*}', 'IIIF.Image:getImageStream');
 
 $app->get('/object/{objectId}/image/{entityId}', 'IIIF.NonInformationResource')
