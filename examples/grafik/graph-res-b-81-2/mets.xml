@@ -104,6 +104,9 @@
       <div ID="div.2" TYPE="page" DMDID="dmdSec.1">
         <fptr FILEID="file.1" ID="fptr.1"/>
       </div>
+      <div ID="div.4" TYPE="page" DMDID="dmdSec.1">
+        <fptr FILEID="file.2" ID="fptr.2"/>
+      </div>
     </div>
   </structMap>
 
@@ -113,5 +116,6 @@
 
   <structLink>
     <smLink xlink:from="div.2" xlink:to="div.3"/>
+    <smLink xlink:from="div.4" xlink:to="div.3"/>
   </structLink>
 </mets>
