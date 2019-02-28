@@ -13,6 +13,7 @@
         "hab/resolver": "^1.0",
         "tuupola/cors-middleware": "^0.9.1",
         "monolog/monolog": "^1.24",
-        "hab/php-image-server": "dev-master"
+        "hab/php-image-server": "dev-master",
+        "guzzlehttp/guzzle": "~6.0"
     }
 }
