@@ -23,6 +23,10 @@
 
 namespace HAB\Diglib\API\IIIF;
 
+use Slim\Http\Response;
+use Slim\Http\Headers;
+use Slim\Http\Stream;
+
 /**
  * Connects a IIIF Image server.
  *
@@ -38,6 +42,14 @@ class NativeBridge extends ImageServer\Native implements ImageServer
     {
         parent::__construct($features);
         $this->mapper = $mapper;
+    }
+
+    public function getImageStream ($imageUri, $imageParameters)
+    {
+        $stream = parent::getImageStream($imageUri, $imageParameters);
+        $headers = new Header(array('Content-Type' => $stream->getMediaType()));
+        $body = new Stream($stream->getStream());
+        return new Response(200, $headers, $body);
     }
 
     public function getImageUri ($objectId, $imageId)
