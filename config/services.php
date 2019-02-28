@@ -1,11 +1,11 @@
 <?php
 
 $container = $app->getContainer();
-$container['errorHandler'] = function ($container) {
-    $handler = new HAB\Diglib\API\Error\Handler();
-    $handler->setLogger($container['Logger']);
-    return $handler;
-};
+// $container['errorHandler'] = function ($container) {
+//     $handler = new HAB\Diglib\API\Error\Handler();
+//     $handler->setLogger($container['Logger']);
+//     return $handler;
+// };
 
 $container['Logger'] = function () use ($container) {
     $logger = new Monolog\Logger('diglib-iiif');
@@ -77,7 +77,9 @@ $container['IIIF.ImageServer.Features'] = function () use ($container) {
 $container['IIIF.ImageServer'] = function () use ($container) {
     $features = $container['IIIF.ImageServer.Features'];
     $mapper = $container['IIIF.Mapper'];
-    $server = new HAB\Diglib\API\IIIF\NativeBridge($features, $mapper);
+    $uri = $container['IIIF.IIPImage.URL'];
+    // $server = new HAB\Diglib\API\IIIF\NativeBridge($features, $mapper);
+    $server = new HAB\Diglib\API\IIIF\IIPImage($features, $mapper, $uri);
     return $server;
 };
 
