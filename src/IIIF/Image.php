@@ -43,18 +43,16 @@ use RuntimeException;
 class Image
 {
     private $server;
-    private $mapper;
 
-    public function __construct (ImageServer $server, MapperFactory $mapper, Router $router)
+    public function __construct (ImageServer $server, Router $router)
     {
         $this->server = $server;
-        $this->mapper = $mapper;
         $this->router = $router;
     }
 
     public function getImageInfo (Request $request, Response $response, array $arguments)
     {
-        $imageUri = $this->resolveImageUri($arguments['objectId'], $arguments['entityId']);
+        $imageUri = $this->server->getImageUri($arguments['objectId'], $arguments['entityId']);
         if (!$imageUri) {
             throw new Error\Http(404);
         }
@@ -73,7 +71,7 @@ class Image
 
         $info['@id'] = $this->router->pathFor('iiif.image', $arguments);
         $info['profile'] = array($this->server->getComplianceLevel(), $profile);
-        
+
         $payload = json_encode($info, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException(json_last_error_msg());
@@ -83,7 +81,7 @@ class Image
 
     public function getImageStream (Request $request, Response $response, array $arguments)
     {
-        $imageUri = $this->resolveImageUri($arguments['objectId'], $arguments['entityId']);
+        $imageUri = $this->server->getImageUri($arguments['objectId'], $arguments['entityId']);
         if (!$imageUri) {
             throw new Error\Http(404);
         }
@@ -101,21 +99,6 @@ class Image
         $response = $response->withHeader('Content-Type', $image->getMediatype());
         $response = $response->withBody(new Stream($image->getStream()));
         return $response;
-    }
-
-    private function resolveImageUri ($objectId, $entityId)
-    {
-        $location = $this->mapper->getObjectLocation($objectId);
-        $mapper = $this->mapper->create($objectId);
-        $image = $mapper->getImageUri($entityId);
-        if (preg_match('@https?://@u', $image)) {
-            return $image;
-        } else {
-            $image = rtrim($location, '/\\') . DIRECTORY_SEPARATOR . $image;
-            if (file_exists($image) && is_readable($image)) {
-                return  $image;
-            }
-        }
     }
 
 }

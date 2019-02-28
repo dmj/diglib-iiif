@@ -31,4 +31,27 @@ namespace HAB\Diglib\API\IIIF;
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
 class NativeBridge extends ImageServer\Native implements ImageServer
-{}
+{
+    private $mapper;
+
+    public function __construct (ImageServer\FeatureSet $features, MapperFactory $mapper)
+    {
+        parent::__construct($features);
+        $this->mapper = $mapper;
+    }
+
+    public function getImageUri ($objectId, $imageId)
+    {
+        $location = $this->mapper->getObjectLocation($objectId);
+        $mapper = $this->mapper->create($objectId);
+        $image = $mapper->getImageUri($imageId);
+        if (preg_match('@https?://@u', $image)) {
+            return $image;
+        } else {
+            $image = rtrim($location, '/\\') . DIRECTORY_SEPARATOR . $image;
+            if (file_exists($image) && is_readable($image)) {
+                return  $image;
+            }
+        }
+    }
+}
