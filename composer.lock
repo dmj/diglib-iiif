@@ -43,15 +43,15 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmj/php-iiif-image-server.git",
-                "reference": "a3dd1e3b62718f1b22f6fcc383f76159e45f5f72"
+                "reference": "9884842a070ace4b025cbcce25f4befedfd18067"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmj/php-iiif-image-server/zipball/a3dd1e3b62718f1b22f6fcc383f76159e45f5f72",
-                "reference": "a3dd1e3b62718f1b22f6fcc383f76159e45f5f72",
+                "url": "https://api.github.com/repos/dmj/php-iiif-image-server/zipball/9884842a070ace4b025cbcce25f4befedfd18067",
+                "reference": "9884842a070ace4b025cbcce25f4befedfd18067",
                 "shasum": ""
             },
-            "require": {
+            "require-dev": {
                 "ext-gd": "*"
             },
             "type": "library",
@@ -64,7 +64,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2019-01-07T13:05:38+00:00"
+            "time": "2019-02-28T13:23:30+00:00"
         },
         {
             "name": "hab/resolver",
@@ -660,16 +660,16 @@
         },
         {
             "name": "slim/slim",
-            "version": "3.11.0",
+            "version": "3.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim.git",
-                "reference": "d378e70431e78ee92ee32ddde61ecc72edf5dc0a"
+                "reference": "f4947cc900b6e51cbfda58b9f1247bca2f76f9f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim/zipball/d378e70431e78ee92ee32ddde61ecc72edf5dc0a",
-                "reference": "d378e70431e78ee92ee32ddde61ecc72edf5dc0a",
+                "url": "https://api.github.com/repos/slimphp/Slim/zipball/f4947cc900b6e51cbfda58b9f1247bca2f76f9f0",
+                "reference": "f4947cc900b6e51cbfda58b9f1247bca2f76f9f0",
                 "shasum": ""
             },
             "require": {
@@ -727,7 +727,7 @@
                 "micro",
                 "router"
             ],
-            "time": "2018-09-16T10:54:21+00:00"
+            "time": "2019-01-15T13:21:25+00:00"
         },
         {
             "name": "tuupola/callable-handler",
@@ -784,16 +784,16 @@
         },
         {
             "name": "tuupola/cors-middleware",
-            "version": "0.9.1",
+            "version": "0.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tuupola/cors-middleware.git",
-                "reference": "bd36c15e1abc63f300a004fa7da850ba845b92a5"
+                "reference": "75c76aa9dae47ec37c06c5940d2135c7d668fd93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tuupola/cors-middleware/zipball/bd36c15e1abc63f300a004fa7da850ba845b92a5",
-                "reference": "bd36c15e1abc63f300a004fa7da850ba845b92a5",
+                "url": "https://api.github.com/repos/tuupola/cors-middleware/zipball/75c76aa9dae47ec37c06c5940d2135c7d668fd93",
+                "reference": "75c76aa9dae47ec37c06c5940d2135c7d668fd93",
                 "shasum": ""
             },
             "require": {
@@ -808,7 +808,7 @@
                 "equip/dispatch": "^2.0",
                 "overtrue/phplint": "^1.0",
                 "phpunit/phpunit": "^7.4",
-                "squizlabs/php_codesniffer": "^3.2",
+                "squizlabs/php_codesniffer": "^3.3.1",
                 "zendframework/zend-diactoros": "^1.0|^2.0"
             },
             "type": "library",
@@ -837,20 +837,20 @@
                 "psr-15",
                 "psr-7"
             ],
-            "time": "2018-10-15T12:34:33+00:00"
+            "time": "2019-02-25T13:06:11+00:00"
         },
         {
             "name": "tuupola/http-factory",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tuupola/http-factory.git",
-                "reference": "60f44b13e5363fbe6876b5b5edc03af5e4cb6294"
+                "reference": "1fd4eaafe3a6e0c26d288e3b3e17d777ea1991bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tuupola/http-factory/zipball/60f44b13e5363fbe6876b5b5edc03af5e4cb6294",
-                "reference": "60f44b13e5363fbe6876b5b5edc03af5e4cb6294",
+                "url": "https://api.github.com/repos/tuupola/http-factory/zipball/1fd4eaafe3a6e0c26d288e3b3e17d777ea1991bf",
+                "reference": "1fd4eaafe3a6e0c26d288e3b3e17d777ea1991bf",
                 "shasum": ""
             },
             "require": {
@@ -894,7 +894,7 @@
                 "psr-17",
                 "psr-7"
             ],
-            "time": "2018-12-22T06:14:23+00:00"
+            "time": "2019-01-11T15:13:01+00:00"
         },
         {
             "name": "willdurand/negotiation",
