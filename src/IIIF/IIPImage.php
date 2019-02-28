@@ -17,82 +17,60 @@
  * along with HAB Diglib IIIF.  If not, see <https://www.gnu.org/licenses/>.
  *
  * @author    David Maus <maus@hab.de>
- * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
+ * @copyright (c) 2019 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
 
 namespace HAB\Diglib\API\IIIF;
 
-use HAB\Diglib\API\Error;
-
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
-
-use Slim\Interfaces\RouterInterface as Router;
-
-use Slim\Exception\NotFoundException;
-use Slim\Http\Stream;
-
 use RuntimeException;
 
 /**
- * IIIF Image API using a IIPImage backend.
+ * Connect to IIPImage server.
  *
  * @author    David Maus <maus@hab.de>
- * @copyright (c) 2018 by Herzog August Bibliothek Wolfenbüttel
+ * @copyright (c) 2019 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class IIPImage extends Controller
+class IIPImage extends ImageServer\Server implements ImageServer
 {
-    protected static $jsonRoute = 'iiif.image.json';
-
+    private $mapper;
     private $iipImageUri;
 
-    public function __construct (Router $router, Resolver $resolver, $iipImageUri)
+    public function __construct (ImageServer\FeatureSet $features, MapperFactory $mapper, $iipImageUri)
     {
-        parent::__construct($router, $resolver);
+        parent::__construct($features);
+        $this->mapper = $mapper;
         $this->iipImageUri = $iipImageUri;
     }
 
-    public function asJPEG (Request $request, Response $response, array $arguments)
+    public function getImageStream ($imageUri, $imageParameters)
     {
-        $accept = array('image/jpeg');
-        $ctype = $this->findRequestedEntityContentType($request, $accept);
-        if (!$ctype) {
-            throw new Error\Http(406, array('Accept' => $accept));
-        }
-
-        $mapper = $this->getMapper($arguments['objectId']);
-        $imageUri = $mapper->getImageUri($arguments['entityId']);
-
-        $imageUri = sprintf('%s?IIIF=/%s/%s/%s', $this->iipImageUri, strtr($arguments['objectId'], '_', '/'), $imageUri, $arguments['ops']);
-
-        $image = new Stream(fopen($imageUri, 'r'));
-        return $response
-            ->withStatus(200)
-            ->withHeader('Content-Type', 'image/jpeg')
-            ->withBody($image);
+        $remoteUri = $this->iipImageUri . '?IIIF=' . $imageUri . '/' . $imageParameters;
+        $source = fopen($remoteUri, 'r');
+        $stream = new ImageServer\ImageStream($source, null);
+        return $stream;
     }
 
-    protected function getJSON (array $arguments)
+    public function getImageInfo ($imageUri)
     {
-        $mapper = $this->getMapper($arguments['objectId']);
-        $imageUri = $mapper->getImageUri($arguments['entityId']);
-
-        $iipImageUri = sprintf('%s?IIIF=/%s/%s/info.json', $this->iipImageUri, strtr($arguments['objectId'], '_', '/'), $imageUri);
-
-        $json = json_decode(@file_get_contents($iipImageUri), JSON_OBJECT_AS_ARRAY);
+        $remoteUri = $this->iipImageUri . '?IIIF=' . $imageUri . '/info.json';
+        $info = file_get_contents($remoteUri);
+        $info = json_decode($info, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException(json_last_error_msg());
         }
-
-        $json['@id'] = $this->router->pathFor(static::$jsonRoute, $arguments);
-
-        $json = json_encode($json, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException(json_last_error_msg());
-        }
-
-        return $json;
+        return $info;
     }
+
+    public function getImageUri ($objectId, $imageId)
+    {
+        $location = $this->mapper->getObjectLocation($objectId);
+        $mapper = $this->mapper->create($objectId);
+        $image = $mapper->getImageUri($imageId);
+        if ($image) {
+            return strtr($objectId, '_', '/') . '/' . $image;
+        }
+    }
+
 }
