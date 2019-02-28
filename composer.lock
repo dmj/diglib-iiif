@@ -43,12 +43,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmj/php-iiif-image-server.git",
-                "reference": "a8c66e8ecaebfa48278274e3cee0d832c7c1b74c"
+                "reference": "e6794626035750ff8411e327a4825e9878ef604a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmj/php-iiif-image-server/zipball/a8c66e8ecaebfa48278274e3cee0d832c7c1b74c",
-                "reference": "a8c66e8ecaebfa48278274e3cee0d832c7c1b74c",
+                "url": "https://api.github.com/repos/dmj/php-iiif-image-server/zipball/e6794626035750ff8411e327a4825e9878ef604a",
+                "reference": "e6794626035750ff8411e327a4825e9878ef604a",
                 "shasum": ""
             },
             "type": "library",
@@ -61,7 +61,7 @@
             "license": [
                 "AGPL-3.0-or-later"
             ],
-            "time": "2019-02-28T13:26:07+00:00"
+            "time": "2019-02-28T13:31:19+00:00"
         },
         {
             "name": "hab/resolver",
