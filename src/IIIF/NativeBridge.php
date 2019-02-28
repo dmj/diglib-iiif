@@ -47,7 +47,7 @@ class NativeBridge extends ImageServer\Native implements ImageServer
     public function getImageStream ($imageUri, $imageParameters)
     {
         $stream = parent::getImageStream($imageUri, $imageParameters);
-        $headers = new Header(array('Content-Type' => $stream->getMediaType()));
+        $headers = new Headers(array('Content-Type' => $stream->getMediaType()));
         $body = new Stream($stream->getStream());
         return new Response(200, $headers, $body);
     }
