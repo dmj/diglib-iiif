@@ -68,34 +68,6 @@ $container['IIIF.InformationResource.Image'] = function () {
     return $middleware;
 };
 
-$container['IIIF.Manifest'] = function () use ($container) {
-    $router = $container['router'];
-    $mapper = $container['IIIF.Mapper'];
-    $controller = new HAB\Diglib\API\IIIF\Manifest($router, $mapper);
-    return $controller;
-};
-
-$container['IIIF.Canvas'] = function () use ($container) {
-    $router = $container['router'];
-    $mapper = $container['IIIF.Mapper'];
-    $controller = new HAB\Diglib\API\IIIF\Canvas($router, $mapper);
-    return $controller;
-};
-
-$container['IIIF.Annotation'] = function () use ($container) {
-    $router = $container['router'];
-    $mapper = $container['IIIF.Mapper'];
-    $controller = new HAB\Diglib\API\IIIF\Annotation($router, $mapper);
-    return $controller;
-};
-
-$container['IIIF.Sequence'] = function () use ($container) {
-    $router = $container['router'];
-    $mapper = $container['IIIF.Mapper'];
-    $controller = new HAB\Diglib\API\IIIF\Sequence($router, $mapper);
-    return $controller;
-};
-
 $container['IIIF.ImageServer.Features'] = function () use ($container) {
     $base = new HAB\Diglib\API\IIIF\ImageServer\Level2();
     $features = new HAB\Diglib\API\IIIF\ImageServer\Custom($base);
