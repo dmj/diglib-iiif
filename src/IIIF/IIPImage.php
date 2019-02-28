@@ -23,6 +23,8 @@
 
 namespace HAB\Diglib\API\IIIF;
 
+use GuzzleHttp\Client;
+
 use RuntimeException;
 
 /**
@@ -34,6 +36,7 @@ use RuntimeException;
  */
 class IIPImage extends ImageServer\Server implements ImageServer
 {
+    private $client;
     private $mapper;
     private $iipImageUri;
 
@@ -42,21 +45,21 @@ class IIPImage extends ImageServer\Server implements ImageServer
         parent::__construct($features);
         $this->mapper = $mapper;
         $this->iipImageUri = $iipImageUri;
+        $this->client = new Client();
     }
 
     public function getImageStream ($imageUri, $imageParameters)
     {
         $remoteUri = $this->iipImageUri . '?IIIF=' . $imageUri . '/' . $imageParameters;
-        $source = fopen($remoteUri, 'r');
-        $stream = new ImageServer\ImageStream($source, null);
-        return $stream;
+        $response = $this->request($remoteUri);
+        return $response;
     }
 
     public function getImageInfo ($imageUri)
     {
         $remoteUri = $this->iipImageUri . '?IIIF=' . $imageUri . '/info.json';
-        $info = file_get_contents($remoteUri);
-        $info = json_decode($info, true);
+        $response = $this->request($remoteUri);
+        $info = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException(json_last_error_msg());
         }
@@ -71,6 +74,12 @@ class IIPImage extends ImageServer\Server implements ImageServer
         if ($image) {
             return strtr($objectId, '_', '/') . '/' . $image;
         }
+    }
+
+    private function request ($remoteUri)
+    {
+        $response = $this->client->get($remoteUri);
+        return $response;
     }
 
 }
