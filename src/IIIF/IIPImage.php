@@ -23,7 +23,11 @@
 
 namespace HAB\Diglib\API\IIIF;
 
+use HAB\Diglib\API\Error;
+
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 
 use RuntimeException;
 
@@ -78,7 +82,13 @@ class IIPImage extends ImageServer\Server implements ImageServer
 
     private function request ($remoteUri)
     {
-        $response = $this->client->get($remoteUri);
+        try {
+            $response = $this->client->get($remoteUri);
+        } catch (ClientException $e) {
+            return $e->getResponse();
+        } catch (ServerException $e) {
+            throw new Error\Http(502);
+        }
         return $response;
     }
 
