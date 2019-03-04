@@ -136,6 +136,8 @@
     <xsl:variable name="rightsMD" select="mets:amdSec/mets:rightsMD[@ID = /mets:mets/mets:fileSec/mets:fileGrp[@USE = 'MASTER']/@ADMID]/mets:mdWrap/mets:xmlData/rdf:Description"/>
     <xsl:variable name="dmdSec" select="mets:dmdSec[@ID = /mets:mets/mets:structMap[@TYPE = 'LOGICAL']/mets:div/@DMDID]/mets:mdWrap/mets:xmlData/rdf:Description"/>
 
+    <json:string key="viewingHint">paged</json:string>
+
     <xsl:if test="$rightsMD/dct:rightsHolder/dct:Agent | $rightsMD/dct:license/dct:LicenseDocument">
       <json:string key="attribution">
         <xsl:value-of select="normalize-space($rightsMD/dct:rightsHolder/dct:Agent/skos:prefLabel)"/>
@@ -367,10 +369,10 @@
 
       <xsl:variable name="canvasDesc" select="key('dmd-by-id', @DMDID)//rdf:Description"/>
       <json:number key="height">
-        <xsl:value-of select="$canvasDesc/exif:width"/>
+        <xsl:value-of select="$canvasDesc/exif:height"/>
       </json:number>
       <json:number key="width">
-        <xsl:value-of select="$canvasDesc/exif:height"/>
+        <xsl:value-of select="$canvasDesc/exif:width"/>
       </json:number>
 
       <json:array key="images">
