@@ -78,8 +78,8 @@ $container['IIIF.ImageServer'] = function () use ($container) {
     $features = $container['IIIF.ImageServer.Features'];
     $mapper = $container['IIIF.Mapper'];
     $uri = $container['IIIF.IIPImage.URL'];
-    // $server = new HAB\Diglib\API\IIIF\NativeBridge($features, $mapper);
-    $server = new HAB\Diglib\API\IIIF\IIPImage($features, $mapper, $uri);
+    $server = new HAB\Diglib\API\IIIF\NativeBridge($features, $mapper);
+    // $server = new HAB\Diglib\API\IIIF\IIPImage($features, $mapper, $uri);
     return $server;
 };
 
