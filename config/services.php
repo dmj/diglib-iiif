@@ -1,11 +1,11 @@
 <?php
 
 $container = $app->getContainer();
-// $container['errorHandler'] = function ($container) {
-//     $handler = new HAB\Diglib\API\Error\Handler();
-//     $handler->setLogger($container['Logger']);
-//     return $handler;
-// };
+$container['errorHandler'] = function ($container) {
+    $handler = new HAB\Diglib\API\Error\Handler();
+    $handler->setLogger($container['Logger']);
+    return $handler;
+};
 
 $container['Logger'] = function () use ($container) {
     $logger = new Monolog\Logger('diglib-iiif');
@@ -74,12 +74,14 @@ $container['IIIF.ImageServer.Features'] = function () use ($container) {
     $features->addRotationFeatures(HAB\Diglib\API\IIIF\ImageServer\Rotation::rotationArbitrary);
     return $features;
 };
+
+$container['IIIF.IIPImage.URL'] = 'http://127.0.0.1:8080/fcgi-bin/iipsrv.fcgi';
 $container['IIIF.ImageServer'] = function () use ($container) {
     $features = $container['IIIF.ImageServer.Features'];
     $mapper = $container['IIIF.Mapper'];
     $uri = $container['IIIF.IIPImage.URL'];
-    $server = new HAB\Diglib\API\IIIF\NativeBridge($features, $mapper);
-    // $server = new HAB\Diglib\API\IIIF\IIPImage($features, $mapper, $uri);
+    // $server = new HAB\Diglib\API\IIIF\NativeBridge($features, $mapper);
+    $server = new HAB\Diglib\API\IIIF\IIPImage($features, $mapper, $uri);
     return $server;
 };
 
@@ -92,28 +94,28 @@ $container['IIIF.Image'] = function () use ($container) {
 
 $container['IIIF.StaticCollection'] = function () use ($container) {
     $members = array(
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 35 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_35-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 173 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_173-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 1297 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_1297-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 268 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_268-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 272 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_272-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 282 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_282-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 309 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_309-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 310 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_310-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 369 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_369-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 373 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_373-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 203 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_203-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 529 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_529-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 533 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_533-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 547 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_547-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 552 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_552-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 556 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_556-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 567 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_567-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 586 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_586-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 587 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_587-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 560 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_560-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 212 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_212-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 238 Helmst.', 'id' => 'http://iiif.hab.de/object/mss_238-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 35 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_35-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 173 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_173-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 1297 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_1297-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 268 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_268-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 272 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_272-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 282 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_282-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 309 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_309-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 310 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_310-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 369 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_369-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 373 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_373-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 203 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_203-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 529 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_529-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 533 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_533-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 547 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_547-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 552 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_552-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 556 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_556-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 567 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_567-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 586 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_586-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 587 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_587-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 560 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_560-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 212 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_212-helmst/manifest', '@type' => 'sc:Manifest'),
+        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 238 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_238-helmst/manifest', '@type' => 'sc:Manifest'),
     );
     $collection = array(
         '@context' => 'http://iiif.io/api/presentation/2/context.json',
@@ -123,15 +125,6 @@ $container['IIIF.StaticCollection'] = function () use ($container) {
         'members' => $members,
     );
     return new HAB\Diglib\API\IIIF\StaticCollection($collection);
-};
-
-$container['IIIF.IIPImage.URL'] = 'http://127.0.0.1:8080/fcgi-bin/iipsrv.fcgi';
-$container['IIIF.IIPImage'] = function () use ($container) {
-    $router = $container['router'];
-    $resolver = $container['IIIF.Resolver'];
-    $controller = new HAB\Diglib\API\IIIF\IIPImage($router, $resolver, $container['IIIF.IIPImage.URL']);
-    $controller->setLogger($container['Logger']);
-    return $controller;
 };
 
 $container['CORS.Middleware'] = function () use ($container) {
