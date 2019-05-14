@@ -23,14 +23,6 @@
 
 namespace HAB\Diglib\API\IIIF;
 
-use HAB\Diglib\API\Error;
-
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use GuzzleHttp\Exception\ServerException;
-
-use RuntimeException;
-
 /**
  * Connect to IIPImage server.
  *
@@ -38,58 +30,15 @@ use RuntimeException;
  * @copyright (c) 2019 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class IIPImageBridge extends ImageServer\Server implements ImageServer
+class IIPImageBridge extends HttpBridge
 {
-    private $client;
-    private $mapper;
-    private $iipImageUri;
-
-    public function __construct (ImageServer\FeatureSet $features, MapperFactory $mapper, $iipImageUri)
+    protected function getImageStreamUri ($imageUri, $imageParameters)
     {
-        parent::__construct($features);
-        $this->mapper = $mapper;
-        $this->iipImageUri = $iipImageUri;
-        $this->client = new Client();
+        return '?IIIF=' . $imageUri . '/' . $imageParameters;
     }
 
-    public function getImageStream ($imageUri, $imageParameters)
+    protected function getImageInfoUri ($imageUri)
     {
-        $remoteUri = $this->iipImageUri . '?IIIF=' . $imageUri . '/' . $imageParameters;
-        $response = $this->request($remoteUri);
-        return $response;
+        return '?IIIF=' . $imageUri . '/info.json';
     }
-
-    public function getImageInfo ($imageUri)
-    {
-        $remoteUri = $this->iipImageUri . '?IIIF=' . $imageUri . '/info.json';
-        $response = $this->request($remoteUri);
-        $info = json_decode($response, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new RuntimeException(json_last_error_msg());
-        }
-        return $info;
-    }
-
-    public function getImageUri ($objectId, $imageId)
-    {
-        $location = $this->mapper->getObjectLocation($objectId);
-        $mapper = $this->mapper->create($objectId);
-        $image = $mapper->getImageUri($imageId);
-        if ($image) {
-            return strtr($objectId, '_', '/') . '/' . $image;
-        }
-    }
-
-    private function request ($remoteUri)
-    {
-        try {
-            $response = $this->client->get($remoteUri);
-        } catch (ClientException $e) {
-            throw new Error\Http($e->getResponse()->getStatusCode());
-        } catch (ServerException $e) {
-            throw new Error\Http(502);
-        }
-        return $response;
-    }
-
 }
