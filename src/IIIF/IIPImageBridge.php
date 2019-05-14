@@ -85,7 +85,7 @@ class IIPImageBridge extends ImageServer\Server implements ImageServer
         try {
             $response = $this->client->get($remoteUri);
         } catch (ClientException $e) {
-            return $e->getResponse();
+            throw new Error\Http($e->getResponse()->getStatusCode());
         } catch (ServerException $e) {
             throw new Error\Http(502);
         }
