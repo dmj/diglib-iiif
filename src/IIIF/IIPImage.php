@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
 
-namespace HAB\Diglib\API\IIIF\Adapter;
+namespace HAB\Diglib\API\IIIF;
 
 use HAB\Diglib\API\Error;
 
@@ -54,16 +54,16 @@ class IIPImage extends ImageServer\Server implements ImageServer
 
     public function getImageStream ($imageUri, $imageParameters)
     {
-        $remoteUri = $this->iipImageUri . '?IIIF=/images/' . $imageUri . '/' . $imageParameters;
-        $response = $this->request($remoteUri, array('stream' => true));
-        return clone($response);
+        $remoteUri = $this->iipImageUri . '?IIIF=' . $imageUri . '/' . $imageParameters;
+        $response = $this->request($remoteUri);
+        return $response;
     }
 
     public function getImageInfo ($imageUri)
     {
-        $remoteUri = $this->iipImageUri . '?IIIF=/images/' . $imageUri . '/info.json';
+        $remoteUri = $this->iipImageUri . '?IIIF=' . $imageUri . '/info.json';
         $response = $this->request($remoteUri);
-        $info = json_decode($response->getBody(), true);
+        $info = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException(json_last_error_msg());
         }
@@ -80,10 +80,10 @@ class IIPImage extends ImageServer\Server implements ImageServer
         }
     }
 
-    private function request ($remoteUri, array $options = array())
+    private function request ($remoteUri)
     {
         try {
-            $response = $this->client->get($remoteUri, $options);
+            $response = $this->client->get($remoteUri);
         } catch (ClientException $e) {
             return $e->getResponse();
         } catch (ServerException $e) {
