@@ -44,7 +44,7 @@ class Image
 {
     private $server;
 
-    public function __construct (ImageServer $server, Router $router)
+    public function __construct (Adapter\ImageServer $server, Router $router)
     {
         $this->server = $server;
         $this->router = $router;

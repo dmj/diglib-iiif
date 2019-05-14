@@ -21,7 +21,7 @@
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
 
-namespace HAB\Diglib\API\IIIF;
+namespace HAB\Diglib\API\IIIF\Adapter;
 
 /**
  * Connects a IIIF Image server.
