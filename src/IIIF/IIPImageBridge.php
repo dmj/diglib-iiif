@@ -38,7 +38,7 @@ use RuntimeException;
  * @copyright (c) 2019 by Herzog August Bibliothek Wolfenbüttel
  * @license   http://www.gnu.org/licenses/gpl.txt GNU General Public License v3 or higher
  */
-class IIPImage extends ImageServer\Server implements ImageServer
+class IIPImageBridge extends ImageServer\Server implements ImageServer
 {
     private $client;
     private $mapper;
