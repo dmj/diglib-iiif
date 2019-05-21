@@ -198,7 +198,7 @@
         <xsl:variable name="catalogUri">
           <xsl:choose>
             <xsl:when test="starts-with(@OBJID, 'mss/')">
-              <xsl:value-of select="concat('http://diglib.hab.de?db=mss&amp;id=', substring-after(@OBJID, 'mss/'))"/>
+              <xsl:value-of select="concat('http://diglib.hab.de?db=mss&amp;list=ms&amp;id=', substring-after(@OBJID, 'mss/'))"/>
             </xsl:when>
             <xsl:when test="starts-with(@OBJID, 'grafik/')">
               <xsl:value-of select="concat('http://diglib.hab.de?grafik=', substring-after(@OBJID, 'grafik/'))"/>
