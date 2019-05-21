@@ -53,7 +53,7 @@ class MapperFactory
     {
         $location = $this->getObjectLocation($objectId);
         if (!$location || !file_exists($location . DIRECTORY_SEPARATOR . 'mets.xml')) {
-            throw new RuntimeException();
+            throw new RuntimeException("Unable to locate object description: {$location}");
         }
         $source = new DOMDocument();
         if (!$source->load($location . DIRECTORY_SEPARATOR . 'mets.xml')) {
