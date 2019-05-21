@@ -28,6 +28,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 use HAB\Diglib\API\Error;
 
+use RuntimeException;
+
 /**
  * Presentation API controller.
  *
@@ -49,7 +51,11 @@ class Presentation
         $entityType = $arguments['entityType'];
         $entityId = isset($arguments['entityId']) ? $arguments['entityId'] : null;
 
-        $mapper = $this->mapper->create($arguments['objectId']);
+        try {
+            $mapper = $this->mapper->create($arguments['objectId']);
+        } catch (RuntimeException $e) {
+            throw new Error\Http(404);
+        }
 
         $payload = $mapper->getEntity($entityType, $entityId);
         if (!$payload) {
