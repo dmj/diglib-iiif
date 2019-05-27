@@ -23,6 +23,8 @@
 
 namespace HAB\Diglib\API\IIIF;
 
+use HAB\Diglib\API\Error;
+
 use RuntimeException;
 use DOMDocument;
 
@@ -53,7 +55,7 @@ class MapperFactory
     {
         $location = $this->getObjectLocation($objectId);
         if (!$location || !file_exists($location . DIRECTORY_SEPARATOR . 'mets.xml')) {
-            throw new RuntimeException("Unable to locate object description: {$location}");
+            throw new Error\Http(404);
         }
         $source = new DOMDocument();
         if (!$source->load($location . DIRECTORY_SEPARATOR . 'mets.xml')) {
