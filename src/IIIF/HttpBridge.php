@@ -58,7 +58,7 @@ abstract class HttpBridge extends ImageServer\Server implements ImageServer
     public function getImageStream ($imageUri, $imageParameters)
     {
         $remoteUri = $this->baseUri . $this->getImageStreamUri($imageUri, $imageParameters);
-        $response = $this->request($remoteUri);
+        $response = $this->request($remoteUri, true);
         return $response;
     }
 
@@ -83,10 +83,10 @@ abstract class HttpBridge extends ImageServer\Server implements ImageServer
         }
     }
 
-    private function request ($remoteUri)
+    private function request ($remoteUri, $stream = false)
     {
         try {
-            $response = $this->client->get($remoteUri);
+            $response = $this->client->get($remoteUri, ['stream' => $stream]);
         } catch (ClientException $e) {
             throw new Error\Http($e->getResponse()->getStatusCode());
         } catch (ServerException $e) {
