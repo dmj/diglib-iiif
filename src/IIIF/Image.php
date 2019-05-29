@@ -87,12 +87,15 @@ class Image
             throw new Error\Http(404);
         }
 
-        $response = $this->server->getImageStream($imageUri, $arguments['ops']);
+        $stream = $this->server->getImageStream($imageUri, $arguments['ops']);
         if ($complianceLevelUri = $this->server->getComplianceLevel()) {
             $response = $response->withHeader('Link', sprintf('<%s>; rel="profile"', $complianceLevelUri));
         }
 
-        return $response;
+        $response = $response->withHeader('Content-Type', $stream->getHeader('Content-Type'));
+        $response = $response->withHeader('Content-Disposition', $stream->getHeader('Content-Disposition'));
+        $response = $response->withHeader('Last-Modified', $stream->getHeader('Last-Modified'));
+        return $response->withBody($stream->getBody());
     }
 
 }
