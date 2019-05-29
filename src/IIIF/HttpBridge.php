@@ -66,7 +66,7 @@ abstract class HttpBridge extends ImageServer\Server implements ImageServer
     {
         $remoteUri = $this->baseUri . $this->getImageInfoUri($imageUri);
         $response = $this->request($remoteUri);
-        $info = json_decode($response, true);
+        $info = json_decode((string)$response->getBody(), true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException(json_last_error_msg());
         }
