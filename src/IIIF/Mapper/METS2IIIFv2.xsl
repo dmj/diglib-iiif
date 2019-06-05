@@ -197,7 +197,7 @@
       <xsl:if test="starts-with(@OBJID, 'mss/') or starts-with(@OBJID, 'grafik/')">
         <xsl:variable name="catalogUri">
           <xsl:choose>
-            <xsl:when test="starts-with(@OBJID, 'mss/')">
+            <xsl:when test="starts-with(@OBJID, 'mss/') and not(starts-with(@OBJID, 'mss/ed'))">
               <xsl:value-of select="concat('http://diglib.hab.de?db=mss&amp;list=ms&amp;id=', substring-after(@OBJID, 'mss/'))"/>
             </xsl:when>
             <xsl:when test="starts-with(@OBJID, 'grafik/')">
@@ -205,18 +205,19 @@
             </xsl:when>
           </xsl:choose>
         </xsl:variable>
-        <json:map>
-          <xsl:call-template name="metadata-label">
-            <xsl:with-param name="property">tag:maus@hab.de,2019:isDescribedBy</xsl:with-param>
-          </xsl:call-template>
-          <json:string key="value">
-            <xsl:text>&lt;a href="</xsl:text>
-            <xsl:value-of select="$catalogUri"/>
-            <xsl:text>" target="_blank"></xsl:text>
-            <xsl:value-of select="$catalogUri"/>
-            <xsl:text>&lt;/a></xsl:text>
-          </json:string>
-        </json:map>
+        <xsl:if test="$catalogUri != ''">
+          <json:map>
+            <xsl:call-template name="metadata-label">
+              <xsl:with-param name="property">tag:maus@hab.de,2019:isDescribedBy</xsl:with-param>
+            </xsl:call-template>
+            <json:string key="value">
+              <xsl:call-template name="hyperlink">
+                <xsl:with-param name="href" select="$catalogUri"/>
+                <xsl:with-param name="label" select="$catalogUri"/>
+              </xsl:call-template>
+            </json:string>
+          </json:map>
+        </xsl:if>
       </xsl:if>
 
       <xsl:if test="$rightsMD">
@@ -435,5 +436,17 @@
   </xsl:template>
 
   <xsl:template match="text()"/>
+
+  <xsl:template name="hyperlink">
+    <xsl:param name="href"/>
+    <xsl:param name="label"/>
+
+    <xsl:text>&lt;a href="</xsl:text>
+    <xsl:value-of select="$href"/>
+    <xsl:text>" target="_blank"></xsl:text>
+    <xsl:value-of select="$label"/>
+    <xsl:text>&lt;/a></xsl:text>
+
+  </xsl:template>
 
 </xsl:transform>
