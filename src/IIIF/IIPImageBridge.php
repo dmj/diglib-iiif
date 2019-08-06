@@ -34,11 +34,11 @@ class IIPImageBridge extends HttpBridge
 {
     protected function getImageStreamUri ($imageUri, $imageParameters)
     {
-        return '?IIIF=' . $imageUri . '/' . $imageParameters;
+        return '?IIIF=/images/' . $imageUri . '/' . $imageParameters;
     }
 
     protected function getImageInfoUri ($imageUri)
     {
-        return '?IIIF=' . $imageUri . '/info.json';
+        return '?IIIF=/images/' . $imageUri . '/info.json';
     }
 }
