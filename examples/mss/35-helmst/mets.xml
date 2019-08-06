@@ -11,7 +11,7 @@
       OBJID="mss/35-helmst"
       LABEL="Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 35 Helmst."
       PROFILE="tag:diglib.hab.de,2018:METS:v1">
-   <metsHdr CREATEDATE="2019-03-12T08:46:28.225+01:00">
+   <metsHdr CREATEDATE="2019-07-08T10:39:21.13+02:00">
       <agent ROLE="CUSTODIAN" TYPE="ORGANIZATION">
          <name>Herzog August Bibliothek Wolfenbüttel</name>
       </agent>
@@ -36,12 +36,12 @@
          </xmlData>
       </mdWrap>
    </dmdSec>
-   <dmdSec ID="id.dmd.8688x5792">
+   <dmdSec ID="id.dmd.6687x1904">
       <mdWrap MDTYPE="OTHER" OTHERMDTYPE="RDF" MIMETYPE="application/rdf+xml">
          <xmlData>
             <rdf:Description>
-               <exif:width rdf:datatype="http://www.w3.org/2001/XMLSchema#int">8688</exif:width>
-               <exif:height rdf:datatype="http://www.w3.org/2001/XMLSchema#int">5792</exif:height>
+               <exif:width rdf:datatype="http://www.w3.org/2001/XMLSchema#int">6687</exif:width>
+               <exif:height rdf:datatype="http://www.w3.org/2001/XMLSchema#int">1904</exif:height>
             </rdf:Description>
          </xmlData>
       </mdWrap>
@@ -1677,17 +1677,17 @@
          <file ID="image_00525" MIMETYPE="image/jp2">
             <FLocat LOCTYPE="URL" xlink:href="00525.jp2"/>
          </file>
-         <file ID="image_eb01" MIMETYPE="image/jp2">
-            <FLocat LOCTYPE="URL" xlink:href="eb01.jp2"/>
+         <file ID="image_ebs01" MIMETYPE="image/jp2">
+            <FLocat LOCTYPE="URL" xlink:href="ebs01.jp2"/>
          </file>
-         <file ID="image_eb02" MIMETYPE="image/jp2">
-            <FLocat LOCTYPE="URL" xlink:href="eb02.jp2"/>
+         <file ID="image_ebs02" MIMETYPE="image/jp2">
+            <FLocat LOCTYPE="URL" xlink:href="ebs02.jp2"/>
          </file>
-         <file ID="image_eb03" MIMETYPE="image/jp2">
-            <FLocat LOCTYPE="URL" xlink:href="eb03.jp2"/>
+         <file ID="image_ebs03" MIMETYPE="image/jp2">
+            <FLocat LOCTYPE="URL" xlink:href="ebs03.jp2"/>
          </file>
-         <file ID="image_eb04" MIMETYPE="image/jp2">
-            <FLocat LOCTYPE="URL" xlink:href="eb04.jp2"/>
+         <file ID="image_ebs04" MIMETYPE="image/jp2">
+            <FLocat LOCTYPE="URL" xlink:href="ebs04.jp2"/>
          </file>
       </fileGrp>
    </fileSec>
@@ -4843,29 +4843,29 @@
               ORDERLABEL="Farbtafel">
             <fptr FILEID="image_00525"/>
          </div>
-         <div ID="mss_35-helmst_eb01"
+         <div ID="mss_35-helmst_ebs01"
               TYPE="page"
-              DMDID="id.dmd.8688x5792"
+              DMDID="id.dmd.6687x1904"
               ORDERLABEL="Rücken">
-            <fptr FILEID="image_eb01"/>
+            <fptr FILEID="image_ebs01"/>
          </div>
-         <div ID="mss_35-helmst_eb02"
+         <div ID="mss_35-helmst_ebs02"
               TYPE="page"
-              DMDID="id.dmd.8688x5792"
-              ORDERLABEL="Oberschnitt">
-            <fptr FILEID="image_eb02"/>
+              DMDID="id.dmd.6687x1904"
+              ORDERLABEL="Kopfschnitt">
+            <fptr FILEID="image_ebs02"/>
          </div>
-         <div ID="mss_35-helmst_eb03"
+         <div ID="mss_35-helmst_ebs03"
               TYPE="page"
-              DMDID="id.dmd.8688x5792"
+              DMDID="id.dmd.6687x1904"
               ORDERLABEL="Schließenseite">
-            <fptr FILEID="image_eb03"/>
+            <fptr FILEID="image_ebs03"/>
          </div>
-         <div ID="mss_35-helmst_eb04"
+         <div ID="mss_35-helmst_ebs04"
               TYPE="page"
-              DMDID="id.dmd.8688x5792"
-              ORDERLABEL="Unterschnitt">
-            <fptr FILEID="image_eb04"/>
+              DMDID="id.dmd.6687x1904"
+              ORDERLABEL="Fussschnitt">
+            <fptr FILEID="image_ebs04"/>
          </div>
       </div>
    </structMap>
@@ -5398,9 +5398,9 @@
       <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_00523"/>
       <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_00524"/>
       <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_00525"/>
-      <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_eb01"/>
-      <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_eb02"/>
-      <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_eb03"/>
-      <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_eb04"/>
+      <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_ebs01"/>
+      <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_ebs02"/>
+      <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_ebs03"/>
+      <smLink xlink:from="logical.top" xlink:to="mss_35-helmst_ebs04"/>
    </structLink>
 </mets>
