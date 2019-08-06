@@ -15,7 +15,7 @@ $container['Logger'] = function () use ($container) {
 };
 
 $container['IIIF.Resolver'] = function () use ($container) {
-    $baseDirectory = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'examples';
+    $baseDirectory = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'data';
     $resolver = new HAB\Diglib\API\IIIF\Resolver($baseDirectory);
     return $resolver;
 };
@@ -93,26 +93,23 @@ $container['IIIF.Image'] = function () use ($container) {
 };
 
 $container['IIIF.StaticCollection'] = function () use ($container) {
-    $members = array(
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 35 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_35-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 173 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_173-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 203 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_203-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 212 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_212-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 238 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_238-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 272 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_272-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 282 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_282-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 309 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_309-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 310 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_310-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 369 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_369-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 373 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_373-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 533 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_533-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 547 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_547-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 560 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_560-helmst/manifest', '@type' => 'sc:Manifest'),
-        array('label' => 'Herzog August Bibliothek Wolfenbüttel, Cod. Guelf. 1297 Helmst.', '@id' => 'http://iiif.hab.de/object/mss_1297-helmst/manifest', '@type' => 'sc:Manifest'),
-    );
+
+    $location = $container['IIIF.Resolver']->resolve('mssox.xml');
+    $xml = simplexml_load_file($location);
+
+    $members = array();
+    foreach ($xml->children() as $entry) {
+        $attributes = $entry->attributes();
+        $members[] = array(
+            '@id' => (string)$attributes['id'],
+            '@type' => (string)$attributes['type'],
+            'label' => (string)$attributes['label'],
+        );
+    }
+    
     $collection = array(
-        '@context' => 'http://iiif.io/api/presentation/2/context.json',
-        '@id' => 'http://iiif.hab.de/collection/project/mssox',
+        '@context' => 'https://iiif.io/api/presentation/2/context.json',
+        '@id' => 'https://iiif.hab.de/collection/project/mssox',
         '@type' => 'sc:Collection',
         'label' => 'The Polonsky Foundation Oxford-Wolfenbüttel German Manuscripts Digitization Project (2018-2021)',
         'members' => $members,
