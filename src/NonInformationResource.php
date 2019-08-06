@@ -55,7 +55,11 @@ class NonInformationResource
             throw new Error\Http(406);
         }
         $extension = $this->extensions[$type->getValue()];
-        $target = (string)$request->getUri() . $extension;
+        $uri = (string)$request->getUri();
+        if (strpos($uri, '?') !== false) {
+            $uri = substr($uri, 0, strpos($uri, '?'));
+        }
+        $target = $uri . $extension;
         return $response->withRedirect($target, 303);
     }
 
