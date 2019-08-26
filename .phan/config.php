@@ -362,16 +362,7 @@ return [
     // your application should be included in this list.
     'directory_list' => [
         'src',
-        'vendor/guzzlehttp/guzzle/src',
-        'vendor/hab/php-image-server/src',
-        'vendor/hab/resolver/lib',
-        'vendor/hab/xml-helper/lib',
-        'vendor/monolog/monolog/src/Monolog',
-        'vendor/phan/phan/src/Phan',
-        'vendor/psr/log/Psr/Log',
-        'vendor/slim/slim/Slim',
-        'vendor/tuupola/cors-middleware/src',
-        'vendor/willdurand/negotiation/src/Negotiation',
+        'vendor',
     ],
 
     // A list of individual files to include in analysis
