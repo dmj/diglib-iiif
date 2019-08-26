@@ -46,6 +46,7 @@ class InformationResource
         if (!$client) {
             $client = '*/*';
         }
+
         $type = $negotiator->getBest($client, $this->mediatypes);
         if (!$type) {
             throw new Error\Http(406);
