@@ -24,7 +24,8 @@
 namespace HAB\Diglib\API\IIIF;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+
+use Slim\Http\Response;
 
 use HAB\Diglib\API\Error;
 
@@ -49,12 +50,12 @@ class Presentation
     public function __invoke (Request $request, Response $response, array $arguments)
     {
         $entityType = $arguments['entityType'];
-        $entityId = isset($arguments['entityId']) ? $arguments['entityId'] : null;
+        $entityId = $arguments['entityId'] ?? null;
 
         try {
             $mapper = $this->mapper->create($arguments['objectId']);
         } catch (RuntimeException $e) {
-            throw new Error\Http(404);
+            throw new Error\Http(404, [], $e);
         }
 
         $payload = $mapper->getEntity($entityType, $entityId);

@@ -24,7 +24,8 @@
 namespace HAB\Diglib\API\Error;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+
+use Slim\Http\Response;
 
 use HAB\Diglib\API\LoggerAwareTrait;
 
@@ -60,10 +61,10 @@ class Handler
         foreach ($exception->getHeaders() as $name => $value) {
             $response = $response->withHeader($name, $value);
         }
-        $response = $response->withStatus($exception->getCode());
+        $response = $response->withStatus(intval($exception->getCode()));
         $message = sprintf('%03d %s', $response->getStatusCode(), $response->getReasonPhrase());
 
-        if ($this->displayErrorDetails) {
+        if ($this->displayErrorDetails && $details) {
             $response = $response->write($details);
         } else {
             $response = $response->write($message);

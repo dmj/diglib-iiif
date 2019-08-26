@@ -24,10 +24,9 @@
 namespace HAB\Diglib\API\IIIF;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 
+use Slim\Http\Response;
 use Slim\Interfaces\RouterInterface as Router;
-use Slim\Http\Stream;
 
 use HAB\Diglib\API\Error;
 
@@ -42,6 +41,7 @@ use RuntimeException;
  */
 class Image
 {
+    private $router;
     private $server;
 
     public function __construct (ImageServer $server, Router $router)
@@ -66,7 +66,7 @@ class Image
         try {
             $info = $this->server->getImageInfo($imageUri);
         } catch (RuntimeException $e) {
-            throw new Error\Http(404);
+            throw new Error\Http(404, [], $e);
         }
 
         $info['@id'] = $this->router->pathFor('iiif.image', $arguments);
@@ -77,7 +77,10 @@ class Image
             throw new RuntimeException(json_last_error_msg());
         }
 
-        return $response->write($payload);
+        if (is_string($payload)) {
+            return $response->write($payload);
+        }
+        return $response;
     }
 
     public function getImageStream (Request $request, Response $response, array $arguments)

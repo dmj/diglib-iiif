@@ -24,7 +24,8 @@
 namespace HAB\Diglib\API;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+
+use Slim\Http\Response;
 
 use Negotiation\Negotiator;
 
@@ -57,7 +58,7 @@ class NonInformationResource
         $extension = $this->extensions[$type->getValue()];
         $uri = (string)$request->getUri();
         if (strpos($uri, '?') !== false) {
-            $uri = substr($uri, 0, strpos($uri, '?'));
+            $uri = substr($uri, 0, intval(strpos($uri, '?')));
         }
         $target = $uri . $extension;
         return $response->withRedirect($target, 303);

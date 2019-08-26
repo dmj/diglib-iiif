@@ -24,7 +24,8 @@
 namespace HAB\Diglib\API\IIIF;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+
+use Slim\Http\Response;
 
 use RuntimeException;
 
@@ -50,6 +51,9 @@ class StaticCollection
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException(json_last_error_msg());
         }
-        return $response->write($payload);
+        if (is_string($payload)) {
+            return $response->write($payload);
+        }
+        return $response;
     }
 }

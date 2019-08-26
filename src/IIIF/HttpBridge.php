@@ -75,7 +75,6 @@ abstract class HttpBridge extends ImageServer\Server implements ImageServer
 
     public function getImageUri ($objectId, $imageId)
     {
-        $location = $this->mapper->getObjectLocation($objectId);
         $mapper = $this->mapper->create($objectId);
         $image = $mapper->getImageUri($imageId);
         if ($image) {
@@ -88,9 +87,15 @@ abstract class HttpBridge extends ImageServer\Server implements ImageServer
         try {
             $response = $this->client->get($remoteUri, ['stream' => $stream]);
         } catch (ClientException $e) {
-            throw new Error\Http($e->getResponse()->getStatusCode());
+            $response = $e->getResponse();
+            if ($response) {
+                $code = $response->getStatusCode();
+            } else {
+                $code = 500;
+            }
+            throw new Error\Http($code, [], $e);
         } catch (ServerException $e) {
-            throw new Error\Http(502);
+            throw new Error\Http(502, [], $e);
         }
         return $response;
     }

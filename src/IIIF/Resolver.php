@@ -23,8 +23,6 @@
 
 namespace HAB\Diglib\API\IIIF;
 
-use HAB\Diglib\API\LoggerAwareTrait;
-
 /**
  * Resolve identifier to accessible location.
  *

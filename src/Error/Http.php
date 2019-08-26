@@ -34,9 +34,11 @@ use Exception;
  */
 class Http extends Exception
 {
+    private $headers;
+
     public function __construct ($code, array $headers = array(), Exception $previous = null)
     {
-        $message = $previous ? $previous->getMessage() : null;
+        $message = $previous ? $previous->getMessage() : '';
         parent::__construct($message, $code, $previous);
         $this->headers = $headers;
     }
