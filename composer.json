@@ -15,5 +15,8 @@
         "monolog/monolog": "^1.24",
         "hab/php-image-server": "dev-master",
         "guzzlehttp/guzzle": "~6.0"
+    },
+    "require-dev": {
+        "phan/phan": "^2.2"
     }
 }
