@@ -72,6 +72,10 @@
       <skos:prefLabel xml:lang="de">Sprache</skos:prefLabel>
       <skos:prefLabel xml:lang="en">Language</skos:prefLabel>
     </rdf:Description>
+    <rdf:Description rdf:about="http://purl.org/dc/terms/title">
+      <skos:prefLabel xml:lang="de">Titel</skos:prefLabel>
+      <skos:prefLabel xml:lang="en">Title</skos:prefLabel>
+    </rdf:Description>
   </rdf:RDF>
 
   <xsl:output indent="yes"/>
@@ -173,6 +177,36 @@
 
       <!-- Descriptive Metadata -->
       <xsl:if test="$dmdSec">
+        <xsl:if test="$dmdSec/dct:title">
+          <json:map>
+            <xsl:call-template name="metadata-label">
+              <xsl:with-param name="property">http://purl.org/dc/terms/title</xsl:with-param>
+            </xsl:call-template>
+            <xsl:call-template name="metadata-value">
+              <xsl:with-param name="labels" select="$dmdSec/dct:title"/>
+            </xsl:call-template>
+          </json:map>
+        </xsl:if>
+        <xsl:if test="$dmdSec/dct:creator">
+          <json:map>
+            <xsl:call-template name="metadata-label">
+              <xsl:with-param name="property">http://purl.org/dc/terms/creator</xsl:with-param>
+            </xsl:call-template>
+            <xsl:call-template name="metadata-value">
+              <xsl:with-param name="labels" select="$dmdSec/dct:creator/dct:Agent/skos:prefLabel"/>
+            </xsl:call-template>
+          </json:map>
+        </xsl:if>
+        <xsl:if test="$dmdSec/dct:contributor">
+          <json:map>
+            <xsl:call-template name="metadata-label">
+              <xsl:with-param name="property">http://purl.org/dc/terms/contributor</xsl:with-param>
+            </xsl:call-template>
+            <xsl:call-template name="metadata-value">
+              <xsl:with-param name="labels" select="$dmdSec/dct:contributor/dct:Agent/skos:prefLabel"/>
+            </xsl:call-template>
+          </json:map>
+        </xsl:if>
         <xsl:if test="$dmdSec/dct:spatial">
           <json:map>
             <xsl:call-template name="metadata-label">
